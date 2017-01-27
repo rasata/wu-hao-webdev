@@ -2,6 +2,14 @@ input.form-control {
     margin-bottom: 5px;
 }
 
+#h3Green {
+    background-color: greenyellow;
+}
+
 body {
     /*padding-top: 100px;*/
+}
+
+.navbar-default .navbar-brand {
+    color: white;
 }

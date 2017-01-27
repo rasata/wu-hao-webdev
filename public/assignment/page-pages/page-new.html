@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Website List</title>
+    <title>Page New</title>
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
 
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="css/style.css" rel="stylesheet"/>
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
           integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/style.css"/>
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -22,8 +23,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-</head>
 
+</head>
 
 <body>
 <nav class="navbar navbar-inverse">
@@ -34,29 +35,27 @@
         </ul>
 
         <div class="navbar-header col-xs-8 col-sm-10">
-            <a href="#" class="navbar-brand">Websites</a>
+            <a href="#" class="navbar-brand">New Page</a>
         </div>
 
         <ul class="nav navbar-nav navbar-right navbar-collapse col-xs-2 col-sm-1">
-            <li><a href="#"><span class="glyphicon glyphicon-plus"></span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-ok"></span></a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container">
-    <div class="row text-left">
-        <p class="col-xs-11">Address Book App</p>
-        <span class="col-xs-1 glyphicon glyphicon-cog"></span>
-
-        <p class="col-xs-11">Blogger</p>
-        <span class="col-xs-1 glyphicon glyphicon-cog"></span>
-
-        <p class="col-xs-11">Blogging App</p>
-        <span class="col-xs-1 glyphicon glyphicon-cog"></span>
-
-        <p class="col-xs-11">Script Testing App</p>
-        <span class="col-xs-1 glyphicon glyphicon-cog"></span>
-    </div>
+    <form class="col-xs-12">
+        <div class="form-group">
+            <label for="page-name">Name</label>
+            <input type="text" class="form-control" id="page-name" placeholder="Page Name">
+        </div>
+        <div class="form-group">
+            <label for="page-title">Title</label>
+            <input type="text" class="form-control"
+                   id="page-title" placeholder="Page Title">
+        </div>
+    </form>
 </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom">

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Website New</title>
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
+
+    <meta name="viewpoint" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="../css/style.css"/>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <style>
+        #wrapper {
+            padding-left: 250px;
+            transition: all 0.4s ease 0s;
+        }
+
+        #sidebar-wrapper {
+            margin-left: -250px;
+            left: 250px;
+            width: 250px;
+            background: white;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: all 0.4s ease 0s;
+        }
+
+        #page-content-wrapper {
+            width: 100%;
+        }
+
+        .sidebar-nav {
+            position: absolute;
+            top: 0;
+            width: 250px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        @media (max-width:767px) {
+
+            #wrapper {
+                padding-left: 0;
+            }
+
+            #sidebar-wrapper {
+                left: 0;
+            }
+
+            #wrapper.active {
+                position: relative;
+                left: 250px;
+            }
+
+            #wrapper.active #sidebar-wrapper {
+                left: 250px;
+                width: 250px;
+                transition: all 0.4s ease 0s;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <ul class="nav navbar-nav navbar-left navbar-collapse col-xs-2 col-md-1">
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        </ul>
+
+        <div class="navbar-header col-xs-8 col-sm-10">
+            <a href="#" class="navbar-brand">New Website</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right navbar-collapse col-xs-2 col-sm-1">
+            <li><a href="#"><span class="glyphicon glyphicon-ok"></span></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="wrapper">
+    <div id="sidebar-wrapper" class=".visible-lg-*">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand"><a href="#">Home</a></li>
+            <li><a href="#">Another link</a></li>
+            <li><a href="#">Next link</a></li>
+            <li><a href="#">Last link</a></li>
+        </ul>
+    </div>
+    <div id="page-content-wrapper">
+        <div class="page-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea type="text" class="form-control" id="description" placeholder="Description"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="container">
+        <div class="row navbar-right navbar-text">
+
+            <div class="col-xs-11 text-right">
+                <a href="#">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Page List</title>
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
 
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
@@ -28,39 +28,37 @@
 <body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-left navbar-collapse col-xs-2 col-md-1">
+            <li><a href="../"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        </ul>
+
         <!-- Logo -->
         <div class="navbar-header col-xs-11 col-sm-10">
-            <a href="#" class="navbar-brand">Profile</a>
+            <a href="../index.html" class="navbar-brand">Pages</a>
         </div>
         <ul class="nav navbar-nav navbar-right navbar-collapse col-xs-1 col-sm-2">
-            <li><a href="#"><span class="glyphicon glyphicon-ok"></span></a></li>
+            <li><a href="page-new.html"><span class="glyphicon glyphicon-plus"></span></a></li>
         </ul>
     </div>
 </nav>
-<div class="container">
-    <form>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" placeholder="alice@wonderland.com">
-        </div>
-        <div class="form-group">
-            <label for="first-name">First Name</label>
-            <input type="text" class="form-control" id="first-name" placeholder="Alice">
-        </div>
-        <div class="form-group">
-            <label for="last-name">Last Name</label>
-            <input type="text" class="form-control" id="last-name" placeholder="Wonderland">
-        </div>
-    </form>
 
-    <a class="btn btn-primary btn-block"
-       href="website-list.html">Websites</a>
-    <a class="btn btn-danger  btn-block"
-       href="login.html">Logout</a>
+<div class="container">
+    <div class="row text-left">
+        <p class="col-xs-11">Blog Post</p>
+        <span href="page-edit" class="col-xs-1 glyphicon glyphicon-cog"></span>
+
+        <p class="col-xs-11">Blogs</p>
+        <span href="page-edit" class="col-xs-1 glyphicon glyphicon-cog"></span>
+
+        <p class="col-xs-11">Home</p>
+        <span href="page-edit" class="col-xs-1 glyphicon glyphicon-cog"></span>
+
+        <p class="col-xs-11">About</p>
+        <span href="page-edit" class="col-xs-1 glyphicon glyphicon-cog"></span>
+
+        <p class="col-xs-11">Contact Us</p>
+        <span href="page-edit" class="col-xs-1 glyphicon glyphicon-cog"></span>
+    </div>
 </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
@@ -75,6 +73,7 @@
         </div>
     </div>
 </nav>
+
 
 </body>
 </html>

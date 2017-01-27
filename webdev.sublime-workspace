@@ -519,13 +519,6 @@
 	},
 	"buffers":
 	[
-		{
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -534,7 +527,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 247.0,
+		"height": 347.0,
 		"last_filter": ":w",
 		"selected_items":
 		[
@@ -724,10 +717,12 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev"
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/bootstrap"
 	],
 	"file_history":
 	[
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/bootstrap/index.html",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700-computerNetworking/cs5700Projects/project2/README",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs6740-networkSecurity/problemSets/ps1/ChatUtil.py",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs6740-networkSecurity/problemSets/ps1/ChatClient.py",
@@ -854,8 +849,7 @@
 		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/TCPHeader.java",
 		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/SocketClient.java",
 		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/RawSocketClient.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/IPPacket.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/IPHeader.java"
+		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/IPPacket.java"
 	],
 	"find":
 	{
@@ -1024,36 +1018,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1329,7 +1295,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": false,
+	"side_bar_visible": true,
 	"side_bar_width": 244.0,
 	"status_bar_visible": true,
 	"template_settings":
