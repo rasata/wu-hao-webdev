@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Website New</title>
+    <title>New Website</title>
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>-->
 
     <meta name="viewpoint" content="width=device-width, initial-scale=1">
@@ -23,120 +23,92 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-
-    <style>
-        #wrapper {
-            padding-left: 250px;
-            transition: all 0.4s ease 0s;
-        }
-
-        #sidebar-wrapper {
-            margin-left: -250px;
-            left: 250px;
-            width: 250px;
-            background: white;
-            position: fixed;
-            height: 100%;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: all 0.4s ease 0s;
-        }
-
-        #page-content-wrapper {
-            width: 100%;
-        }
-
-        .sidebar-nav {
-            position: absolute;
-            top: 0;
-            width: 250px;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        @media (max-width:767px) {
-
-            #wrapper {
-                padding-left: 0;
-            }
-
-            #sidebar-wrapper {
-                left: 0;
-            }
-
-            #wrapper.active {
-                position: relative;
-                left: 250px;
-            }
-
-            #wrapper.active #sidebar-wrapper {
-                left: 250px;
-                width: 250px;
-                transition: all 0.4s ease 0s;
-            }
-
-        }
-    </style>
 </head>
 
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <!-- Logo -->
-        <ul class="nav navbar-nav navbar-left navbar-collapse col-xs-2 col-md-1">
-            <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-        </ul>
-
-        <div class="navbar-header col-xs-8 col-sm-10">
-            <a href="#" class="navbar-brand">New Website</a>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="row container-fluid">
+        <div class="col-sm-4 hidden-xs">
+            <div class="navbar-text pull-left">
+                <a href="website-list.html">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="website-new.html">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Websites</a>
+            </div>
         </div>
 
-        <ul class="nav navbar-nav navbar-right navbar-collapse col-xs-2 col-sm-1">
-            <li><a href="#"><span class="glyphicon glyphicon-ok"></span></a></li>
-        </ul>
+        <div class="col-sm-8">
+            <div class="navbar-text pull-right">
+                <a href="website-list.html">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">New Website</a>
+            </div>
+        </div>
     </div>
 </nav>
 
-<div id="wrapper">
-    <div id="sidebar-wrapper" class=".visible-lg-*">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand"><a href="#">Home</a></li>
-            <li><a href="#">Another link</a></li>
-            <li><a href="#">Next link</a></li>
-            <li><a href="#">Last link</a></li>
+<div class="row container-fluid">
+    <!-- left side -->
+    <div class="col-sm-4 hidden-xs hw-sidebar">
+        <ul class="list-group">
+
+            <li class="list-group-item borderless">
+                <a href="../page-pages/page-list.html">Blogging App</a>
+                <a href="website-edit.html" class="pull-right">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+            </li>
+
+            <li class="list-group-item borderless">
+                <a href="../page-pages/page-list.html">Address Book App</a>
+                <a href="website-edit.html" class="pull-right">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+
+            </li>
+
+            <li class="list-group-item borderless">
+                <a href="../page-pages/page-list.html">Script Testing App</a>
+                <a href="website-edit.html" class="pull-right">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+            </li>
+
+            <li class="list-group-item borderless">
+                <a href="../page-pages/page-list.html">Blogger</a>
+                <a href="website-edit.html" class="pull-right">
+                    <span class="glyphicon glyphicon-cog"></span>
+                </a>
+            </li>
+
         </ul>
     </div>
-    <div id="page-content-wrapper">
-        <div class="page-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Name">
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea type="text" class="form-control" id="description" placeholder="Description"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    <!-- right side -->
+    <div class="col-sm-8">
+        <label for="name">Name</label>
+        <input class="form-control" id="name" placeholder="Name">
+
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" placeholder="Description"></textarea>
     </div>
 </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row navbar-right navbar-text">
-
-            <div class="col-xs-11 text-right">
-                <a href="#">
-                    <span class="glyphicon glyphicon-user"></span>
-                </a>
+            <div class="col-xs-12 text-right">
+                <a href="../user-pages/profile.html"><span class="glyphicon glyphicon-user"></span></a>
             </div>
         </div>
     </div>

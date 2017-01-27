@@ -1,5 +1,11 @@
 /*Custom css class need to start with initials*/
-.hw-toolbar {
+.hw-sidebar {
+    /*margin-bottom: 5px;*/
+    border-right: grey;
+}
+
+.hw-button {
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 
