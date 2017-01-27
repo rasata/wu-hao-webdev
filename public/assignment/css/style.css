@@ -1,15 +1,28 @@
+/*Custom css class need to start with initials*/
+.hw-toolbar {
+    margin-bottom: 5px;
+}
+
+li.borderless {
+    border-top: 0 none;
+    border-left: 0 none;
+    border-right: 0 none;
+    border-bottom: 0 none;
+}
+
+body {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
 input.form-control {
     margin-bottom: 5px;
 }
 
-#h3Green {
-    background-color: greenyellow;
-}
+/*#h3Green {*/
+    /*background-color: greenyellow;*/
+/*}*/
 
-body {
-    /*padding-top: 100px;*/
-}
-
-.navbar-default .navbar-brand {
-    color: white;
-}
+/*.navbar-default .navbar-brand {*/
+    /*color: white;*/
+/*}*/
