@@ -24,7 +24,7 @@
         return api;
 
         function createUser(user) {
-            users.add(user);
+            users.push(user);
         }
 
         function findUserById(userId) {
@@ -58,6 +58,7 @@
             for(var u in users) {
                 if(users[u]._id == userId) {
                     users[u] = user;
+                    return;
                 }
             }
         }
@@ -66,6 +67,7 @@
             for(var i = 0; i < users.length; ++i) {
                 if(users[i]._id == userId) {
                     users.splice(i, 1);
+                    return;
                 }
             }
         }
