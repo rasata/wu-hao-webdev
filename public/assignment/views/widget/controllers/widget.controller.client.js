@@ -27,7 +27,6 @@
         }
 
         function getYouTubeEmbedUrl(widgetUrl) {
-            console.log("I'm here: " + widgetUrl);
             var urlParts = widgetUrl.split('/');
             var id = urlParts[urlParts.length - 1];
             var url = "https://www.youtube.com/embed/" + id;
