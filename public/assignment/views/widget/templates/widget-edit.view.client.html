@@ -18,27 +18,104 @@
 
 <!--{{model.widget}}-->
 <div ng-if="model.widget.widgetType === 'HEADER'">
-    <h1>Header Editor</h1>
-    {{model.widget}}
+    <!--{ "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"}-->
+    <div class="container-fluid">
+        <h1>Header Editor</h1>
+        {{model.widget}}
+
+        <label for="header-page-id">Page ID</label>
+        <input ng-model="model.widget.pageId" type="text" class="form-control"
+               id="header-page-id" placeholder="{{model.widget.pageId}}">
+
+        <label for="header-size">Size</label>
+        <input ng-model="model.widget.size" type="text" class="form-control"
+               id="header-size" placeholder="{{model.widget.size}}">
+
+        <label for="header-text">Text</label>
+        <textarea ng-model="model.widget.text" class="form-control"
+                  id="header-text" placeholder="{{model.widget.text}}"></textarea>
+
+        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
+           class="btn btn-danger btn-block">Update</a>
+    </div>
 </div>
 
 <div ng-if="model.widget.widgetType === 'IMAGE'">
-    <h1>Image Editor</h1>
-    {{model.widget}}
+<!--
+{ "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%", "url": "http://lorempixel.com/400/200/"}
+-->
+    <div class="container-fluid">
+        <h1>Image Editor</h1>
+        {{model.widget}}
+
+        <label for="image-page-id">Page ID</label>
+        <input ng-model="model.widget.pageId" type="text" class="form-control"
+               id="image-page-id" placeholder="{{model.widget.pageId}}">
+
+        <label for="image-width">Width</label>
+        <input ng-model="model.widget.width" type="text" class="form-control"
+               id="image-width" placeholder="{{model.widget.width}}">
+
+        <label for="image-url">URL</label>
+        <input ng-model="model.widget.url" type="text" class="form-control"
+               id="image-url" placeholder="{{model.widget.url}}">
+
+        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
+           class="btn btn-danger btn-block">Update</a>
+    </div>
+
 </div>
 
 <div ng-if="model.widget.widgetType === 'YOUTUBE'">
-    <h1>YouTube Editor</h1>
-    {{model.widget}}
+<!--
+{ "_id": "678", "widgetType": "YOUTUBE", "pageId": "123", "width": "100%",
+    "url": "https://youtu.be/AM2Ivdi9c4E" }
+-->
+    <div class="container-fluid">
+        <h1>YouTube Editor</h1>
+        {{model.widget}}
+
+        <label for="youtube-page-id">Page ID</label>
+        <input ng-model="model.widget.pageId" type="text" class="form-control"
+               id="youtube-page-id" placeholder="{{model.widget.pageId}}">
+
+        <label for="youtube-width">Width</label>
+        <input ng-model="model.widget.width" type="text" class="form-control"
+               id="youtube-width" placeholder="{{model.widget.width}}">
+
+        <label for="youtube-url">URL</label>
+        <input ng-model="model.widget.url" type="text" class="form-control"
+               id="youtube-url" placeholder="{{model.widget.url}}">
+
+        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
+           class="btn btn-danger btn-block">Update</a>
+    </div>
 </div>
 
 <div ng-if="model.widget.widgetType === 'HTML'">
-    <h1>HTML Editor</h1>
-    {{model.widget}}
+<!--
+{ "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+-->
+    <div class="container-fluid">
+        <h1>HTML Editor</h1>
+        {{model.widget}}
+
+        <label for="html-page-id">Page ID</label>
+        <input ng-model="model.widget.pageId" type="text" class="form-control"
+               id="html-page-id" placeholder="{{model.widget.pageId}}">
+
+        <label for="html-text">Text</label>
+        <textarea ng-model="model.widget.text" class="form-control"
+                  id="html-text" placeholder="{{model.widget.text}}"></textarea>
+
+        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
+           class="btn btn-danger btn-block">Update</a>
+    </div>
 </div>
 
 <!--<div ng-include="mode.getEditorTemplateUrl(widget.widgetType")>-->
 <!--</div>-->
+
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container-fluid">

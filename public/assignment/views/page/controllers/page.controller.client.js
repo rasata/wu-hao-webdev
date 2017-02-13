@@ -30,8 +30,12 @@
         init();
     }
 
-    function EditPageController($location, PageService) {
+    function EditPageController($routeParams, $location, PageService) {
         var vm = this;
+        // /user/:uid/website/:wid/page/:pid
+        vm.userId = $routeParams["uid"];
+        vm.websiteId = $routeParams["wid"];
+        vm.pageId = $routeParams["pid"];
 
         // event handlers
         // vm.login = login;

@@ -57,6 +57,8 @@
 
     function EditWidgetController($routeParams, WidgetService) {
         var vm = this;
+
+        // /user/:uid/website/:wid/page/:pid/widget/:wgid
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
