@@ -12,6 +12,7 @@
         var vm = this;
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
         vm.getTrustedHtml = getTrustedHtml;
+        vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
@@ -21,6 +22,10 @@
         // vm.websiteId = $routeParams.wid;
         // vm.pageId = $routeParams.pid;
         // vm.widgets = WidgetService.findAllWidgets(vm.pageId);
+        function getWidgetTemplateUrl(widgetType) {
+            url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
+            return url;
+        }
 
         function getTrustedHtml(html) {
             return $sce.trustAsHtml(html);
@@ -30,7 +35,6 @@
             var urlParts = widgetUrl.split('/');
             var id = urlParts[urlParts.length - 1];
             var url = "https://www.youtube.com/embed/" + id;
-            console.log(url);
             return $sce.trustAsResourceUrl(url);
         }
 
@@ -51,13 +55,18 @@
         init();
     }
 
-    function EditWidgetController($location, WidgetService) {
+    function EditWidgetController($routeParams, WidgetService) {
         var vm = this;
+        vm.userId = $routeParams["uid"];
+        vm.websiteId = $routeParams["wid"];
+        vm.pageId = $routeParams["pid"];
+        vm.widgetId = $routeParams["wgid"];
 
         // event handlers
         // vm.login = login;
 
         function init() {
+            vm.widget = WidgetService.findWidgetById(vm.widgetId);
         }
         init();
     }

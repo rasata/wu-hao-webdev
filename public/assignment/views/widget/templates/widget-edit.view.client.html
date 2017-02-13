@@ -1,10 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a href="../../page/templates/page-list.html">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-text pull-right">
+            <a href="widget-chooser.view.client.html">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Widget Editor</a>
+        </div>
+    </div>
+</nav>
 
-</body>
-</html>
+<!--{{model.widget}}-->
+<div ng-if="model.widget.widgetType === 'HEADER'">
+    <h1>Header Editor</h1>
+    {{model.widget}}
+</div>
+
+<div ng-if="model.widget.widgetType === 'IMAGE'">
+    <h1>Image Editor</h1>
+    {{model.widget}}
+</div>
+
+<div ng-if="model.widget.widgetType === 'YOUTUBE'">
+    <h1>YouTube Editor</h1>
+    {{model.widget}}
+</div>
+
+<div ng-if="model.widget.widgetType === 'HTML'">
+    <h1>HTML Editor</h1>
+    {{model.widget}}
+</div>
+
+<!--<div ng-include="mode.getEditorTemplateUrl(widget.widgetType")>-->
+<!--</div>-->
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <span class="glyphicon glyphicon-play hw-navbar-glyphicon"></span>
+            <span class="glyphicon glyphicon-eye-open hw-navbar-glyphicon"></span>
+        </div>
+        <div class="navbar-text pull-right">
+            <a href="../../user/templates/profile.view.client.html"><span
+                    class="glyphicon glyphicon-user hw-navbar-glyphicon"></span></a>
+        </div>
+    </div>
+</nav>

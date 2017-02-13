@@ -4,15 +4,15 @@
 (function () {
     angular
         .module("WebAppMaker")
-        .service("WidgetService", WidgetService);
-        // .factory("WidgetService", WidgetService);
+        // .service("WidgetService", WidgetService);
+        .factory("WidgetService", WidgetService);
 
     function WidgetService() {
-        this.createWebsite = createWidget;
-        this.findWidgetsByPageId = findWidgetsByPageId;
-        this.findWidgetById = findWidgetById;
-        this.updateWidget = updateWidget;
-        this.deleteWidget = deleteWidget;
+        // this.createWebsite = createWidget;
+        // this.findWidgetsByPageId = findWidgetsByPageId;
+        // this.findWidgetById = findWidgetById;
+        // this.updateWidget = updateWidget;
+        // this.deleteWidget = deleteWidget;
 
         var widgets = [
             { "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -28,14 +28,14 @@
                 "url": "http://thecatapi.com/api/images/get?format=src&type=gif"}
         ];
 
-        // var api = {
-        //     "createWidget": createWidget,
-        //     "findWidgetsByPageId": findWidgetsByPageId,
-        //     "findWidgetById": findWidgetById,
-        //     "updateWidget": updateWidget,
-        //     "deleteWidget": deleteWidget
-        // };
-        // return api;
+        var api = {
+            "createWidget": createWidget,
+            "findWidgetsByPageId": findWidgetsByPageId,
+            "findWidgetById": findWidgetById,
+            "updateWidget": updateWidget,
+            "deleteWidget": deleteWidget
+        };
+        return api;
 
         // createWidget(pageId, widget) - adds the widget parameter instance to the local widgets array.
         // The new widget's pageId is set to the pageId parameter
@@ -63,9 +63,10 @@
         function findWidgetById(widgetId) {
             for (var w in widgets) {
                 if (widgets[w]._id == widgetId) {
-                    return widgets[w];
+                    return angular.copy(widgets[w]);
                 }
             }
+            return null;
         }
 
         // updateWidget(widgetId, widget) -
