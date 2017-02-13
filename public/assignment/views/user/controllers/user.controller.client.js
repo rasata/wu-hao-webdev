@@ -8,6 +8,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
+
     function LoginController($location, UserService) {
         var vm = this;
 
@@ -36,10 +37,24 @@
         init();
     }
 
-    function ProfileController($location, UserService) {
+    function ProfileController($routeParams, UserService) {
         var vm = this;
+        vm.userId = $routeParams["uid"];
+
+        var user = UserService.findUserById(vm.userId);
+        vm.user = user;
+
+        vm.update = function (newUser) {
+            var user = UserService.updateUser(vm.userId, newUser);
+            if(user == null) {
+                vm.error = "unable to update user";
+            } else {
+                vm.message = "user successfully updated.";
+            }
+        }
 
         function init() {
+            vm.user = UserService.findUserById(vm.userId);
         }
         init();
     }

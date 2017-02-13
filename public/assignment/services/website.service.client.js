@@ -7,7 +7,7 @@
         .factory("WebsiteService", WebsiteService);
     
     function WebsiteService() {
-        websites = [
+        var websites = [
             { "_id": "123", "name": "Facebook",    "developerId": "456", "description": "Lorem" },
             { "_id": "234", "name": "Tweeter",     "developerId": "456", "description": "Lorem" },
             { "_id": "456", "name": "Gizmodo",     "developerId": "456", "description": "Lorem" },
@@ -20,8 +20,8 @@
             "createWebsite": createWebsite,
             "findWebsitesByUser": findWebsitesByUser,
             "findWebsiteById": findWebsiteById,
-            "updateWebsite": updateWebsite,
-            "deleteWebsite": deleteWebsite
+            "deleteWebsite": deleteWebsite,
+            "updateWebsite": updateWebsite
         };
         return api;
 
@@ -29,7 +29,18 @@
         // The new website's developerId is set to the userId parameter
         function createWebsite(userId, website) {
             website.developerId = userId;
+            website._id = (new Date()).getTime();
             websites.push(website);
+        }
+
+        // removes the website from local websites array whose _id matches the websiteId parameter
+        function deleteWebsite(websiteId) {
+            for (var i = 0; i < websites.length; ++i) {
+                if(websites[i]._id == websiteId) {
+                    websites.splice(i ,1);
+                    // return;
+                }
+            }
         }
 
         // retrieves the websites in local websites array whose developerId matches the parameter userId
@@ -58,16 +69,6 @@
             for (var w in websites) {
                 if (websites[w]._id == websiteId) {
                     websites[w] = website;
-                    return;
-                }
-            }
-        }
-
-        // removes the website from local websites array whose _id matches the websiteId parameter
-        function deleteWebsite(websiteId) {
-            for (var i = 0; i < websites.length; ++i) {
-                if(websites[i]._id == websiteId) {
-                    websites.splice(w,1);
                     return;
                 }
             }

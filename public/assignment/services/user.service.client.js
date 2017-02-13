@@ -11,7 +11,8 @@
             {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
             {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
             {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
+            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" },
+            {_id: "000", username: "wuhao4u", password: "wuhao4u", firstName: "Hao",   lastName: "Wu" }
         ];
         var api = {
             "createUser": createUser,
@@ -46,8 +47,8 @@
         
         function findUserByCredentials(username, password) {
             for(var u in users) {
-                if( users[u].username == username &&
-                    users[u].password == password ) {
+                if( users[u].username === username &&
+                    users[u].password === password ) {
                     return users[u];
                 }
             }
@@ -57,10 +58,13 @@
         function updateUser(userId, user) {
             for(var u in users) {
                 if(users[u]._id == userId) {
-                    users[u] = user;
-                    return;
+                    users[u].firstName = user.firstName;
+                    users[u].lastName = user.lastName;
+                    users[u].username = user.username;
+                    return user;
                 }
             }
+            return null;
         }
         
         function deleteUser(userId) {

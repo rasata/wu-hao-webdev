@@ -9,74 +9,75 @@
     function configuration($routeProvider, $locationProvider) {
         $routeProvider
             .when("/login", {
-                templateUrl: "views/user/templates/login.view.client.html",
+                templateUrl: "user/login.view.client.html",
                 controller: "LoginController",
-                controllerAs: "model"
+                controllerAs: "loginModel"
             })
             .when("/", {
-                templateUrl: "views/user/templates/login.view.client.html",
+                templateUrl: "user/login.view.client.html",
                 controller: "LoginController",
-                controllerAs: "model"
+                controllerAs: "loginModel"
             })
             .when("/register", {
-                templateUrl: "views/user/templates/register.view.client.html",
+                templateUrl: "user/register.view.client.html",
                 controller: "RegisterController",
-                controllerAs: "model"
+                controllerAs: "registerModel"
             })
+
             .when("/user/:uid", {
-                templateUrl: "views/user/templates/profile.view.client.html",
+                templateUrl: "user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "profileModel"
             })
             .when("/user/:uid/website", {
-                templateUrl: "views/website/templates/website-list.view.client.html",
+                templateUrl: "website/website-list.view.client.html",
                 controller: "WebsiteListController",
-                controllerAs: "model"
+                controllerAs: "websiteListModel"
             })
             .when("/user/:uid/website/new", {
-                templateUrl: "views/website/templates/website-new.view.client.html",
+                templateUrl: "website/website-new.view.client.html",
                 controller: "NewWebsiteController",
-                controllerAs: "model"
+                controllerAs: "newWebsiteModel"
             })
             .when("/user/:uid/website/:wid", {
-                templateUrl: "views/website/templates/website-edit.view.client.html",
+                templateUrl: "website/website-edit.view.client.html",
                 controller: "EditWebsiteController",
-                controllerAs: "model"
+                controllerAs: "editWebsiteModel"
             })
             .when("/user/:uid/website/:wid/page", {
-                templateUrl: "views/page/templates/page-list.view.client.html",
+                templateUrl: "page/page-list.view.client.html",
                 controller: "PageListController",
-                controllerAs: "model"
+                controllerAs: "pageListModel"
             })
             .when("/user/:uid/website/:wid/page/new", {
-                templateUrl: "views/page/templates/page-new.view.client.html",
+                templateUrl: "page/page-new.view.client.html",
                 controller: "NewPageController",
-                controllerAs: "model"
+                controllerAs: "newPageModel"
             })
             .when("/user/:uid/website/:wid/page/:pid", {
-                templateUrl: "views/page/templates/page-edit.view.client.html",
+                templateUrl: "page/page-edit.view.client.html",
                 controller: "EditPageController",
-                controllerAs: "model"
+                controllerAs: "editPageModel"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget", {
-                templateUrl: "views/widget/templates/widget-list.view.client.html",
+                templateUrl: "widget/widget-list.view.client.html",
                 controller: "WidgetListController",
-                controllerAs: "model"
+                controllerAs: "widgetListModel"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/new", {
-                templateUrl: "views/widget/templates/widget-chooser.view.client.html",
+                templateUrl: "widget/widget-chooser.view.client.html",
                 controller: "NewWidgetController",
-                controllerAs: "model"
+                controllerAs: "newWidgetModel"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
-                templateUrl: "views/widget/templates/widget-edit.view.client.html",
+                templateUrl: "widget/widget-edit.view.client.html",
                 controller: "EditWidgetController",
-                controllerAs: "model"
+                controllerAs: "editWidgetModel"
             })
             .otherwise({
-                templateUrl: "views/user/templates/login.view.client.html",
+                templateUrl: "user/login.view.client.html",
                 controller: "LoginController",
-                controllerAs: "model"
+                controllerAs: "loginModel"
             });
 
         // $locationProvider.html5Mode(true);
