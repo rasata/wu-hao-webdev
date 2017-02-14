@@ -10,7 +10,10 @@
         pages = [
             { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
             { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-            { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
+            { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" },
+            { "_id": "000", "name": "Post 4", "websiteId": "456", "description": "Lorem" },
+            { "_id": "001", "name": "Post 5", "websiteId": "456", "description": "Lorem" },
+            { "_id": "002", "name": "Post 6", "websiteId": "456", "description": "Lorem" },
         ];
         
         var api = {
@@ -25,8 +28,20 @@
         // createPage(websiteId, page) - adds the page parameter instance to the local pages array.
         // The new page's websiteId is set to the websiteId parameter
         function createPage(websiteId, page) {
+            if(page == null) {
+                return null;
+            }
+
+            for(var p in pages) {
+                if (pages[p].name == page.name) {
+                    return null;
+                }
+            }
+
             page.websiteId = websiteId;
+            page._id = (new Date()).getTime();
             pages.push(page);
+            return page;
         }
 
         // findPageByWebsiteId(websiteId) -
@@ -35,7 +50,7 @@
             ret = [];
             for(var p in pages) {
                 if (pages[p].websiteId == websiteId) {
-                    ret.push(pages[p]);
+                    ret.push(angular.copy(pages[p]));
                 }
             }
             return ret;
@@ -45,7 +60,7 @@
         function findPageById(pageId) {
             for (var p in pages) {
                 if (pages[p]._id == pageId)
-                    return pages[p];
+                    return angular.copy(pages[p]);
             }
             return null;
         }
@@ -65,9 +80,10 @@
             for (var i = 0; i < pages.length; ++i) {
                 if (pages[i]._id == pageId) {
                     pages.splice(i, 1);
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     }
 })();

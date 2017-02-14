@@ -53,6 +53,10 @@
 
     <!-- right side -->
     <div class="col-sm-8">
+        <div ng-show="model.error" class="alert alert-danger" role="alert">
+            {{model.error}}
+        </div>
+
         <label for="web-edit-name">Website Name</label>
         <input ng-model="model.website.name" class="form-control" id="web-edit-name" placeholder="Name">
 
