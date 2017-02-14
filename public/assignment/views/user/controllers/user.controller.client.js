@@ -39,6 +39,8 @@
 
     function ProfileController($routeParams, UserService) {
         var vm = this;
+
+        // /user/:uid
         vm.userId = $routeParams["uid"];
 
         var user = UserService.findUserById(vm.userId);

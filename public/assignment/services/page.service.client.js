@@ -2,7 +2,9 @@
  * Created by wuhao on 2017-02-10.
  */
 (function () {
-    angular.module("WebAppMaker").factory("PageService", PageService);
+    angular
+        .module("WebAppMaker")
+        .factory("PageService", PageService);
 
     function PageService() {
         pages = [
@@ -18,6 +20,7 @@
             "updatePage": updatePage,
             "deletePage": deletePage
         };
+        return api;
 
         // createPage(websiteId, page) - adds the page parameter instance to the local pages array.
         // The new page's websiteId is set to the websiteId parameter

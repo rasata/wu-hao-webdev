@@ -49,6 +49,7 @@
 
         function init() {
             // event handlers
+            // vm.user = WebsiteService.findUserById(vm.userId);
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
             vm.website = WebsiteService.findWebsiteById(vm.websiteId);
         }

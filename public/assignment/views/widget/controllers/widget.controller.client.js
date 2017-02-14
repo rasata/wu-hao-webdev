@@ -13,17 +13,13 @@
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
         vm.getTrustedHtml = getTrustedHtml;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
+
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
 
-        // var vm = this;
-        // vm.userId = $routeParams.uid;
-        // vm.websiteId = $routeParams.wid;
-        // vm.pageId = $routeParams.pid;
-        // vm.widgets = WidgetService.findAllWidgets(vm.pageId);
         function getWidgetTemplateUrl(widgetType) {
-            url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
+            var url = 'views/widget/templates/widget-' + widgetType + '.view.client.html';
             return url;
         }
 
@@ -65,9 +61,9 @@
         vm.widgetId = $routeParams["wgid"];
 
         // event handlers
-        // vm.login = login;
 
         function init() {
+            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
             vm.widget = WidgetService.findWidgetById(vm.widgetId);
         }
         init();
