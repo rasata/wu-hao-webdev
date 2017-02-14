@@ -25,6 +25,12 @@
         return api;
 
         function createUser(user) {
+            for(var u in users) {
+                if (users[u].username === user.username) {
+                    return null;
+                }
+            }
+            user._id = (new Date()).getTime();
             users.push(user);
         }
 
@@ -71,9 +77,10 @@
             for(var i = 0; i < users.length; ++i) {
                 if(users[i]._id == userId) {
                     users.splice(i, 1);
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     }
 })();

@@ -3,10 +3,10 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-right">
-            <a href="#/profile"><span class="glyphicon glyphicon-ok"></span></a>
+            <a ng-click="model.update(model.user)"><span class="glyphicon glyphicon-ok"></span></a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="../index.html">Profile</a>
+            <a class="navbar-brand" href="#/user/{{model.user._id}}">Profile</a>
         </div>
     </div>
 </nav>
@@ -59,8 +59,13 @@
 
     <a ng-click="model.update(model.user)"
        class="btn btn-primary btn-block">
-        Update
+        OK
     </a>
+
+    <!--<a ng-click="model.delete()"-->
+       <!--class="btn btn-danger btn-block">-->
+        <!--Delete-->
+    <!--</a>-->
 
     <a class="btn btn-danger  btn-block"
        href="#/login">Logout</a>
@@ -70,7 +75,7 @@
     <div class="container-fluid">
         <div class="row navbar-right navbar-text">
             <div class="col-xs-12 text-right">
-                <a href="#"><span class="glyphicon glyphicon-user"></span></a>
+                <a href="#/user/{{model.user._id}}"><span class="glyphicon glyphicon-user"></span></a>
             </div>
         </div>
     </div>

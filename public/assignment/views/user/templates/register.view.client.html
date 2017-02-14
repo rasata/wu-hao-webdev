@@ -1,6 +1,10 @@
 <div class="container">
     <h1>Register</h1>
 
+    <div ng-show="model.error" class="alert alert-danger" role="alert">
+        {{model.error}}
+    </div>
+
     <label for="username">Username</label>
     <input ng-model="model.user.username" id="username" type="text" class="form-control" placeholder="username"/>
 
@@ -8,8 +12,10 @@
     <input ng-model="model.user.password" id="passwd" type="password" class="form-control" placeholder="password"/>
 
     <label for="reg-v-passwd">Validate Password</label>
-    <input ng-model="model.user.password" id="reg-v-passwd" type="password" class="form-control" placeholder="verify password"/>
 
-    <a class="btn btn-primary btn-block" href="#/profile">Register</a>
+    <!--TODO: validate the two passwords-->
+    <input id="reg-v-passwd" type="password" class="form-control" placeholder="verify password"/>
+
+    <a class="btn btn-primary btn-block" ng-click="model.register(model.user)">Register</a>
     <a class="btn btn-danger  btn-block" href="#/login">Cancel</a>
 </div>

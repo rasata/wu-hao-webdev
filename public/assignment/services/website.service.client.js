@@ -28,9 +28,20 @@
         // adds the website parameter instance to the local websites array.
         // The new website's developerId is set to the userId parameter
         function createWebsite(userId, website) {
+            if(website == null) {
+                return null;
+            }
+
+            for(var w in websites) {
+                if (websites[w].name == website.name) {
+                    return null;
+                }
+            }
+
             website.developerId = userId;
             website._id = (new Date()).getTime();
             websites.push(website);
+            return website;
         }
 
         // removes the website from local websites array whose _id matches the websiteId parameter
@@ -38,9 +49,10 @@
             for (var i = 0; i < websites.length; ++i) {
                 if(websites[i]._id == websiteId) {
                     websites.splice(i ,1);
-                    // return;
+                    return true;
                 }
             }
+            return false;
         }
 
         // retrieves the websites in local websites array whose developerId matches the parameter userId
@@ -48,7 +60,7 @@
             var result = []
             for (var w in websites) {
                 if (websites[w].developerId == userId) {
-                    result.push(websites[w]);
+                    result.push(angular.copy(websites[w]));
                 }
             }
             return result;
@@ -58,7 +70,7 @@
         function findWebsiteById(websiteId) {
             for (var w in websites) {
                 if(websites[w]._id == websiteId) {
-                    return websites[w];
+                    return angular.copy(websites[w]);
                 }
             }
             return null;
