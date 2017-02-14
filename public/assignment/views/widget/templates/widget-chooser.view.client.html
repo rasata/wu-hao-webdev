@@ -3,56 +3,29 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-left">
-            <a href="/widget-list.html">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Choose Widget</a>
+            <a class="navbar-brand"
+               href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
+                Choose Widget
+            </a>
         </div>
     </div>
 </nav>
 
 <div class="container-fluid">
     <ul class="list-group">
-        <li class="list-group-item borderless">
-            <a href="/widget-heading.html">Header</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">Label</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">HTML</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">Text Input</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">Link</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">Button</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-image.html">Image</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-youtube.html">YouTube</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">Data Table</a>
-        </li>
-
-        <li class="list-group-item borderless">
-            <a href="/widget-list.html">Repeater</a>
+        <li ng-repeat="widget in model.widgets" class="list-group-item">
+            <div class="row">
+                <div class="col-xs-11 col-sm-6">
+                    <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
+                        {{widget.widgetType}}
+                    </a>
+                </div>
+            </div>
         </li>
     </ul>
 </div>
@@ -61,7 +34,9 @@
     <div class="container-fluid">
         <div class="row navbar-right navbar-text">
             <div class="col-xs-12 text-right">
-                <a href="../../user/templates/profile.view.client.html"><span class="glyphicon glyphicon-user"></span></a>
+                <a href="#/user/{{model.userId}}">
+                    <span class="glyphicon glyphicon-user hw-navbar-glyphicon"></span>
+                </a>
             </div>
         </div>
     </div>

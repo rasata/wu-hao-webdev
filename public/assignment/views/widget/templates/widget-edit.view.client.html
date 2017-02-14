@@ -1,17 +1,21 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-left">
-            <a href="../../page/templates/page-list.view.client.html">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
         <div class="navbar-text pull-right">
-            <a href="widget-chooser.view.client.html">
-                <span class="glyphicon glyphicon-plus"></span>
+            <!--TODO: update widget-->
+            <!--<a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">-->
+            <a ng-click="model.updateWidget(model.widget)">
+                <span class="glyphicon glyphicon-ok"></span>
             </a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Widget Editor</a>
+            <a class="navbar-brand" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widgetId}}">
+                Widget Editor
+            </a>
         </div>
     </div>
 </nav>
@@ -21,7 +25,11 @@
     <!--{ "_id": "123", "widgetType": "HEADER", "pageId": "321", "size": 2, "text": "GIZMODO"}-->
     <div class="container-fluid">
         <h1>Header Editor</h1>
-        {{model.widget}}
+        <!--{{model.widget}}-->
+
+        <div ng-show="model.error" class="alert alert-danger" role="alert">
+            {{model.error}}
+        </div>
 
         <label for="header-page-id">Page ID</label>
         <input ng-model="model.widget.pageId" type="text" class="form-control"
@@ -35,8 +43,8 @@
         <textarea ng-model="model.widget.text" class="form-control"
                   id="header-text" placeholder="{{model.widget.text}}"></textarea>
 
-        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
-           class="btn btn-danger btn-block">Update</a>
+        <a ng-click="model.deleteWidget()"
+           class="btn btn-danger btn-block">Delete</a>
     </div>
 </div>
 
@@ -46,7 +54,10 @@
 -->
     <div class="container-fluid">
         <h1>Image Editor</h1>
-        {{model.widget}}
+
+        <div ng-show="model.error" class="alert alert-danger" role="alert">
+            {{model.error}}
+        </div>
 
         <label for="image-page-id">Page ID</label>
         <input ng-model="model.widget.pageId" type="text" class="form-control"
@@ -60,8 +71,8 @@
         <input ng-model="model.widget.url" type="text" class="form-control"
                id="image-url" placeholder="{{model.widget.url}}">
 
-        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
-           class="btn btn-danger btn-block">Update</a>
+        <a ng-click="model.deleteWidget()"
+           class="btn btn-danger btn-block">Delete</a>
     </div>
 
 </div>
@@ -73,7 +84,10 @@
 -->
     <div class="container-fluid">
         <h1>YouTube Editor</h1>
-        {{model.widget}}
+
+        <div ng-show="model.error" class="alert alert-danger" role="alert">
+            {{model.error}}
+        </div>
 
         <label for="youtube-page-id">Page ID</label>
         <input ng-model="model.widget.pageId" type="text" class="form-control"
@@ -87,8 +101,8 @@
         <input ng-model="model.widget.url" type="text" class="form-control"
                id="youtube-url" placeholder="{{model.widget.url}}">
 
-        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
-           class="btn btn-danger btn-block">Update</a>
+        <a ng-click="model.deleteWidget()"
+           class="btn btn-danger btn-block">Delete</a>
     </div>
 </div>
 
@@ -98,7 +112,10 @@
 -->
     <div class="container-fluid">
         <h1>HTML Editor</h1>
-        {{model.widget}}
+
+        <div ng-show="model.error" class="alert alert-danger" role="alert">
+            {{model.error}}
+        </div>
 
         <label for="html-page-id">Page ID</label>
         <input ng-model="model.widget.pageId" type="text" class="form-control"
@@ -108,8 +125,8 @@
         <textarea ng-model="model.widget.text" class="form-control"
                   id="html-text" placeholder="{{model.widget.text}}"></textarea>
 
-        <a ng-click="model.updateWidget(model.widget.widgetId, model.widget)"
-           class="btn btn-danger btn-block">Update</a>
+        <a ng-click="model.deleteWidget()"
+           class="btn btn-danger btn-block">Delete</a>
     </div>
 </div>
 
@@ -124,8 +141,9 @@
             <span class="glyphicon glyphicon-eye-open hw-navbar-glyphicon"></span>
         </div>
         <div class="navbar-text pull-right">
-            <a href="../../user/templates/profile.view.client.html"><span
-                    class="glyphicon glyphicon-user hw-navbar-glyphicon"></span></a>
+            <a href="#/user/{{model.userId}}">
+                <span class="glyphicon glyphicon-user hw-navbar-glyphicon"></span>
+            </a>
         </div>
     </div>
 </nav>

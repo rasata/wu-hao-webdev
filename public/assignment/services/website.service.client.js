@@ -83,9 +83,10 @@
             for (var w in websites) {
                 if (websites[w]._id == websiteId) {
                     websites[w] = website;
-                    return;
+                    return website;
                 }
             }
+            return null;
         }
     }
 })();

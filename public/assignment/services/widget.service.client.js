@@ -8,6 +8,7 @@
         .factory("WidgetService", WidgetService);
 
     function WidgetService() {
+        // Service Method
         // this.createWebsite = createWidget;
         // this.findWidgetsByPageId = findWidgetsByPageId;
         // this.findWidgetById = findWidgetById;
@@ -50,9 +51,10 @@
             var ret = [];
             for(var w in widgets) {
                 if (widgets[w].pageId == pageId) {
-                    ret.push(widgets[w]);
+                    ret.push(angular.copy(widgets[w]));
                 }
             }
+
             return ret;
         }
 
@@ -70,12 +72,17 @@
         // updateWidget(widgetId, widget) -
         // updates the widget in local widgets array whose _id matches the widgetId parameter
         function updateWidget(widgetId, widget) {
+            if (widget === null) {
+                return widget;
+            }
+
             for (var i = 0; i < widgets.length; ++i) {
                 if (widgets[i]._id == widgetId) {
                     widgets[i] = widget;
-                    return;
+                    return widget;
                 }
             }
+            return null
         }
 
         // deleteWidget(widgetId) -
@@ -84,9 +91,10 @@
             for (var i = 0; i < widgets.length; ++i) {
                 if (widgets[i]._id == widgetId) {
                     widgets.splice(i, 1);
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
     }
 })();

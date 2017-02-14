@@ -70,8 +70,12 @@
         }
 
         function updateWebsite() {
-            WebsiteService.updateWebsite(vm.websiteId, vm.website);
-            $location.url("/user/"+vm.userId+"/website");
+            var newWebsite = WebsiteService.updateWebsite(vm.websiteId, vm.website);
+            if (newWebsite) {
+                $location.url("/user/"+vm.userId+"/website");
+            } else {
+                vm.error = "Failed to update the website.";
+            }
         }
     }
 })();

@@ -3,17 +3,20 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-text pull-left">
-            <a href="../../page/templates/page-list.view.client.html">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
         </div>
         <div class="navbar-text pull-right">
-            <a href="widget-chooser.view.client.html">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Widgets</a>
+            <a class="navbar-brand"
+               href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/">
+                Widgets
+            </a>
         </div>
     </div>
 </nav>
@@ -27,20 +30,22 @@
             <span class="glyphicon glyphicon-align-justify"></span>
         </div>
 
+        <!-- Method 2: using ng-include -->
         <ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>
 
+        <!--Method 1: using ng-switch -->
         <!--<div ng-switch="widget.widgetType">-->
             <!--<div ng-switch-when="HEADER" ng-switch="widget.size">-->
-                <!--<ng-include src="'views/widget/templates/widget-HEADER.view.client.html'"></ng-include>-->
+                <!--<ng-include src="'views/widget/templates/widget-header.view.client.html'"></ng-include>-->
             <!--</div>-->
             <!--<div ng-switch-when="IMAGE">-->
-                <!--<ng-include src="'views/widget/templates/widget-IMAGE.view.client.html'"></ng-include>-->
+                <!--<ng-include src="'views/widget/templates/widget-image.view.client.html'"></ng-include>-->
             <!--</div>-->
             <!--<div ng-switch-when="HTML">-->
-                <!--<ng-include src="'views/widget/templates/widget-HTML.view.client.html'"></ng-include>-->
+                <!--<ng-include src="'views/widget/templates/widget-html.view.client.html'"></ng-include>-->
             <!--</div>-->
             <!--<div ng-switch-when="YOUTUBE">-->
-                <!--<ng-include src="'views/widget/templates/widget-YOUTUBE.view.client.html'"></ng-include>-->
+                <!--<ng-include src="'views/widget/templates/widget-youtube.view.client.html'"></ng-include>-->
             <!--</div>-->
         <!--</div>-->
     </div>
@@ -54,8 +59,7 @@
             <span class="glyphicon glyphicon-eye-open hw-navbar-glyphicon"></span>
         </div>
         <div class="navbar-text pull-right">
-            <a href="../../user/templates/profile.view.client.html"><span
-                    class="glyphicon glyphicon-user hw-navbar-glyphicon"></span></a>
+            <a href="#/user/{{model.userId}}"><span class="glyphicon glyphicon-user hw-navbar-glyphicon"></span></a>
         </div>
     </div>
 </nav>
