@@ -10,10 +10,7 @@
         pages = [
             { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
             { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
-            { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" },
-            { "_id": "000", "name": "Post 4", "websiteId": "456", "description": "Lorem" },
-            { "_id": "001", "name": "Post 5", "websiteId": "456", "description": "Lorem" },
-            { "_id": "002", "name": "Post 6", "websiteId": "456", "description": "Lorem" },
+            { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
         ];
         
         var api = {
@@ -65,14 +62,18 @@
             return null;
         }
 
+        // { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
         // updatePage(pageId, page) - updates the page in local pages array whose _id matches the pageId parameter
         function updatePage(pageId, page) {
             for (var p in pages) {
                 if (pages[p]._id == pageId) {
-                    pages[p] = page;
-                    return;
+                    pages[p].name = page.name;
+                    pages[p].websiteId = page.websiteId;
+                    pages[p].description = page.description;
+                    return pages[p];
                 }
             }
+            return null;
         }
 
         // deletePage(pageId) - removes the page from local pages array whose _id matches the pageId parameter

@@ -11,9 +11,9 @@
             {_id: "123", username: "alice",    password: "alice",    firstName: "Alice",  lastName: "Wonder"  },
             {_id: "234", username: "bob",      password: "bob",      firstName: "Bob",    lastName: "Marley"  },
             {_id: "345", username: "charly",   password: "charly",   firstName: "Charly", lastName: "Garcia"  },
-            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" },
-            {_id: "000", username: "wuhao4u", password: "wuhao4u", firstName: "Hao",   lastName: "Wu" }
+            {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose",   lastName: "Annunzi" }
         ];
+
         var api = {
             "createUser": createUser,
             "findUserById": findUserById,
@@ -64,10 +64,10 @@
         function updateUser(userId, user) {
             for(var u in users) {
                 if(users[u]._id == userId) {
+                    users[u].username = user.username;
                     users[u].firstName = user.firstName;
                     users[u].lastName = user.lastName;
-                    users[u].username = user.username;
-                    return user;
+                    return users[u];
                 }
             }
             return null;
