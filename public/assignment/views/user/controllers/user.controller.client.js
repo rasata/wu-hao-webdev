@@ -12,9 +12,10 @@
     function LoginController($location, UserService) {
         var vm = this;
 
+        // event handlers
+        vm.login = login;
+
         function init() {
-            // event handlers
-            vm.login = login;
         }
         init();
 
@@ -31,9 +32,10 @@
     function RegisterController($location, UserService) {
         var vm = this;
 
+        // event handlers
+        vm.register = register;
+
         function init() {
-            // event handlers
-            vm.register = register;
         }
         init();
 
@@ -54,7 +56,16 @@
         // /user/:uid
         vm.userId = $routeParams["uid"];
 
-        vm.update = function (newUser) {
+        // Event handler
+        vm.update = updateUser;
+        vm.delete = deleteUser;
+
+        function init() {
+            vm.user = UserService.findUserById(vm.userId);
+        }
+        init();
+
+        function updateUser(newUser) {
             var user = UserService.updateUser(vm.userId, newUser);
             if(user == null) {
                 vm.error = "unable to update user.";
@@ -62,12 +73,6 @@
                 vm.message = "user successfully updated.";
             }
         }
-
-        function init() {
-            vm.user = UserService.findUserById(vm.userId);
-            vm.delete = deleteUser;
-        }
-        init();
 
         function deleteUser() {
             var flag = UserService.deleteUser(vm.userId);
@@ -80,5 +85,4 @@
             }
         }
     }
-
 })();

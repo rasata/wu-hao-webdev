@@ -23,17 +23,19 @@
 
     function NewWebsiteController($routeParams, $location, WebsiteService) {
         var vm = this;
+
         vm.userId = $routeParams["uid"];
+
+        // event handler
+        vm.createWebsite = createWebsite;
 
         function init() {
             // event handlers
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            vm.createWebsite = createWebsite;
         }
         init();
 
         function createWebsite(website) {
-            // console.log(vm.userId);
             var newSite = WebsiteService.createWebsite(vm.userId, website);
             if (newSite == null) {
                 vm.error = "Cannot create site.";
@@ -50,13 +52,13 @@
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
 
+        // event handler
+        vm.deleteWebsite = deleteWebsite;
+        vm.updateWebsite = updateWebsite;
+
         function init() {
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
             vm.website = WebsiteService.findWebsiteById(vm.websiteId);
-
-            // event handler
-            vm.deleteWebsite = deleteWebsite;
-            vm.updateWebsite = updateWebsite;
         }
         init();
 

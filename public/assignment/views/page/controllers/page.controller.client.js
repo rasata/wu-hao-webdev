@@ -17,8 +17,6 @@
         function init() {
             vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
             vm.page = PageService.findPageById(vm.pageId);
-
-            // event handlers
         }
         init();
     }
@@ -29,9 +27,10 @@
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
 
+        // event handlers
+        vm.createPage = createPage;
+
         function init() {
-            // event handlers
-            vm.createPage = createPage;
         }
         init();
 
@@ -53,11 +52,12 @@
         vm.pageId = $routeParams["pid"];
 
         // event handlers
+        vm.updatePage = updatePage;
+        vm.deletePage = deletePage;
+
         function init() {
             vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
             vm.page = PageService.findPageById(vm.pageId);
-            vm.updatePage = updatePage;
-            vm.deletePage = deletePage;
         }
         init();
         

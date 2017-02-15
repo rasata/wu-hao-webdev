@@ -15,13 +15,13 @@
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
 
+        // Event handlers
+        vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
+        vm.getTrustedHtml = getTrustedHtml;
+        vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
+
         function init() {
             vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
-
-            // Event handlers
-            vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
-            vm.getTrustedHtml = getTrustedHtml;
-            vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
         }
         init();
 
@@ -67,6 +67,15 @@
         vm.widgetId = $routeParams["wgid"];
 
         // event handlers
+        vm.updateWidget = updateWidget;
+        vm.deleteWidget = deleteWidget;
+
+        function init() {
+            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+            vm.widget = WidgetService.findWidgetById(vm.widgetId);
+        }
+        init();
+
         function updateWidget(widget) {
             var newWidget = WidgetService.updateWidget(vm.widgetId, widget);
             if (newWidget) {
@@ -84,13 +93,5 @@
                 vm.error = "Delete Widget Failed.";
             }
         }
-
-        function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
-            vm.updateWidget = updateWidget;
-            vm.deleteWidget = deleteWidget;
-        }
-        init();
     }
 })();
