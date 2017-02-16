@@ -77,7 +77,7 @@
 
             for (var i = 0; i < widgets.length; ++i) {
                 if (widgets[i]._id == widgetId) {
-                    widgets[i] = widget;
+                    widgets[i] = angular.copy(widget);
                     return widgets[i];
                 }
             }
