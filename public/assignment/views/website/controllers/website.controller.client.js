@@ -21,6 +21,7 @@
                 vm.websites = websites;
             });
         }
+
         init();
     }
 
@@ -34,17 +35,24 @@
 
         function init() {
             // event handlers
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+            var promise = WebsiteService.findWebsitesByUser(vm.userId);
+            promise.success(function (websites) {
+                console.log(websites);
+                vm.websites = websites;
+            });
         }
+
         init();
 
         function createWebsite(website) {
-            var newSite = WebsiteService.createWebsite(vm.userId, website);
-            if (newSite == null) {
+            var promise = WebsiteService.createWebsite(vm.userId, website);
+            promise.success(function (newSite) {
+                $location.url("/user/" + vm.userId + "/website");
+            });
+
+            promise.error(function (res, statusCode) {
                 vm.error = "Cannot create site.";
-            } else {
-                $location.url("/user/"+vm.userId+"/website");
-            }
+            });
         }
     }
 
@@ -60,27 +68,39 @@
         vm.updateWebsite = updateWebsite;
 
         function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+            var sitesPromise = WebsiteService.findWebsitesByUser(vm.userId);
+            sitesPromise.success(function (websites) {
+                vm.websites = websites;
+            });
+
+            var sitePromise = WebsiteService.findWebsiteById(vm.websiteId);
+            sitePromise.success(function (website) {
+                vm.website = website;
+            });
         }
+
         init();
 
         function deleteWebsite() {
-            var flag = WebsiteService.deleteWebsite(vm.websiteId);
-            if(flag) {
-                $location.url("/user/"+vm.userId+"/website");
-            } else {
-                vm.error = "Failed Deleting the website.";
-            }
+            var deletePromise = WebsiteService.deleteWebsite(vm.websiteId);
+            deletePromise.success(function () {
+                $location.url("/user/" + vm.userId + "/website");
+            });
+
+            deletePromise.error(function (errorBody, errorCode) {
+                vm.error = errorCode + " Failed Deleting the website. " + errorBody;
+            });
         }
 
         function updateWebsite() {
-            var newWebsite = WebsiteService.updateWebsite(vm.websiteId, vm.website);
-            if (newWebsite) {
-                $location.url("/user/"+vm.userId+"/website");
-            } else {
-                vm.error = "Failed to update the website.";
-            }
+            var updatePromise = WebsiteService.updateWebsite(vm.websiteId, vm.website);
+            updatePromise.success(function () {
+                $location.url("/user/" + vm.userId + "/website");
+            });
+
+            updatePromise.error(function (errorBody, errorCode) {
+                vm.error = errorCode + " Failed Updating the website. " + errorBody;
+            });
         }
     }
 })();

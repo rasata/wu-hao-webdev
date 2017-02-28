@@ -15,7 +15,6 @@ module.exports = function (app) {
     ];
 
     function createUser(req, res) {
-        // TODO: implement this
         var newUser = req.body;
 
         for(var u in users) {
@@ -26,7 +25,7 @@ module.exports = function (app) {
         }
         newUser._id = (new Date()).getTime();
         users.push(newUser);
-        res.sendStatus(200);
+        res.send(newUser);
     }
 
     function findUserByUsername(req, res) {
@@ -75,14 +74,15 @@ module.exports = function (app) {
     }
 
     function deleteUser(req, res) {
-        // TODO: implement this
-        // for(var i = 0; i < users.length; ++i) {
-        //     if(users[i]._id == userId) {
-        //         users.splice(i, 1);
-        //         return true;
-        //     }
-        // }
-        // return false;
+        var userId = req.params.userId;
+        for(var i = 0; i < users.length; ++i) {
+            if(users[i]._id == userId) {
+                users.splice(i, 1);
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.status(500).send("Could not find the user.");
     }
 
     // A more general find user function

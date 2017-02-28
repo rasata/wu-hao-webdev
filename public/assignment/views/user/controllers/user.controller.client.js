@@ -51,12 +51,13 @@
                 if (retUser) {
                     vm.error = "User already exist";
                 } else {
-                    // TODO: create user also returns a promise?
                     var createUserPromise = UserService.createUser(user);
-                        createUserPromise.success(function () {
+                        // create user successful, redirect to the new user page
+                        createUserPromise.success(function (user) {
                             $location.url("/user/" + user._id);
                         });
 
+                        // Some other error happened while creating the user at server side
                         createUserPromise.error(function (createUserRes, createUserStatus) {
                             vm.error = createUserRes;
                         });
@@ -96,14 +97,14 @@
         }
 
         function deleteUser() {
-            var flag = UserService.deleteUser(vm.userId);
+            var promise = UserService.deleteUser(vm.userId);
+            promise.success(function (user) {
+                    $location.url("/login");
+            });
 
-            if (flag) {
-                console.log("User deleted");
-                $location.url("/login");
-            } else {
-                vm.error = "unable to delete user.";
-            }
+            promise.error(function (res, statusCode) {
+                vm.error = res;
+            });
         }
     }
 })();
