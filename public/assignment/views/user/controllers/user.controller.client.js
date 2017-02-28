@@ -17,15 +17,20 @@
 
         function init() {
         }
+
         init();
 
         function login(user) {
-            var oldUser = UserService.findUserByCredentials(user.username, user.password);
-            if(oldUser) {
-                $location.url("/user/"+oldUser._id);
-            } else {
-                vm.error = "User not found";
-            }
+            var promise = UserService.findUserByCredentials(user.username, user.password);
+
+            // execute when the server side actually returns the user object
+            promise.success(function (user) {
+                if (user) {
+                    $location.url("/user/" + user._id);
+                } else {
+                    vm.error = "User not found";
+                }
+            });
         }
     }
 
@@ -37,16 +42,26 @@
 
         function init() {
         }
+
         init();
 
         function register(user) {
-            var oldUser = UserService.findUserByUsername(user.username);
-            if(oldUser) {
-                vm.error = "User already exist";
-            } else {
-                UserService.createUser(user);
-                $location.url("/user/"+user._id);
-            }
+            var promise = UserService.findUserByUsername(user.username);
+            promise.success(function (retUser) {
+                if (retUser) {
+                    vm.error = "User already exist";
+                } else {
+                    // TODO: create user also returns a promise?
+                    var createUserPromise = UserService.createUser(user);
+                        createUserPromise.success(function () {
+                            $location.url("/user/" + user._id);
+                        });
+
+                        createUserPromise.error(function (createUserRes, createUserStatus) {
+                            vm.error = createUserRes;
+                        });
+                }
+            });
         }
     }
 
@@ -61,17 +76,23 @@
         vm.delete = deleteUser;
 
         function init() {
-            vm.user = UserService.findUserById(vm.userId);
+            var promise = UserService.findUserById(vm.userId);
+            promise.success(function (user) {
+                vm.user = user;
+            });
         }
+
         init();
 
         function updateUser(newUser) {
-            var user = UserService.updateUser(vm.userId, newUser);
-            if(user == null) {
-                vm.error = "unable to update user.";
-            } else {
-                vm.message = "user successfully updated.";
-            }
+            var promise = UserService.updateUser(vm.userId, newUser);
+            promise.success(function (user) {
+                if (user == null) {
+                    vm.error = "unable to update user.";
+                } else {
+                    vm.message = "user successfully updated.";
+                }
+            });
         }
 
         function deleteUser() {

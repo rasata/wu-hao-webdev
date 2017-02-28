@@ -15,8 +15,11 @@
         vm.userId = $routeParams["uid"];
 
         function init() {
-            // event handlers
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+            var promise = WebsiteService.findWebsitesByUser(vm.userId);
+            promise.success(function (websites) {
+                console.log(websites);
+                vm.websites = websites;
+            });
         }
         init();
     }
