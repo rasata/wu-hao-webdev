@@ -28,7 +28,6 @@ module.exports = function (app) {
             }
         }
         newPage.websiteId = websiteId;
-        newPage.developerId = userId;
         newPage._id = (new Date()).getTime();
         pages.push(newPage);
         res.sendStatus(200);
@@ -38,51 +37,55 @@ module.exports = function (app) {
         // /api/website/:websiteId/page
         var websiteId = req.params.websiteId;
 
-        ret = [];
+        var ret = [];
         for(var p in pages) {
             if (pages[p].websiteId == websiteId) {
                 ret.push(pages[p]);
             }
         }
-        res.json(pages);
+
+        res.json(ret);
     }
 
     function findPageById(req, res) {
         // /api/page/:pageId
         var pageId = req.params.pageId;
 
-        // for (var p in pages) {
-        //     if (pages[p]._id == pageId)
-        //         return angular.copy(pages[p]);
-        // }
-        // return null;
+        var page = pages.find(function (page) {
+            return page._id == pageId;
+        });
+
+        res.send(page);
     }
 
     function updatePage(req, res) {
         // /api/page/:pageId
         var pageId = req.params.pageId;
+        var newPage = req.body;
 
-        // for (var p in pages) {
-        //     if (pages[p]._id == pageId) {
-        //         pages[p].name = page.name;
-        //         pages[p].websiteId = page.websiteId;
-        //         pages[p].description = page.description;
-        //         return pages[p];
-        //     }
-        // }
-        // return null;
+        for (var p in pages) {
+            if (pages[p]._id == pageId) {
+                pages[p].name = newPage.name;
+                pages[p].websiteId = newPage.websiteId;
+                pages[p].description = newPage.description;
+                res.json(pages[p]);
+                return;
+            }
+        }
+        res.status(500).send("Could not find the page.");
     }
 
     function deletePage(req, res) {
         // /api/page/:pageId
         var pageId = req.params.pageId;
 
-        // for (var i = 0; i < pages.length; ++i) {
-        //     if (pages[i]._id == pageId) {
-        //         pages.splice(i, 1);
-        //         return true;
-        //     }
-        // }
-        // return false;
+        for (var i = 0; i < pages.length; ++i) {
+            if (pages[i]._id == pageId) {
+                pages.splice(i, 1);
+                res.sendStatus(200);
+                return;
+            }
+        }
+        res.status(500).send("Could not find the page.");
     }
 };

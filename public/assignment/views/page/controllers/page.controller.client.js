@@ -15,9 +15,36 @@
         vm.websiteId = $routeParams["wid"];
 
         function init() {
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
-            vm.page = PageService.findPageById(vm.pageId);
+            // pages
+            var x = 0;
+            var pagesPromise = PageService.findPageByWebsiteId(vm.websiteId);
+            pagesPromise.success(function (pages) {
+                if (pages == null || pages.length == 0) {
+                    vm.error = "Could not find related pages.";
+                } else {
+                    vm.pages = pages;
+                }
+            });
+
+            pagesPromise.error(function (errorBody, errorCode) {
+                vm.error = "Finding pages failed. " + errorBody + " " + errorCode;
+            });
+
+            // page
+            var pagePromise = PageService.findPageById(vm.pageId);
+            pagePromise.success(function (page) {
+                if (page === null) {
+                    vm.error = "Could not find requested page.";
+                } else {
+                    vm.page = page;
+                }
+            });
+
+            pagesPromise.error(function (errorBody, errorCode) {
+                vm.error = "Finding page failed. " + errorBody + " " + errorCode;
+            });
         }
+
         init();
     }
 
@@ -32,15 +59,18 @@
 
         function init() {
         }
+
         init();
 
         function createPage(page) {
-            var newPage = PageService.createPage(vm.websiteId, page);
-            if (newPage != null) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-            } else {
-                vm.error = "Cannot create page.";
-            }
+            var createPagePromise = PageService.createPage(vm.websiteId, page);
+            createPagePromise.success(function () {
+                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+            });
+
+            createPagePromise.error(function (errBody, errCode) {
+                vm.error = "Creating page failed. " + errBody + " " + errCode;
+            });
         }
     }
 
@@ -56,27 +86,61 @@
         vm.deletePage = deletePage;
 
         function init() {
-            vm.pages = PageService.findPageByWebsiteId(vm.websiteId);
-            vm.page = PageService.findPageById(vm.pageId);
+            // pages
+            var pagesPromise = PageService.findPageByWebsiteId(vm.websiteId);
+            pagesPromise.success(function (pages) {
+                if (pages == null || pages.length == 0) {
+                    vm.error = "Could not find related pages.";
+                } else {
+                    vm.pages = pages;
+                }
+            });
+
+            pagesPromise.error(function (errorBody, errorCode) {
+                vm.error = "Finding pages failed. " + errorBody + " " + errorCode;
+            });
+
+            // page
+            var pagePromise = PageService.findPageById(vm.pageId);
+            pagePromise.success(function (page) {
+                if (page === null) {
+                    vm.error = "Could not find requested page.";
+                } else {
+                    vm.page = page;
+                }
+            });
+
+            pagesPromise.error(function (errorBody, errorCode) {
+                vm.error = "Finding page failed. " + errorBody + " " + errorCode;
+            });
         }
+
         init();
-        
+
         function updatePage(page) {
-            var newPage = PageService.updatePage(vm.pageId, page);
-            if(newPage === null) {
-                vm.error = "Update page failed.";
-            } else {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-            }
+            var updatePagePromise = PageService.updatePage(vm.pageId, page);
+            updatePagePromise.success(function (updatedPage) {
+                if(updatedPage == null) {
+                    vm.error = "Update page failed."
+                } else {
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                }
+            });
+
+            updatePagePromise.error(function (errBody, errCode) {
+                vm.error = "Updating page failed. " + errBody + " " + errCode;
+            });
         }
-        
+
         function deletePage() {
-            var flag = PageService.deletePage(vm.pageId);
-            if(flag) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page");
-            } else {
-                vm.error = "Delete page failed.";
-            }
+            var deletePagePromise = PageService.deletePage(vm.pageId);
+            deletePagePromise.success(function () {
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+            });
+
+            deletePagePromise.error(function (errBody, errCode) {
+                    vm.error = "Delete page failed. " + errBody + ' ' + errCode;
+            });
         }
     }
 })();

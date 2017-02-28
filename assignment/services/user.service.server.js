@@ -96,5 +96,4 @@ module.exports = function (app) {
             findUserByUsername(req, res);
         }
     }
-
-}
+};
