@@ -6,7 +6,7 @@
         .module("WebAppMaker")
         .factory("PageService", PageService);
 
-    function PageService() {
+    function PageService($http) {
         pages = [
             { "_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem" },
             { "_id": "432", "name": "Post 2", "websiteId": "456", "description": "Lorem" },
@@ -25,66 +25,29 @@
         // createPage(websiteId, page) - adds the page parameter instance to the local pages array.
         // The new page's websiteId is set to the websiteId parameter
         function createPage(websiteId, page) {
-            if(page == null) {
-                return null;
-            }
-
-            for(var p in pages) {
-                if (pages[p].name == page.name) {
-                    return null;
-                }
-            }
-
-            page.websiteId = websiteId;
-            page._id = (new Date()).getTime();
-            pages.push(page);
-            return page;
+            $http.post("/api/website/" + websiteId +"/page", page);
         }
 
         // findPageByWebsiteId(websiteId) -
         // retrieves the pages in local pages array whose websiteId matches the parameter websiteId
         function findPageByWebsiteId(websiteId) {
-            ret = [];
-            for(var p in pages) {
-                if (pages[p].websiteId == websiteId) {
-                    ret.push(angular.copy(pages[p]));
-                }
-            }
-            return ret;
+            $http.get("/api/website/" + websiteId + "/page");
         }
 
         // findPageById(pageId) - retrieves the page in local pages array whose _id matches the pageId parameter
         function findPageById(pageId) {
-            for (var p in pages) {
-                if (pages[p]._id == pageId)
-                    return angular.copy(pages[p]);
-            }
-            return null;
+            $http.get("/api/page/" + pageId);
         }
 
         // { "_id": "543", "name": "Post 3", "websiteId": "456", "description": "Lorem" }
         // updatePage(pageId, page) - updates the page in local pages array whose _id matches the pageId parameter
         function updatePage(pageId, page) {
-            for (var p in pages) {
-                if (pages[p]._id == pageId) {
-                    pages[p].name = page.name;
-                    pages[p].websiteId = page.websiteId;
-                    pages[p].description = page.description;
-                    return pages[p];
-                }
-            }
-            return null;
+            $http.put("/api/page/" + pageId, page);
         }
 
         // deletePage(pageId) - removes the page from local pages array whose _id matches the pageId parameter
         function deletePage(pageId) {
-            for (var i = 0; i < pages.length; ++i) {
-                if (pages[i]._id == pageId) {
-                    pages.splice(i, 1);
-                    return true;
-                }
-            }
-            return false;
+            $http.delete("/api/page/" + pageId);
         }
     }
 })();
