@@ -21,8 +21,12 @@
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+            var widgetsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
+            widgetsPromise.success(function (newWidgets) {
+                vm.widgets = newWidgets;
+            });
         }
+
         init();
 
         function getWidgetTemplateUrl(widgetType) {
@@ -52,9 +56,25 @@
 
         function init() {
             // event handlers
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+            var widgetsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
+            widgetsPromise.success(function (newWidgets) {
+                vm.widgets = newWidgets;
+            });
         }
+
         init();
+
+        function createWidget(widget) {
+            // TODO: createWidget not being used right now.
+            var promise = WidgetService.createWidget(vm.pageId, widget);
+            promise.success(function (newWidget) {
+                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+            });
+
+            promise.error(function (errBody, errCode) {
+                vm.error = "Failed creating widget. " + errCode + ' ' + errBody;
+            });
+        }
     }
 
     function EditWidgetController($routeParams, $location, WidgetService) {
@@ -71,27 +91,39 @@
         vm.deleteWidget = deleteWidget;
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
+            var wsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
+            wsPromise.success(function (newWidgets) {
+                vm.widgets = newWidgets;
+            });
+
+            var wPromise = WidgetService.findWidgetById(vm.widgetId);
+            wPromise.success(function (newWidget) {
+                vm.widget = newWidget;
+            });
         }
+
         init();
 
         function updateWidget(widget) {
-            var newWidget = WidgetService.updateWidget(vm.widgetId, widget);
-            if (newWidget) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            } else {
+            var widgetPromise = WidgetService.updateWidget(vm.widgetId, widget);
+            widgetPromise.success(function (newWidget) {
+                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget");
+            });
+
+            widgetPromise.error(function () {
                 vm.error = "Update Widget Failed.";
-            }
+            });
         }
 
         function deleteWidget() {
-            var flag = WidgetService.deleteWidget(vm.widgetId);
-            if (flag) {
-                $location.url("/user/"+vm.userId+"/website/"+vm.websiteId+"/page/"+vm.pageId+"/widget");
-            } else {
+            var widgetPromise = WidgetService.deleteWidget(vm.widgetId);
+            widgetPromise.success(function () {
+                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget");
+            });
+
+            widgetPromise.error(function () {
                 vm.error = "Delete Widget Failed.";
-            }
+            });
         }
     }
 })();

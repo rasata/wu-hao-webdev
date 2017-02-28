@@ -23,7 +23,7 @@ module.exports = function (app) {
                 return;
             }
         }
-        newUser._id = (new Date()).getTime();
+            newUser._id = (new Date()).getTime();
         users.push(newUser);
         res.send(newUser);
     }
