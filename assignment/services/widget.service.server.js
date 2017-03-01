@@ -62,14 +62,9 @@ module.exports = function (app) {
 
     function reorderWidget(req, res) {
         // /api/page/:pageId/widget
-        // TODO: is this really working? why go to list and back will forget the index change?
         var pageId = req.params.pageId;
         var index1 = req.query.initial;
         var index2 = req.query.final;
-
-        console.log("Hi mom, im in reorderWidget widgetserver");
-        console.log(index1);
-        console.log(index2);
 
         var index1Widget = widgets.find(function (w) {
             return w.index == index1;
@@ -79,15 +74,15 @@ module.exports = function (app) {
             return w.index == index2;
         });
 
-        // swap indexes
-        index1Widget.index = index2;
-        index2Widget.index = index1;
+        if (index1Widget === null || index2Widget === null) {
+            res.status(500).send("Could not find the matching widget index.");
+        } else {
+            // swap indexes
+            index1Widget.index = index2;
+            index2Widget.index = index1;
 
-        console.log(index1Widget);
-        console.log(index2Widget);
-
-        // res.status(500).send("Could not find the matching widget index.");
-        res.sendStatus(200);
+            res.sendStatus(200);
+        }
     }
 
     function createWidget(req, res) {
@@ -101,6 +96,15 @@ module.exports = function (app) {
         res.send(newWidget);
     }
 
+    // a compare function for sorting array by index
+    function compareIndex(a,b) {
+        if (a.index < b.index)
+            return -1;
+        if (a.index > b.index)
+            return 1;
+        return 0;
+    }
+
     function findAllWidgetsForPage(req, res) {
         // /api/page/:pageId/widget
         var pageId = req.params.pageId;
@@ -111,6 +115,8 @@ module.exports = function (app) {
                 ret.push(widgets[w]);
             }
         }
+
+        ret.sort(compareIndex);
         res.json(ret);
     }
 
