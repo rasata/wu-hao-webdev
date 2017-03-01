@@ -4,18 +4,49 @@ module.exports = function (app) {
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
+    app.put("/api/page/:pageId/widget?", reorderWidget);
 
     var widgets = [
-        { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-        { "_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        { "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%",
+        { "_id": "123", "index": 0, "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
+        { "_id": "234", "index": 1, "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
+        { "_id": "345", "index": 2, "widgetType": "IMAGE", "pageId": "321", "width": "100%",
             "url": "http://lorempixel.com/400/200/"},
-        { "_id": "456", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-        { "_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        { "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
+        { "_id": "456", "index": 3, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
+        { "_id": "567", "index": 4, "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
+        { "_id": "678", "index": 5, "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
             "url": "https://youtu.be/AM2Ivdi9c4E" },
-        { "_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+        { "_id": "789", "index": 6, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
     ];
+
+    function reorderWidget(req, res) {
+        // /api/page/:pageId/widget
+        // TODO: is this really working? why go to list and back will forget the index change?
+        var pageId = req.params.pageId;
+        var index1 = req.query.initial;
+        var index2 = req.query.final;
+
+        console.log("Hi mom, im in reorderWidget widgetserver");
+        console.log(index1);
+        console.log(index2);
+
+        var index1Widget = widgets.find(function (w) {
+            return w.index == index1;
+        });
+
+        var index2Widget = widgets.find(function (w) {
+            return w.index == index2;
+        });
+
+        // swap indexes
+        index1Widget.index = index2;
+        index2Widget.index = index1;
+
+        console.log(index1Widget);
+        console.log(index2Widget);
+
+        // res.status(500).send("Could not find the matching widget index.");
+        res.sendStatus(200);
+    }
 
     function createWidget(req, res) {
         // /api/page/:pageId/widget
@@ -52,10 +83,6 @@ module.exports = function (app) {
         res.send(widget);
     }
 
-    function clone(a) {
-        return JSON.parse(JSON.stringify(a));
-    }
-
     function updateWidget(req, res) {
         // /api/widget/:widgetId
         var widgetId = req.params.widgetId;
@@ -66,7 +93,7 @@ module.exports = function (app) {
         //
         for (var i = 0; i < widgets.length; ++i) {
             if (widgets[i]._id == widgetId) {
-                widgets[i] = clone(newWidget);
+                widgets[i] = newWidget;
                 res.send(widgets[i]);
                 return;
             }

@@ -12,10 +12,16 @@
             "findWidgetsByPageId": findWidgetsByPageId,
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
-            "deleteWidget": deleteWidget
+            "deleteWidget": deleteWidget,
+            "reorderWidget": reorderWidget
         };
         return api;
-
+        
+        function reorderWidget(pageId, index1, index2) {
+            // /api/page/:pageId/widget?initial=index1&final=index2
+            return $http.put("/api/page/" + pageId + "/widget?initial=" + index1 + "&final=" + index2);
+        }
+        
         // createWidget(pageId, widget) - adds the widget parameter instance to the local widgets array.
         // The new widget's pageId is set to the pageId parameter
         function createWidget(pageId, widget) {

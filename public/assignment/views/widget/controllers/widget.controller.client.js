@@ -19,15 +19,32 @@
         vm.getYouTubeEmbedUrl = getYouTubeEmbedUrl;
         vm.getTrustedHtml = getTrustedHtml;
         vm.getWidgetTemplateUrl = getWidgetTemplateUrl;
+        vm.reorderWidget = reorderWidget;
 
         function init() {
             var widgetsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
             widgetsPromise.success(function (newWidgets) {
                 vm.widgets = newWidgets;
             });
+
+            // $("#widget-list")
+            //     .sortable({axis: 'y'});
         }
 
         init();
+
+        function reorderWidget(index1, index2) {
+            // console.log("Hi mom, in widget controller client " + index1 + ' ' + index2);
+            var promise = WidgetService.reorderWidget(vm.pageId, index1, index2);
+
+            promise.success(function (newWidget) {
+                // $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
+            });
+
+            promise.error(function (errBody, errCode) {
+                vm.error = "Failed reordering widget. " + errCode + ' ' + errBody;
+            });
+        }
 
         function getWidgetTemplateUrl(widgetType) {
             var url = 'views/widget/templates/widget-' + widgetType.toLowerCase() + '.view.client.html';

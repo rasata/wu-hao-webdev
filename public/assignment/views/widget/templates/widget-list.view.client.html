@@ -21,33 +21,18 @@
     </div>
 </nav>
 
-<div class="container-fluid">
+<div wbdv-sortable id="widget-list" class="container-fluid">
     <div ng-repeat="widget in model.widgets">
         <div class="jga-toolbar">
             <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
+            <!--<span ng-mouseup="model.reorderWidget(model.widget)" class="glyphicon glyphicon-align-justify"></span>-->
             <span class="glyphicon glyphicon-align-justify"></span>
         </div>
 
         <!-- Method 2: using ng-include -->
         <ng-include src="model.getWidgetTemplateUrl(widget.widgetType)"></ng-include>
-
-        <!--Method 1: using ng-switch -->
-        <!--<div ng-switch="widget.widgetType">-->
-            <!--<div ng-switch-when="HEADING" ng-switch="widget.size">-->
-                <!--<ng-include src="'views/widget/templates/widget-heading.view.client.html'"></ng-include>-->
-            <!--</div>-->
-            <!--<div ng-switch-when="IMAGE">-->
-                <!--<ng-include src="'views/widget/templates/widget-image.view.client.html'"></ng-include>-->
-            <!--</div>-->
-            <!--<div ng-switch-when="HTML">-->
-                <!--<ng-include src="'views/widget/templates/widget-html.view.client.html'"></ng-include>-->
-            <!--</div>-->
-            <!--<div ng-switch-when="YOUTUBE">-->
-                <!--<ng-include src="'views/widget/templates/widget-youtube.view.client.html'"></ng-include>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>
 
