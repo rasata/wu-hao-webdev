@@ -57,14 +57,21 @@
         <input ng-model="model.widget.width" type="text" class="form-control"
                id="image-width" placeholder="{{model.widget.width}}">
 
-        <label for="widget_image_upload">Upload</label>
-        <input type="file" class="form-control"
-               id="widget_image_upload" placeholder="Widget File">
+        <!--<label for="widget_image_upload">Upload</label>-->
+        <!--<input type="file" class="form-control"-->
+               <!--id="widget_image_upload" placeholder="Widget File">-->
 
-        <a class="btn btn-primary btn-block"
-           href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widgetId}}">
-            Upload Image
-        </a>
+        <!--<a class="btn btn-primary btn-block"-->
+           <!--href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widgetId}}">-->
+            <!--Upload Image-->
+        <!--</a>-->
+
+        <form action="/api/upload"  method="post" enctype="multipart/form-data">
+            <input  name="myFile"   type="file" class="form-control"/>
+            <input  name="width"    value="{{model.widget.width}}" style="display: none"/>
+            <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+            <button type="submit"   class="btn btn-block btn-primary">Upload Image</button>
+        </form>
     </div>
 
     <div ng-switch-when="HTML" class="container-fluid">
