@@ -38,7 +38,6 @@
             var promise = WidgetService.reorderWidget(vm.pageId, index1, index2);
 
             promise.success(function (newWidget) {
-                // $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
             });
 
             promise.error(function (errBody, errCode) {

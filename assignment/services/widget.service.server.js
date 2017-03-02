@@ -1,6 +1,6 @@
 module.exports = function (app) {
     var multer = require('multer'); // npm install multer --save
-    var upload = multer({ dest: __dirname+'/../../public/uploads' });
+    var upload = multer({dest: __dirname + '/../../public/uploads'});
 
     app.post("/api/page/:pageId/widget", createWidget);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
@@ -53,26 +53,51 @@ module.exports = function (app) {
     function reorderWidget(req, res) {
         // /api/page/:pageId/widget
         var pageId = req.params.pageId;
-        var index1 = req.query.initial;
-        var index2 = req.query.final;
+        var initialIndex = req.query.initial;
+        var finalIndex = req.query.final;
 
-        var index1Widget = widgets.find(function (w) {
-            return w.index == index1;
+        // set moved widget to the new position
+        var movedWidget = widgets.find(function (w) {
+            return w.index == initialIndex;
         });
+        movedWidget.index = finalIndex;
 
-        var index2Widget = widgets.find(function (w) {
-            return w.index == index2;
-        });
-
-        if (index1Widget === null || index2Widget === null) {
-            res.status(500).send("Could not find the matching widget index.");
-        } else {
-            // swap indexes
-            index1Widget.index = index2;
-            index2Widget.index = index1;
-
-            res.sendStatus(200);
+        // find all widget in this page except moved widget
+        var widgetsInPage = [];
+        for (var w in widgets) {
+            if (widgets[w].pageId == pageId && widgets[w]._id != movedWidget._id) {
+                widgetsInPage.push(widgets[w]);
+            }
         }
+        widgetsInPage.sort(compareIndex);
+
+        if (initialIndex < finalIndex) {
+            // the widget moved down
+            // anyone initialIndex < x <= finalIndex needs to decrease 1
+            for(var i = 0; i < widgetsInPage.length; ++i) {
+                if (widgetsInPage[i].index <= initialIndex) {
+                    continue
+                } else if (widgetsInPage[i].index <= finalIndex) {
+                    widgetsInPage[i].index--;
+                } else if (widgetsInPage[i].index > finalIndex) {
+                    break;
+                }
+            }
+        } else if (initialIndex > finalIndex) {
+            // the widget moved up
+            // anyone finalIndex <= x < initialIndex needs to increase 1
+            for(var i = 0; i < widgetsInPage.length; ++i) {
+                if (widgetsInPage[i].index < finalIndex) {
+                    continue
+                } else if (widgetsInPage[i].index <= initialIndex) {
+                    widgetsInPage[i].index++;
+                } else if (widgetsInPage[i].index > initialIndex) {
+                    break;
+                }
+            }
+        }
+
+        res.sendStatus(200);
     }
 
     function createWidget(req, res) {
@@ -86,8 +111,8 @@ module.exports = function (app) {
         res.send(newWidget);
     }
 
-    // a compare function for sorting array by index
-    function compareIndex(a,b) {
+// a compare function for sorting array by index
+    function compareIndex(a, b) {
         if (a.index < b.index)
             return -1;
         if (a.index > b.index)
