@@ -27,11 +27,9 @@ module.exports = function (app) {
     ];
 
     function uploadImage(req, res) {
-        // console.log("Hi mom, server's uploading img");
-        // console.log(req.query);
-        // console.log(req.params);
-        // console.log(req.body);
-
+        var userId = req.body.userId;
+        var websiteId = req.body.websiteId;
+        var pageId = req.body.pageId;
         var widgetId = req.body.widgetId;
         var width = req.body.width;
         var myFile = req.file;
@@ -43,21 +41,13 @@ module.exports = function (app) {
         var size = myFile.size;
         var mimetype = myFile.mimetype;
 
-        console.log(originalname);
-        console.log(filename);
-        console.log(path);
-        console.log(destination);
-        console.log(size);
-        console.log(mimetype);
-
         var widget = widgets.find(function (w) {
             return w._id == widgetId;
         });
 
-        widget.url = __dirname+'/../../public/uploads/'+filename;
+        widget.url = "../uploads/" + filename;
         widget.width = width;
-
-        res.sendStatus(200);
+        res.redirect(req.headers.referer + "#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
     }
 
     function reorderWidget(req, res) {
