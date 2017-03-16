@@ -34,7 +34,6 @@
         init();
 
         function reorderWidget(index1, index2) {
-            // console.log("Hi mom, in widget controller client " + index1 + ' ' + index2);
             var promise = WidgetService.reorderWidget(vm.pageId, index1, index2);
 
             promise.success(function (newWidget) {
