@@ -1,16 +1,6 @@
 module.exports = function (app) {
     var mongoose = require("mongoose");
     mongoose.Promise = require('q').Promise;
-    
-
-    var api = {
-        createWebsite : createWebsite,
-        findAllWebsitesForUser : findAllWebsitesForUser,
-        findWebsiteById : findWebsiteById,
-        updateWebsite : updateWebsite,
-        deleteWebsite : deleteWebsite
-    };
-    return api;
 
     // Creates a new user instance
     function createUser(user) {

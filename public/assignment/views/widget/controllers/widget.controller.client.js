@@ -6,7 +6,8 @@
         .module("WebAppMaker")
         .controller("WidgetListController", WidgetListController)
         .controller("NewWidgetController", NewWidgetController)
-        .controller("EditWidgetController", EditWidgetController);
+        .controller("EditWidgetController", EditWidgetController)
+        // .controller("FlickrController", FlickrController);
 
     function WidgetListController($sce, $routeParams, $location, WidgetService) {
         var vm = this;
@@ -104,6 +105,7 @@
         // event handlers
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
+        vm.searchFlickr = searchFlickr;
 
         function init() {
             var wsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
@@ -118,6 +120,11 @@
         }
 
         init();
+
+        function searchFlickr() {
+            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId
+                + "/widget/" + vm.widgetId + "/flickr");
+        }
 
         function updateWidget(widget) {
             var widgetPromise = WidgetService.updateWidget(vm.widgetId, widget);
@@ -141,4 +148,7 @@
             });
         }
     }
+    
+    // function FlickerController($routeParams) {
+    // };
 })();
