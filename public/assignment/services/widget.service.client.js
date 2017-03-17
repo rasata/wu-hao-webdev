@@ -13,7 +13,8 @@
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
             "deleteWidget": deleteWidget,
-            "reorderWidget": reorderWidget
+            "reorderWidget": reorderWidget,
+            "updateFlickrWidget": updateFlickrWidget
         };
         return api;
         
@@ -46,7 +47,18 @@
         // updateWidget(widgetId, widget) -
         // updates the widget in local widgets array whose _id matches the widgetId parameter
         function updateWidget(widgetId, widget) {
+            console.log(widget);
             return $http.put("/api/widget/"+widgetId, widget);
+        }
+
+        // TODO: update widget for Flickr url, take care of index
+        function updateFlickrWidget(websiteId, pageId, widgetId, urlObj) {
+            var newWidget = urlObj;
+            newWidget.websiteId = websiteId;
+            newWidget.widgetType = "IMAGE";
+            newWidget.pageId = pageId;
+
+            return $http.put("/api/widget/"+widgetId+"/flickr", newWidget);
         }
 
         // deleteWidget(widgetId) -
@@ -54,5 +66,7 @@
         function deleteWidget(widgetId) {
             return $http.delete("/api/widget/"+widgetId);
         }
+
+        // TODO: upload selected photo to the server side
     }
 })();

@@ -9,6 +9,7 @@ module.exports = function (app) {
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.put("/api/page/:pageId/widget?", reorderWidget);
     app.post("/api/upload", upload.single('myFile'), uploadImage);
+    app.put("/api/widget/:widgetId/flickr", updateFlickrWidget);
 
     var widgets = [
         {"_id": "123", "index": 0, "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -153,10 +154,28 @@ module.exports = function (app) {
         if (newWidget === null) {
             res.status(500).send("Given new widget is empty");
         }
-        //
+
         for (var i = 0; i < widgets.length; ++i) {
             if (widgets[i]._id == widgetId) {
                 widgets[i] = newWidget;
+                res.send(widgets[i]);
+                return;
+            }
+        }
+        res.status(500).send("Could not find the matching widget.");
+    }
+
+    function updateFlickrWidget(req, res) {
+        // /api/widget/:widgetId/flickr
+        var widgetId = req.params.widgetId;
+        var newWidget = req.body;
+        if (newWidget === null) {
+            res.status(500).send("Given new widget is empty");
+        }
+
+        for (var i = 0; i < widgets.length; ++i) {
+            if (widgets[i]._id == widgetId) {
+                widgets[i].url = newWidget.url;
                 res.send(widgets[i]);
                 return;
             }
