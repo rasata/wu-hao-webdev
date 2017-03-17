@@ -7,7 +7,6 @@
         .controller("WidgetListController", WidgetListController)
         .controller("NewWidgetController", NewWidgetController)
         .controller("EditWidgetController", EditWidgetController)
-        // .controller("FlickrController", FlickrController);
 
     function WidgetListController($sce, $routeParams, $location, WidgetService) {
         var vm = this;
