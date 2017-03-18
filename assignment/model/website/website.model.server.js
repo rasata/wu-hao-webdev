@@ -9,7 +9,7 @@ module.exports = function (app) {
     var WebsiteModel = mongoose.model("WebsiteModel", WebsiteSchema);
 
     var api = {
-        "createWebsiteForUser": createWebsiteForUser,
+        "createWebsite": createWebsiteForUser,
         "findAllWebsitesForUser": findAllWebsitesForUser,
         "findWebsiteById": findWebsiteById,
         "updateWebsite": updateWebsite,
