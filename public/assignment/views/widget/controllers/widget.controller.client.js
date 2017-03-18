@@ -44,8 +44,8 @@
             });
         }
 
-        function getWidgetTemplateUrl(widgetType) {
-            var url = 'views/widget/templates/widget-' + widgetType.toLowerCase() + '.view.client.html';
+        function getWidgetTemplateUrl(type) {
+            var url = 'views/widget/templates/widget-' + type.toLowerCase() + '.view.client.html';
             return url;
         }
 

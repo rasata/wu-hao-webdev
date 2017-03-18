@@ -3,7 +3,7 @@ module.exports = function (app) {
     var userModel = require("./user/user.model.server.js")();
     var websiteModel = require("./website/website.model.server.js")();
     var pageModel = require("./page/page.model.server.js")();
-    // var widgetModel = require("./widget/widget.model.server.js")();
+    var widgetModel = require("./widget/widget.model.server.js")();
 
     var connectionString = 'mongodb://127.0.0.1:27017/assignment';
 
@@ -23,8 +23,8 @@ module.exports = function (app) {
     var model = {
         "UserModel": userModel,
         "WebsiteModel": websiteModel,
-        "PageModel": pageModel
-        // WidgetModel: widgetModel
+        "PageModel": pageModel,
+        "WidgetModel": widgetModel
     };
     return model;
 };

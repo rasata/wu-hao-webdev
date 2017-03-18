@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, model) {
     var multer = require('multer'); // npm install multer --save
     var upload = multer({dest: __dirname + '/../../public/uploads'});
 
@@ -10,22 +10,6 @@ module.exports = function (app) {
     app.put("/api/page/:pageId/widget?", reorderWidget);
     app.post("/api/upload", upload.single('myFile'), uploadImage);
     app.put("/api/widget/:widgetId/flickr", updateFlickrWidget);
-
-    var widgets = [
-        {"_id": "123", "index": 0, "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-        {"_id": "234", "index": 1, "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        {
-            "_id": "345", "index": 2, "widgetType": "IMAGE", "pageId": "321", "width": "100%",
-            "url": "http://lorempixel.com/400/200/"
-        },
-        {"_id": "456", "index": 3, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
-        {"_id": "567", "index": 4, "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        {
-            "_id": "678", "index": 5, "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
-            "url": "https://youtu.be/AM2Ivdi9c4E"
-        },
-        {"_id": "789", "index": 6, "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
-    ];
 
     function uploadImage(req, res) {
         var userId = req.body.userId;
@@ -75,7 +59,7 @@ module.exports = function (app) {
         if (initialIndex < finalIndex) {
             // the widget moved down
             // anyone initialIndex < x <= finalIndex needs to decrease 1
-            for(var i = 0; i < widgetsInPage.length; ++i) {
+            for (var i = 0; i < widgetsInPage.length; ++i) {
                 if (widgetsInPage[i].index <= initialIndex) {
                     continue
                 } else if (widgetsInPage[i].index <= finalIndex) {
@@ -87,7 +71,7 @@ module.exports = function (app) {
         } else if (initialIndex > finalIndex) {
             // the widget moved up
             // anyone finalIndex <= x < initialIndex needs to increase 1
-            for(var i = 0; i < widgetsInPage.length; ++i) {
+            for (var i = 0; i < widgetsInPage.length; ++i) {
                 if (widgetsInPage[i].index < finalIndex) {
                     continue
                 } else if (widgetsInPage[i].index <= initialIndex) {
@@ -101,17 +85,6 @@ module.exports = function (app) {
         res.sendStatus(200);
     }
 
-    function createWidget(req, res) {
-        // /api/page/:pageId/widget
-        var pageId = req.params.pageId;
-        var newWidget = req.body;
-
-        newWidget.pageId = pageId;
-        newWidget._id = (new Date()).getTime();
-        widgets.push(newWidget);
-        res.send(newWidget);
-    }
-
 // a compare function for sorting array by index
     function compareIndex(a, b) {
         if (a.index < b.index)
@@ -121,79 +94,106 @@ module.exports = function (app) {
         return 0;
     }
 
+
+    function createWidget(req, res) {
+        // /api/page/:pageId/widget
+        var pageId = req.params.pageId;
+        var newWidget = req.body;
+
+        model.WidgetModel.createWidget(pageId, newWidget)
+            .then(
+                function (widget) {
+                    res.json(widget);
+                },
+                function (error) {
+                    res.status(500).send(error);
+                }
+            );
+    }
+
     function findAllWidgetsForPage(req, res) {
         // /api/page/:pageId/widget
         var pageId = req.params.pageId;
 
-        var ret = [];
-        for (var w in widgets) {
-            if (widgets[w].pageId == pageId) {
-                ret.push(widgets[w]);
-            }
-        }
-
-        ret.sort(compareIndex);
-        res.json(ret);
+        model.WidgetModel.findAllWidgetsForPage(pageId)
+            .then(
+                function (widgets) {
+                    res.json(widgets);
+                },
+                function (error) {
+                    res.status(500).send(error);
+                }
+            );
     }
 
     function findWidgetById(req, res) {
         // /api/widget/:widgetId
         var widgetId = req.params.widgetId;
 
-        var widget = widgets.find(function (w) {
-            return w._id == widgetId;
-        });
-
-        res.send(widget);
+        model.WidgetModel.findWidgetById(widgetId)
+            .then(
+                function (widget) {
+                    res.json(widget);
+                },
+                function (error) {
+                    res.status(500).send(error);
+                }
+            );
     }
 
     function updateWidget(req, res) {
         // /api/widget/:widgetId
         var widgetId = req.params.widgetId;
         var newWidget = req.body;
+
         if (newWidget === null) {
             res.status(500).send("Given new widget is empty");
         }
 
-        for (var i = 0; i < widgets.length; ++i) {
-            if (widgets[i]._id == widgetId) {
-                widgets[i] = newWidget;
-                res.send(widgets[i]);
-                return;
-            }
-        }
-        res.status(500).send("Could not find the matching widget.");
+        model.WidgetModel.updateWidget(widgetId, newWidget)
+            .then(
+                function (widget) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.status(500).send(error);
+                }
+            );
     }
 
+    // TODO: right now is the same with updateWidget. need to change?
     function updateFlickrWidget(req, res) {
         // /api/widget/:widgetId/flickr
         var widgetId = req.params.widgetId;
         var newWidget = req.body;
+
         if (newWidget === null) {
             res.status(500).send("Given new widget is empty");
         }
 
-        for (var i = 0; i < widgets.length; ++i) {
-            if (widgets[i]._id == widgetId) {
-                widgets[i].url = newWidget.url;
-                res.send(widgets[i]);
-                return;
-            }
-        }
-        res.status(500).send("Could not find the matching widget.");
+        model.WidgetModel.updateWidget(widgetId, newWidget)
+            .then(
+                function (widget) {
+                    res.sendStatus(200);
+                },
+                function (error) {
+                    res.status(500).send(error);
+                }
+            );
     }
 
     function deleteWidget(req, res) {
         // /api/widget/:widgetId
         var widgetId = req.params.widgetId;
 
-        for (var i = 0; i < widgets.length; ++i) {
-            if (widgets[i]._id == widgetId) {
-                widgets.splice(i, 1);
-                res.sendStatus(200);
-                return;
-            }
-        }
-        res.status(500).send("Could not find the matching widget.");
+        model.WidgetModel.deleteWidget(widgetId)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                },
+                function (err) {
+                    res.status(500).send(err);
+                }
+            )
     }
 };

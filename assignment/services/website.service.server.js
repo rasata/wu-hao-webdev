@@ -62,8 +62,8 @@ module.exports = function (app, model) {
         model.WebsiteModel
             .updateWebsite(websiteId, newWebsite)
             .then(
-                function (website) {
-                    res.json(website);
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (err) {
                     res.status(500).send(err);
@@ -77,8 +77,8 @@ module.exports = function (app, model) {
         model.WebsiteModel
             .deleteWebsite(websiteId)
             .then(
-                function (website) {
-                    res.json(website);
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (err) {
                     res.status(500).send(err);

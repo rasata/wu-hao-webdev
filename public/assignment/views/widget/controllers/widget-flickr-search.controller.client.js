@@ -34,13 +34,11 @@
         function selectPhoto(photo) {
             var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
             url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
-            console.log("selected the photo: " + url);
             WidgetService
                 .updateFlickrWidget(vm.websiteId, vm.pageId, vm.widgetId, {url: url})
                 .then(function (response) {
                     var redirUrl =
                         "/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget";
-                    console.log(redirUrl);
                     $location.url(redirUrl);
                 });
         }

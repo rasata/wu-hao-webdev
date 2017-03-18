@@ -71,8 +71,8 @@ module.exports = function (app, model) {
         model.UserModel
             .updateUser(userId, newUser)
             .then(
-                function (response) {
-                    res.send(response);
+                function (status) {
+                    res.sendStatus(200);
                 }
             )
             .catch(function (err) {
@@ -86,8 +86,8 @@ module.exports = function (app, model) {
         model.UserModel
             .deleteUser(userId)
             .then(
-                function (response) {
-                    res.send(response);
+                function (status) {
+                    res.sendStatus(200);
                 }
             )
             .catch(

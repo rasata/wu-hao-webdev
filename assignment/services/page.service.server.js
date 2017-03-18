@@ -46,8 +46,8 @@ module.exports = function (app, model) {
         model.PageModel
             .findPageById(pageId)
             .then(
-                function (pages) {
-                    res.json(pages);
+                function (page) {
+                    res.json(page);
                 },
                 function (err) {
                     res.status(500).send(err);
@@ -63,8 +63,8 @@ module.exports = function (app, model) {
         model.PageModel
             .updatePage(pageId, newPage)
             .then(
-                function (pages) {
-                    res.json(pages);
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (err) {
                     res.status(500).send(err);
@@ -79,8 +79,8 @@ module.exports = function (app, model) {
         model.PageModel
             .deletePage(pageId)
             .then(
-                function (pages) {
-                    res.json(pages);
+                function (status) {
+                    res.sendStatus(200);
                 },
                 function (err) {
                     res.status(500).send(err);

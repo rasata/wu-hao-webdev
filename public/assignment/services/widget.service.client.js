@@ -43,11 +43,10 @@
             return $http.get("/api/widget/"+widgetId);
         }
 
-        // { "_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
+        // { "_id": "123", "type": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
         // updateWidget(widgetId, widget) -
         // updates the widget in local widgets array whose _id matches the widgetId parameter
         function updateWidget(widgetId, widget) {
-            console.log(widget);
             return $http.put("/api/widget/"+widgetId, widget);
         }
 
@@ -55,7 +54,7 @@
         function updateFlickrWidget(websiteId, pageId, widgetId, urlObj) {
             var newWidget = urlObj;
             newWidget.websiteId = websiteId;
-            newWidget.widgetType = "IMAGE";
+            newWidget.type = "IMAGE";
             newWidget.pageId = pageId;
 
             return $http.put("/api/widget/"+widgetId+"/flickr", newWidget);
