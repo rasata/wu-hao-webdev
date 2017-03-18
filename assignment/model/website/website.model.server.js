@@ -15,6 +15,7 @@ module.exports = function (app) {
         "updateWebsite": updateWebsite,
         "deleteWebsite": deleteWebsite
     };
+    return api;
 
     // Creates a new website instance for user whose _id is userId
     function createWebsiteForUser(userId, website) {
@@ -41,6 +42,4 @@ module.exports = function (app) {
     function deleteWebsite(websiteId) {
         return WebsiteModel.remove({_id: websiteId});
     }
-
-    return api;
 };
