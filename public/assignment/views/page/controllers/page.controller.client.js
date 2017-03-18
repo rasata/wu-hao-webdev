@@ -16,33 +16,18 @@
 
         function init() {
             // pages
-            var x = 0;
             var pagesPromise = PageService.findPageByWebsiteId(vm.websiteId);
-            pagesPromise.success(function (pages) {
-                if (pages == null || pages.length == 0) {
-                    vm.error = "Could not find related pages.";
-                } else {
-                    vm.pages = pages;
-                }
-            });
-
-            pagesPromise.error(function (errorBody, errorCode) {
-                vm.error = "Finding pages failed. " + errorBody + " " + errorCode;
-            });
-
-            // page
-            var pagePromise = PageService.findPageById(vm.pageId);
-            pagePromise.success(function (page) {
-                if (page === null) {
-                    vm.error = "Could not find requested page.";
-                } else {
-                    vm.page = page;
-                }
-            });
-
-            pagesPromise.error(function (errorBody, errorCode) {
-                vm.error = "Finding page failed. " + errorBody + " " + errorCode;
-            });
+            pagesPromise
+                .success(function (pages) {
+                    if (pages == null || pages.length == 0) {
+                        vm.error = "Could not find related pages.";
+                    } else {
+                        vm.pages = pages;
+                    }
+                })
+                .error(function (errorBody, errorCode) {
+                    vm.error = "Finding pages failed. " + errorBody + " " + errorCode;
+                });
         }
 
         init();
@@ -120,10 +105,10 @@
         function updatePage(page) {
             var updatePagePromise = PageService.updatePage(vm.pageId, page);
             updatePagePromise.success(function (updatedPage) {
-                if(updatedPage == null) {
+                if (updatedPage == null) {
                     vm.error = "Update page failed."
                 } else {
-                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
                 }
             });
 
@@ -135,11 +120,11 @@
         function deletePage() {
             var deletePagePromise = PageService.deletePage(vm.pageId);
             deletePagePromise.success(function () {
-                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
             });
 
             deletePagePromise.error(function (errBody, errCode) {
-                    vm.error = "Delete page failed. " + errBody + ' ' + errCode;
+                vm.error = "Delete page failed. " + errBody + ' ' + errCode;
             });
         }
     }

@@ -11,7 +11,7 @@ module.exports = function (app) {
         description: String,
         widgets: [{type: mongoose.Schema.Types.ObjectId, ref: "widget"}],
         dateCreated: {type: Date, default: Date.now}
-    }, {collection: "website"});
+    }, {collection: "page"});
 
     return PageSchema;
 };

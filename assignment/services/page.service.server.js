@@ -1,3 +1,4 @@
+// page service server
 module.exports = function (app, model) {
     app.post("/api/website/:websiteId/page", createPage);
     app.get("/api/website/:websiteId/page", findAllPagesForWebsite);

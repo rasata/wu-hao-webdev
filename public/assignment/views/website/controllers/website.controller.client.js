@@ -17,7 +17,6 @@
         function init() {
             var promise = WebsiteService.findWebsitesByUser(vm.userId);
             promise.success(function (websites) {
-                // console.log(websites);
                 vm.websites = websites;
             });
         }
@@ -37,7 +36,6 @@
             // event handlers
             var promise = WebsiteService.findWebsitesByUser(vm.userId);
             promise.success(function (websites) {
-                // console.log(websites);
                 vm.websites = websites;
             });
         }

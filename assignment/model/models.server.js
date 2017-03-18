@@ -18,6 +18,7 @@ module.exports = function (app) {
     //     });
 
     // console.log(websiteModel.findAllWebsitesForUser("58cc3a8753f7bcfbe9728f8b"));
+    // console.log(pageModel.findAllPagesForWebsite("58ccade328ea33b6bf2dd00d"));
 
     var model = {
         "UserModel": userModel,
