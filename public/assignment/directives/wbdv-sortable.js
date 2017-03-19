@@ -31,5 +31,4 @@
             link: linkFunction
         }
     }
-
 })();

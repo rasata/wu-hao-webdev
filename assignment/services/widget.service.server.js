@@ -38,61 +38,33 @@ module.exports = function (app, model) {
     function reorderWidget(req, res) {
         // /api/page/:pageId/widget
         var pageId = req.params.pageId;
-        var initialIndex = req.query.initial;
-        var finalIndex = req.query.final;
+        var startIndex = parseInt(req.query.start);
+        var endIndex = parseInt(req.query.end);
 
-        // set moved widget to the new position
-        var movedWidget = widgets.find(function (w) {
-            return w.index == initialIndex;
-        });
-        movedWidget.index = finalIndex;
-
-        // find all widget in this page except moved widget
-        var widgetsInPage = [];
-        for (var w in widgets) {
-            if (widgets[w].pageId == pageId && widgets[w]._id != movedWidget._id) {
-                widgetsInPage.push(widgets[w]);
-            }
-        }
-        widgetsInPage.sort(compareIndex);
-
-        if (initialIndex < finalIndex) {
-            // the widget moved down
-            // anyone initialIndex < x <= finalIndex needs to decrease 1
-            for (var i = 0; i < widgetsInPage.length; ++i) {
-                if (widgetsInPage[i].index <= initialIndex) {
-                    continue
-                } else if (widgetsInPage[i].index <= finalIndex) {
-                    widgetsInPage[i].index--;
-                } else if (widgetsInPage[i].index > finalIndex) {
-                    break;
+        // if (model.WidgetModel.reorderWidget(pageId, startIndex, endIndex)) {
+        //     res.sendStatus(200);
+        // } else {
+        //     res.sendStatus(500);
+        // }
+        model.WidgetModel.reorderWidget(pageId, startIndex, endIndex)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                },
+                function (err) {
+                    res.status(500).send(err);
                 }
-            }
-        } else if (initialIndex > finalIndex) {
-            // the widget moved up
-            // anyone finalIndex <= x < initialIndex needs to increase 1
-            for (var i = 0; i < widgetsInPage.length; ++i) {
-                if (widgetsInPage[i].index < finalIndex) {
-                    continue
-                } else if (widgetsInPage[i].index <= initialIndex) {
-                    widgetsInPage[i].index++;
-                } else if (widgetsInPage[i].index > initialIndex) {
-                    break;
-                }
-            }
-        }
-
-        res.sendStatus(200);
+            );
     }
 
 // a compare function for sorting array by index
-    function compareIndex(a, b) {
-        if (a.index < b.index)
-            return -1;
-        if (a.index > b.index)
-            return 1;
-        return 0;
-    }
+//     function compareIndex(a, b) {
+//         if (a.index < b.index)
+//             return -1;
+//         if (a.index > b.index)
+//             return 1;
+//         return 0;
+//     }
 
 
     function createWidget(req, res) {

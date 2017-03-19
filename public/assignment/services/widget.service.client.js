@@ -20,7 +20,7 @@
         
         function reorderWidget(pageId, index1, index2) {
             // /api/page/:pageId/widget?initial=index1&final=index2
-            return $http.put("/api/page/" + pageId + "/widget?initial=" + index1 + "&final=" + index2);
+            return $http.put("/api/page/" + pageId + "/widget?start=" + index1 + "&end=" + index2);
         }
         
         // createWidget(pageId, widget) - adds the widget parameter instance to the local widgets array.
