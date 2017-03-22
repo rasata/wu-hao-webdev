@@ -45,7 +45,8 @@
         }
 
         function getWidgetTemplateUrl(type) {
-            var url = 'views/widget/templates/widget-' + type.toLowerCase() + '.view.client.html';
+            // TODO: move the list templates to the "views/widget/templates/" folder
+            var url = 'views/widget/templates/list/widget-' + type.toLowerCase() + '.view.client.html';
             return url;
         }
 
@@ -69,6 +70,8 @@
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];
 
+        vm.createWidget = createWidget;
+
         function init() {
             // event handlers
             var widgetsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
@@ -79,8 +82,12 @@
 
         init();
 
-        function createWidget(widget) {
+        function createWidget(widgetType) {
             // TODO: createWidget not being used right now.
+            var widget = new Object();
+            widget._page = vm.pageId;
+            widget.type = widgetType;
+
             var promise = WidgetService.createWidget(vm.pageId, widget);
             promise.success(function (newWidget) {
                 $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + newWidget._id);
@@ -105,6 +112,7 @@
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
         vm.searchFlickr = searchFlickr;
+        vm.getEditWidgetTemplateUrl = getEditWidgetTemplateUrl;
 
         function init() {
             var wsPromise = WidgetService.findWidgetsByPageId(vm.pageId);
@@ -119,6 +127,13 @@
         }
 
         init();
+
+        function getEditWidgetTemplateUrl(type) {
+            if (typeof type != "undefined") {
+                var url = 'views/widget/templates/edit/widget-' + type.toLowerCase() + '-edit.view.client.html';
+                return url;
+            }
+        }
 
         function searchFlickr() {
             $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId

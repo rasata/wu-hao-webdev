@@ -44,7 +44,6 @@ module.exports = function (app) {
         return WidgetModel.remove({_id: widgetId});
     }
 
-    // TODO: finish widget reordering
     // Modifies the order of widget at position start into final position end in page whose _id is pageId
     function reorderWidget(pageId, initialIndex, finalIndex) {
         var start = parseInt(initialIndex);
@@ -59,27 +58,22 @@ module.exports = function (app) {
                 .then(function (widgetsInPage) {
                     for (var w in widgetsInPage) {
                         if (widgetsInPage[w].index == start) {
-                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id, {$set: {index: end}})
-                                .then(
-                                    function (response) {
-                                        console.log("update successful " + response);
-                                    },
-                                    function (err) {
-                                        console.log("update unsuccessful " + err);
+                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id, {$set: {index: end}},
+                                function (err, res) {
+                                    if (err) {
+                                        console.log("update index " + widgetsInPage[w].index + " error");
                                     }
-                                );
+                                });
                         }
 
                         if (widgetsInPage[w].index > start && widgetsInPage[w].index <= end) {
-                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id, {$set: {index: widgetsInPage[w].index - 1}})
-                                .then(
-                                    function (response) {
-                                        console.log("update successful " + response);
-                                    },
-                                    function (err) {
-                                        console.log("update unsuccessful " + err);
+                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id,
+                                {$set: {index: widgetsInPage[w].index - 1}},
+                                function (err, res) {
+                                    if (err) {
+                                        console.log("update index " + widgetsInPage[w].index + " error");
                                     }
-                                );
+                                });
                         }
                     }
                 });
@@ -90,27 +84,23 @@ module.exports = function (app) {
                 .then(function (widgetsInPage) {
                     for (var w in widgetsInPage) {
                         if (widgetsInPage[w].index == start) {
-                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id, {$set: {index: end}})
-                                .then(
-                                    function (response) {
-                                        console.log("update successful " + response);
-                                    },
-                                    function (err) {
-                                        console.log("update unsuccessful " + err);
+                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id,
+                                {$set: {index: end}},
+                                function (err, res) {
+                                    if (err) {
+                                        console.log("update index " + widgetsInPage[w].index + " error");
                                     }
-                                );
+                                });
                         }
 
                         if (widgetsInPage[w].index >= end && widgetsInPage[w].index < start) {
-                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id, {$set: {index: widgetsInPage[w].index + 1}})
-                                .then(
-                                    function (response) {
-                                        console.log("update successful " + response);
-                                    },
-                                    function (err) {
-                                        console.log("update unsuccessful " + err);
+                            WidgetModel.findByIdAndUpdate(widgetsInPage[w]._id,
+                                {$set: {index: widgetsInPage[w].index + 1}},
+                                function (err, res) {
+                                    if (err) {
+                                        console.log("update index " + widgetsInPage[w].index + " error");
                                     }
-                                );
+                                });
                         }
                     }
                 });

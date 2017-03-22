@@ -1,0 +1,40 @@
+<h1>Image Editor</h1>
+
+<a class="btn btn-primary btn-block" ng-click="model.searchFlickr()">
+    Search On Flickr
+</a>
+
+<label for="image-name">Name</label>
+<input ng-model="model.widget.name" type="text" class="form-control"
+       id="image-name" placeholder="Widget name">
+
+<label for="image-text">Text</label>
+<textarea ng-model="model.widget.text" class="form-control"
+          id="image-text" placeholder="Sample Image Text"></textarea>
+
+<label for="image-url">URL</label>
+<input ng-model="model.widget.url" type="text" class="form-control"
+       id="image-url" placeholder="{{model.widget.url}}">
+
+<label for="image-width">Width</label>
+<input ng-model="model.widget.width" type="text" class="form-control"
+       id="image-width" placeholder="{{model.widget.width}}">
+
+<!--<label for="widget_image_upload">Upload</label>-->
+<!--<input type="file" class="form-control"-->
+<!--id="widget_image_upload" placeholder="Widget File">-->
+
+<!--<a class="btn btn-primary btn-block"-->
+<!--href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{model.widgetId}}">-->
+<!--Upload Image-->
+<!--</a>-->
+
+<form action="/api/upload" method="post" enctype="multipart/form-data">
+    <input name="myFile" type="file" class="form-control"/>
+    <input name="width" value="{{model.widget.width}}" style="display: none"/>
+    <input name="userId" value="{{model.userId}}" style="display: none"/>
+    <input name="websiteId" value="{{model.websiteId}}" style="display: none"/>
+    <input name="pageId" value="{{model.pageId}}" style="display: none"/>
+    <input name="widgetId" value="{{model.widget._id}}" style="display: none"/>
+    <button ng-click="model.uploadImage()" type="submit" class="btn btn-block btn-primary">Upload Image</button>
+</form>
