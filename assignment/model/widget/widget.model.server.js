@@ -19,9 +19,33 @@ module.exports = function (app) {
     return api;
 
     // Creates new widget instance for parent page whose _id is pageId
-    function createWidget(pageId, widget) {
+    function createWidget(pageId, widget, widgetsInPage) {
         widget._page = pageId;
-        return WidgetModel.create(widget);
+        if (widgetsInPage === undefined) {
+            widget.index = 0;
+            return WidgetModel.create(widget);
+        } else {
+            var max = 0;
+            for (var w in widgetsInPage) {
+                if (widgetsInPage[w].index >= max) {
+                    max = widgetsInPage[w].index + 1;
+                }
+            }
+            widget.index = max;
+            return WidgetModel.create(widget);
+        }
+
+        // WidgetModel.find({_page: pageId}, function (err, widgetsInPage) {
+        //     console.log("Please work!");
+        //     console.log(JSON.stringify(widgetsInPage));
+        //     for (var w in widgetsInPage) {
+        //         if (widgetsInPage[w].index >= max) {
+        //             max = widgetsInPage[w].index + 1;
+        //         }
+        //     }
+        //     widget.index = max;
+        //     console.log(widget.index);
+        // });
     }
 
     // Retrieves all widgets for parent page whose _id is pageId

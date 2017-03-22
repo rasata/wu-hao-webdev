@@ -72,15 +72,30 @@ module.exports = function (app, model) {
         var pageId = req.params.pageId;
         var newWidget = req.body;
 
-        model.WidgetModel.createWidget(pageId, newWidget)
-            .then(
-                function (widget) {
-                    res.json(widget);
-                },
-                function (error) {
-                    res.status(500).send(error);
-                }
-            );
+        model.WidgetModel.findAllWidgetsForPage(pageId).then(
+            function (widgetsInPage) {
+                model.WidgetModel.createWidget(pageId, newWidget, widgetsInPage)
+                    .then(
+                        function (widget) {
+                            res.json(widget);
+                        },
+                        function (error) {
+                            res.status(500).send(error);
+                        }
+                    )
+            },
+            function (err) {
+                model.WidgetModel.createWidget(pageId, newWidget)
+                    .then(
+                        function (widget) {
+                            res.json(widget);
+                        },
+                        function (error) {
+                            res.status(500).send(error);
+                        }
+                    )
+            }
+        );
     }
 
     function findAllWidgetsForPage(req, res) {
