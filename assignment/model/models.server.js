@@ -8,8 +8,8 @@ module.exports = function (app) {
     var connectionString = 'mongodb://127.0.0.1:27017/assignment';
 
     var mongoose = require("mongoose");
-    // mongoose.createConnection(connectionString);
-    mongoose.connect(connectionString);
+    mongoose.createConnection(connectionString);
+    // mongoose.connect(connectionString);
 
     // userModel.createUser({username: "mojo", password: "mojo", firstname: "mo", lastName: "jo"});
     // userModel.findUserByUsername("mojo")
