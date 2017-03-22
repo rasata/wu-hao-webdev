@@ -32,7 +32,7 @@ module.exports = function (app, model) {
 
         widget.url = "../uploads/" + filename;
         widget.width = width;
-        res.redirect(req.headers.referer + "#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+        // res.redirect(req.headers.referer + "#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
     }
 
     function reorderWidget(req, res) {

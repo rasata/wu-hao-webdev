@@ -45,7 +45,6 @@
         }
 
         function getWidgetTemplateUrl(type) {
-            // TODO: move the list templates to the "views/widget/templates/" folder
             var url = 'views/widget/templates/list/widget-' + type.toLowerCase() + '.view.client.html';
             return url;
         }
@@ -83,7 +82,6 @@
         init();
 
         function createWidget(widgetType) {
-            // TODO: createWidget not being used right now.
             var widget = new Object();
             widget._page = vm.pageId;
             widget.type = widgetType;
