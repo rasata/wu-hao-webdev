@@ -26,13 +26,47 @@ module.exports = function (app, model) {
         var size = myFile.size;
         var mimetype = myFile.mimetype;
 
-        var widget = widgets.find(function (w) {
-            return w._id == widgetId;
-        });
+        // widget.url = "../uploads/" + filename;
+        // widget.width = width;
+        // var widget = widgets.find(function (w) {
+        //     w._id == widgetId;
+        // });
+        var newWidget = new Object();
+        newWidget.type = "IMAGE";
+        newWidget.url = "../uploads/" + filename;
+        newWidget.width = width;
+        newWidget._page = pageId;
 
-        widget.url = "../uploads/" + filename;
-        widget.width = width;
-        // res.redirect(req.headers.referer + "#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+        model.WidgetModel.findWidgetById(widgetId).then(
+            function (oldWidget) {
+                if (oldWidget === undefined) {
+                    // this is a new widget
+                    console.log("DEBUG: undefined widget, meaning this is a new widget");
+                    model.WidgetModel.createWidget(pageId, newWidget)
+                        .then(
+                            function (widget) {
+                                res.json(widget);
+                            },
+                            function (error) {
+                                res.status(500).send(error);
+                            }
+                        )
+                } else {
+                    console.log("DEBUG: found widget, meaning this is an old widget");
+                    model.WidgetModel.updateWidget(widgetId, newWidget)
+                        .then(
+                            function (widget) {
+                                res.sendStatus(200);
+                            },
+                            function (error) {
+                                res.status(500).send(error);
+                            }
+                        );
+                }
+            }
+        );
+
+        res.redirect(req.headers.referer + "#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
     }
 
     function reorderWidget(req, res) {
