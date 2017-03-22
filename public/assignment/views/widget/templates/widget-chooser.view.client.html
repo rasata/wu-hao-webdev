@@ -17,8 +17,11 @@
 </nav>
 
 <div class="container-fluid">
+    <a class="btn btn-primary btn-block" ng-click="model.createWidget('HEADING')">Heading</a>
+    <a class="btn btn-primary btn-block" ng-click="model.createWidget('IMAGE')">Image</a>
+    <a class="btn btn-primary btn-block" ng-click="model.createWidget('YOUTUBE')">YouTube</a>
+    <a class="btn btn-primary btn-block" ng-click="model.createWidget('HTML')">HTML</a>
     <a class="btn btn-primary btn-block" ng-click="model.createWidget('INPUT')">Text Input</a>
-
     <ul class="list-group">
         <li ng-repeat="widget in model.widgets" class="list-group-item">
             <div class="row">

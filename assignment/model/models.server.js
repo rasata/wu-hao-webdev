@@ -27,8 +27,15 @@ module.exports = function (app) {
     //         console.log(user);
     //     });
 
-    // console.log(websiteModel.findAllWebsitesForUser("58cc3a8753f7bcfbe9728f8b"));
-    // console.log(pageModel.findAllPagesForWebsite("58ccade328ea33b6bf2dd00d"));
+    // var users = db.collection("user");
+    function insertSampleUsers() {
+        var users = [
+            {username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
+            {username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia"},
+            {username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
+        ];
+    }
+
 
     var model = {
         "UserModel": userModel,
