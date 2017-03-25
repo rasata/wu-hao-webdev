@@ -1,0 +1,84 @@
+
+username
+password
+firstName
+lastName
+email
+phone
+websites
+dateCreated
+
+    var users = [
+        {_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
+        {_id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
+        {_id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia"},
+        {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
+    ];
+    
+
+
+_user
+name
+description
+pages
+dateCreated
+
+    var websites = [
+        { "_id": "123", name: "Facebook",    _user: ObjectId("58cc3a8753f7bcfbe9728f8b"), description: "Lorem" }
+        { "_id": "234", name: "Tweeter",     _user: ObjectId("58cc3a8753f7bcfbe9728f8b"), description: "Lorem" }
+        { "_id": "456", name: "Gizmodo",     _user: ObjectId("58cc3a8753f7bcfbe9728f8b"), description: "Lorem" }
+        { "_id": "567", name: "Tic Tac Toe", _user: ObjectId("58cc3a2753f7bcfbe9728f88"), description: "Lorem" }
+        { "_id": "678", name: "Checkers",    _user: ObjectId("58cc3a2753f7bcfbe9728f88"), description: "Lorem" }
+        { "_id": "789", name: "Chess",       _user: ObjectId("58cc3a5453f7bcfbe9728f89"), description: "Lorem" }
+    ];
+    
+
+
+_website
+name
+title
+description
+widgets
+dateCreated
+
+    var pages = [
+{ name: "Post 1", title: "Post 1", _website: ObjectId("58cc930afd80a8c39ea6f80a"), description: "Lorem" }
+{ name: "Post 2", title: "Post 2", _website: ObjectId("58cc930afd80a8c39ea6f80a"), description: "Lorem" }
+{ name: "Post 3", title: "Post 3", _website: ObjectId("58cc930afd80a8c39ea6f80a"), description: "Lorem" }
+    ];
+    
+
+
+_page
+type
+name
+text
+placeholder
+description
+url
+width
+height
+rows
+size
+class
+icon
+deletable
+formatted
+dateCreated
+
+"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), 
+
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 0, "type": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"}
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 1, "type": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"}
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 2, "type": "IMAGE", "pageId": "321", "width": "100%", "url": "http://lorempixel.com/400/200/"}
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 3, "type": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 4, "type": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"}
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 5, "type": "YOUTUBE", "pageId": "321", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"}
+{"_page": ObjectId("58ccadb628ea33b6bf2dd00b"), "index": 6, "type": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+    
+    
+    
+    
+    
+    
+    

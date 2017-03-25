@@ -8,6 +8,11 @@
     "express": "^4.13.4",
     "mongoose": "^4.4.15",
     "multer": "^1.3.0",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-goodreads": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "password": "^0.1.1",
     "q-": "0.0.0"
   },
   "devDependencies": {},
