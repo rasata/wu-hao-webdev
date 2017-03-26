@@ -5,7 +5,8 @@
     angular
         .module("AutonomousWriters")
         .controller("LoginController", LoginController)
-        .controller("RegisterController", RegisterController);
+        .controller("RegisterController", RegisterController)
+        .controller("ProfileController", ProfileController);
 
     function LoginController($location, UserService) {
         var vm = this;
@@ -19,8 +20,8 @@
         init();
 
         function login(user) {
-            // var promise = UserService.findUserByCredentials(user.username, user.password);
-            var promise = UserService.login(user.username, user.password);
+            var promise = UserService.findUserByCredentials(user.username, user.password);
+            // var promise = UserService.login(user.username, user.password);
 
             // execute when the server side actually returns the user object
             promise.success(function (user) {
@@ -29,6 +30,10 @@
                 } else {
                     vm.error = "User not found";
                 }
+            });
+
+            promise.error(function (response, status) {
+                vm.error = response;
             });
         }
     }
@@ -53,8 +58,11 @@
 
                 // create user successful, redirect to the new user page
                 createUserPromise.success(function (user) {
-                    // $location.url("/user/" + user._id);
-                    console.log("created user: ", JSON.stringify(user));
+                    if(user.role === "writer") {
+                        $location.url("/writer/" + user._id);
+                    } else {
+                        $location.url("/reader/" + user._id);
+                    }
                 });
 
                 // Some other error happened while creating the user at server side
@@ -107,5 +115,9 @@
                 vm.error = res;
             });
         }
+    }
+    
+    function BoobshelfController($routeParams, $location, UserService, BookService) {
+
     }
 })();

@@ -13,6 +13,11 @@
                 // controller: "HomeController",
                 // controllerAs: "models"
             })
+            .when("/home", {
+                templateUrl: "views/home/home.view.client.html",
+                // controller: "HomeController",
+                // controllerAs: "models"
+            })
             .when("/login", {
                 templateUrl: "views/user/templates/login.view.client.html",
                 controller: "LoginController",
@@ -38,7 +43,11 @@
                 controller: "ProfileController",
                 controllerAs: "model"
             })
-
+            .when("/user/:uid/shelf", {
+                templateUrl: "views/user/templates/bookshelf.view.client.html",
+                controller: "BookshelfController",
+                controllerAs:"model"
+            })
             /*
             .when("/user/:uid/website", {
                 templateUrl: "views/website/templates/website-list.view.client.html",
@@ -93,8 +102,8 @@
             */
             .otherwise({
                 templateUrl: "views/home/home.view.client.html",
-                controller: "HomeController",
-                controllerAs: "model"
+                // controller: "HomeController",
+                // controllerAs: "model"
             });
 
         // $locationProvider.html5Mode(true);

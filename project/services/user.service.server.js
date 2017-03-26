@@ -1,4 +1,28 @@
 module.exports = function (app, model) {
+    // passport
+    /*
+    var passport      = require('passport');
+    var auth = authorized;
+
+    app.post  ('/api/login', passport.authenticate('local'), login);
+    app.post  ('/api/logout',         logout);
+    app.post  ('/api/register',       register);
+    app.post  ('/api/user',     auth, createUser);
+    app.get   ('/api/loggedin',       loggedin);
+    app.get   ('/api/user',     auth, findAllUsers);
+    app.put   ('/api/user/:id', auth, updateUser);
+    app.delete('/api/user/:id', auth, deleteUser);    
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
+    */
+
+    // old
     app.post("/api/user", createUser);
     app.get("/api/user?username=username", findUserByUsername);
     app.get("/api/user", findUserByCredentials);
@@ -79,27 +103,29 @@ module.exports = function (app, model) {
 
     function findUserByUsername(req, res) {
         var username = req.query['username'];
-        // var user = users.find(function(u){
-        //     return u.username == username;
-        // });
-        // if(user) {
-        //     res.send(user);
-        // } else {
-        //     res.sendStatus(404).send('User not found for username: ' + username);
-        // }
+
+        model.UserModel
+            .findUserByUsername(username)
+            .then(
+                function (response) {
+                    res.send(response);
+                }
+            )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
     }
 
     function findUserByCredentials(req, res){
         var username = req.query['username'];
         var password = req.query['password'];
 
-        // var user = users.find(function(u){
-        //     return u.username == username && u.password == password;
-        // });
-        // if(user) {
-        //     res.send(user);
-        // } else {
-        //     res.sendStatus(404).send('User not found for username: ' + username + ' and password: ' + password);
-        // }
+        model.UserModel
+            .findUserByCredentials(username, password)
+            .then(
+                function (user) {
+                    res.json(user);
+                }
+            );
     }
 };
