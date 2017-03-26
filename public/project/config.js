@@ -23,11 +23,22 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
-            .when("/user/:uid", {
-                templateUrl: "views/user/templates/profile.view.client.html",
+            .when("/reader/:uid", {
+                templateUrl: "views/user/templates/reader-profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model"
             })
+            .when("/writer/:uid", {
+                templateUrl: "views/user/templates/writer-profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+            })
+            .when("/admin/:uid", {
+                templateUrl: "views/user/templates/admin-profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model"
+            })
+
             /*
             .when("/user/:uid/website", {
                 templateUrl: "views/website/templates/website-list.view.client.html",

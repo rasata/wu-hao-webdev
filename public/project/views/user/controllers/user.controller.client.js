@@ -45,17 +45,66 @@
         init();
 
         function register(user) {
-            var createUserPromise = UserService.createUser(user);
 
-            // create user successful, redirect to the new user page
-            createUserPromise.success(function (user) {
-                // $location.url("/user/" + user._id);
-                console.log("created user: ", JSON.stringify(user));
+            if(user.password === user.passwordCheck) {
+                // the two entered password are the same
+
+                var createUserPromise = UserService.createUser(user);
+
+                // create user successful, redirect to the new user page
+                createUserPromise.success(function (user) {
+                    // $location.url("/user/" + user._id);
+                    console.log("created user: ", JSON.stringify(user));
+                });
+
+                // Some other error happened while creating the user at server side
+                createUserPromise.error(function (createUserRes, createUserStatus) {
+                    vm.error = createUserRes;
+                });
+            } else {
+                vm.error = "You entered invalid username or password.";
+            }
+        }
+    }
+
+    function ProfileController($routeParams, $location, UserService) {
+        var vm = this;
+
+        // /user/:uid
+        vm.userId = $routeParams["uid"];
+
+        // Event handler
+        vm.update = updateUser;
+        vm.delete = deleteUser;
+
+        function init() {
+            var promise = UserService.findUserById(vm.userId);
+            promise.success(function (user) {
+                vm.user = user;
+            });
+        }
+
+        init();
+
+        function updateUser(newUser) {
+            var promise = UserService.updateUser(vm.userId, newUser);
+            promise.success(function (user) {
+                if (user == null) {
+                    vm.error = "unable to update user.";
+                } else {
+                    vm.message = "user successfully updated.";
+                }
+            });
+        }
+
+        function deleteUser() {
+            var promise = UserService.deleteUser(vm.userId);
+            promise.success(function (user) {
+                $location.url("/login");
             });
 
-            // Some other error happened while creating the user at server side
-            createUserPromise.error(function (createUserRes, createUserStatus) {
-                vm.error = createUserRes;
+            promise.error(function (res, statusCode) {
+                vm.error = res;
             });
         }
     }

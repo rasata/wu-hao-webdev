@@ -15,7 +15,14 @@
     <label for="reg-v-passwd">Validate Password</label>
 
     <!--TODO: validate the two passwords-->
-    <input id="reg-v-passwd" type="password" class="form-control" placeholder="verify password"/>
+    <input ng-model="model.user.passwordCheck"
+           id="reg-v-passwd"
+           type="password" class="form-control" placeholder="verify password"/>
+
+    <form>
+        <input ng-model="model.user.role" type="radio" value="reader" checked="checked"> Reader<br>
+        <input ng-model="model.user.role" type="radio" value="writer"> Writer
+    </form>
 
     <a class="btn btn-primary btn-block" ng-click="model.register(model.user)">Register</a>
     <a class="btn btn-danger  btn-block" href="#/login">Cancel</a>
