@@ -1,13 +1,11 @@
-/**
- * Created by wuhao on 2017-03-24.
- */
-// module on node side
 module.exports = function (app) {
-    // var passport = require("passport");
-    // var LocalStrategy = require("passport-local").Strategy;
-    // app.use(passport.initialize());
+    // var userModel = require('./models/user/user.model.server')();
+    var model = require("./models/models.server.js")();
 
-    var model = require("./model/model.server")();
+    require('./services/user.service.server')(app, model);
 
-    require("./services/user.service.server")(app, model);
+    // var mongoose = require("mongoose");
+    // var connectionString = 'mongodb://127.0.0.1:27017/project';
+    // var db = mongoose.createConnection(connectionString);
+    // var db = mongoose.connect(connectionString);
 };

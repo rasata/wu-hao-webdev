@@ -45,27 +45,17 @@
         init();
 
         function register(user) {
-            var promise = UserService.findUserByUsername(user.username);
-            promise.success(function (retUser) {
-                if (retUser) {
-                    vm.error = "User already exist";
-                } else {
-                    var createUserPromise = UserService.createUser(user);
-                    // create user successful, redirect to the new user page
-                    createUserPromise.success(function (user) {
-                        // $location.url("/user/" + user._id);
-                        console.log("created user: ", JSON.stringify(user));
-                    });
+            var createUserPromise = UserService.createUser(user);
 
-                    // Some other error happened while creating the user at server side
-                    createUserPromise.error(function (createUserRes, createUserStatus) {
-                        vm.error = createUserRes;
-                    });
-                }
+            // create user successful, redirect to the new user page
+            createUserPromise.success(function (user) {
+                // $location.url("/user/" + user._id);
+                console.log("created user: ", JSON.stringify(user));
             });
 
-            promise.error(function (response, status) {
-                console.log("find user by username failed: ", response);
+            // Some other error happened while creating the user at server side
+            createUserPromise.error(function (createUserRes, createUserStatus) {
+                vm.error = createUserRes;
             });
         }
     }

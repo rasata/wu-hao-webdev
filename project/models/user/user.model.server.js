@@ -1,27 +1,24 @@
-/**
- * Created by wuhao on 2017-03-25.
- */
-module.exports = function (app) {
-    var mongoose = require("mongoose");
-    mongoose.Promise = require('q').Promise;
-
-    var UserSchema = require("./user.schema.server")();
-    var UserModel = mongoose.model("UserModel", UserSchema);
+module.exports = function () {
 
     var api = {
-        "createUser": createUser,
-        "findUserById": findUserById,
-        "findUserByUsername": findUserByUsername,
-        "findUserByCredentials": findUserByCreadentials,
-        "updateUser": updateUser,
-        "deleteUser": deleteUser
+        createUser: createUser,
+        findUserById: findUserById,
+        findUserByUsername: findUserByUsername,
+        findUserByCredentials: findUserByCreadentials,
+        updateUser: updateUser,
+        deleteUser: deleteUser
     };
+
+    var mongoose = require('mongoose');
+    mongoose.Promise = require('q').Promise;
+
+    var UserSchema = require('./user.schema.server')();
+    var UserModel = mongoose.model('UserModel', UserSchema);
 
     return api;
 
     // Creates a new user instance
     function createUser(user) {
-        console.log("creating it!");
         return UserModel.create(user);
     }
 
@@ -32,8 +29,8 @@ module.exports = function (app) {
 
     // Retrieves a user instance whose username is equal to parameter username
     function findUserByUsername(username) {
-        console.log("findUserByUsername being called");
         return UserModel.findOne({username: username});
+
     }
 
     // Retrieves a user instance whose username and password are equal to parameters userId and password

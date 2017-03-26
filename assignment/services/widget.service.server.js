@@ -75,7 +75,7 @@ module.exports = function (app, model) {
         var startIndex = parseInt(req.query.start);
         var endIndex = parseInt(req.query.end);
 
-        // if (model.WidgetModel.reorderWidget(pageId, startIndex, endIndex)) {
+        // if (models.WidgetModel.reorderWidget(pageId, startIndex, endIndex)) {
         //     res.sendStatus(200);
         // } else {
         //     res.sendStatus(500);
