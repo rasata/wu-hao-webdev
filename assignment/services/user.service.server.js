@@ -1,4 +1,7 @@
 module.exports = function (app, model) {
+    var passport      = require('passport');
+    var auth = authorized;
+
     app.post("/api/user", createUser);
     app.get("/api/user?username=username", findUserByUsername);
     app.get("/api/user", findUserByCredentials);
@@ -6,6 +9,14 @@ module.exports = function (app, model) {
     app.put("/api/user/:userId", updateUser);
     app.delete("/api/user/:userId", deleteUser);
     // app.get("/api/user", findUser);
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
 
     function createUser(req, res) {
         var newUser = req.body;
@@ -40,6 +51,7 @@ module.exports = function (app, model) {
     function findUserByCredentials(req, res) {
         var username = req.query.username;
         var password = req.query.password;
+
         model.UserModel
             .findUserByCredentials(username, password)
             .then(

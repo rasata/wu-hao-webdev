@@ -6,7 +6,7 @@
         .module("AutonomousWriters")
         .controller("HomeController", HomeController);
 
-    function HomeController($location, UserService) {
+    function HomeController($location) {
         var vm = this;
 
         // event handlers

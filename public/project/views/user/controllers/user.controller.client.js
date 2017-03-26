@@ -19,7 +19,8 @@
         init();
 
         function login(user) {
-            var promise = UserService.findUserByCredentials(user.username, user.password);
+            // var promise = UserService.findUserByCredentials(user.username, user.password);
+            var promise = UserService.login(user.username, user.password);
 
             // execute when the server side actually returns the user object
             promise.success(function (user) {
@@ -52,7 +53,8 @@
                     var createUserPromise = UserService.createUser(user);
                     // create user successful, redirect to the new user page
                     createUserPromise.success(function (user) {
-                        $location.url("/user/" + user._id);
+                        // $location.url("/user/" + user._id);
+                        console.log("created user: ", JSON.stringify(user));
                     });
 
                     // Some other error happened while creating the user at server side
@@ -60,6 +62,10 @@
                         vm.error = createUserRes;
                     });
                 }
+            });
+
+            promise.error(function (response, status) {
+                console.log("find user by username failed: ", response);
             });
         }
     }

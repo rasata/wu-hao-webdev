@@ -8,15 +8,12 @@ module.exports = function (app, model) {
     app.get("/api/user/:userId", findUserById);
     app.put("/api/user/:userId", updateUser);
     app.delete("/api/user/:userId", deleteUser);
-    app.post("/api/login/");
     // app.get("/api/user", findUser);
 
-    function login(req, res) {
-        console.log("/login");
-        console.log(req.body);
-    }
+    console.log("user.service.server being called");
 
     function createUser(req, res) {
+        console.log("create user", req.body);
         var newUser = req.body;
         model.UserModel
             .createUser(newUser)

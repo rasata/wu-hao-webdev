@@ -13,15 +13,22 @@
             "findUserByCredentials": findUserByCredentials,
             "findUserById": findUserById,
             "updateUser": updateUser,
-            "deleteUser": deleteUser
+            "deleteUser": deleteUser,
+            // "login": login
         };
         return api;
 
+        function login(username, password) {
+            return $http.post("/api/login", [username, password]);
+        }
+
         function createUser(newUser) {
+            console.log("Hi mom, im in service.client creating user: ", JSON.stringify(newUser));
             return $http.post("/api/user", newUser);
         }
 
         function finderUserByUsername(username) {
+            console.log("hi mom, in user service client, find user by username: ", username);
             return $http.get("/api/user?username=" + username);
         }
 

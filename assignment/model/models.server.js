@@ -1,5 +1,6 @@
 module.exports = function (app) {
-    // require("./user/user.schema.server");
+    var mongoose = require("mongoose");
+
     var userModel = require("./user/user.model.server.js")();
     var websiteModel = require("./website/website.model.server.js")();
     var pageModel = require("./page/page.model.server.js")();
@@ -17,7 +18,6 @@ module.exports = function (app) {
             process.env.MLAB_APP_NAME;
     }
 
-    var mongoose = require("mongoose");
     mongoose.createConnection(connectionString);
     // mongoose.connect(connectionString);
 
@@ -28,6 +28,7 @@ module.exports = function (app) {
     //     });
 
     // var users = db.collection("user");
+    /*
     function insertSampleUsers() {
         var users = [
             {username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
@@ -35,7 +36,7 @@ module.exports = function (app) {
             {username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
         ];
     }
-
+    */
 
     var model = {
         "UserModel": userModel,
