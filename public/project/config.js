@@ -28,47 +28,44 @@
                 controller: "RegisterController",
                 controllerAs: "model"
             })
-            .when("/reader/:uid", {
-                templateUrl: "views/user/templates/reader-profile.view.client.html",
+            .when("/user/:uid", { // for both reader and writer profiles
+                templateUrl: "views/user/templates/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model"
             })
-            .when("/writer/:uid", {
-                templateUrl: "views/user/templates/writer-profile.view.client.html",
-                controller: "ProfileController",
-                controllerAs: "model"
-            })
-            .when("/admin/:uid", {
-                templateUrl: "views/user/templates/admin-profile.view.client.html",
-                controller: "ProfileController",
-                controllerAs: "model"
-            })
-            .when("/user/:uid/shelf", {
-                templateUrl: "views/user/templates/bookshelf.view.client.html",
-                controller: "BookshelfController",
+            .when("/reader/:uid/bookshelf", { // show all books that is on user's shelf
+                templateUrl: "views/user/templates/reader/bookshelf.view.client.html",
+                controller: "ReaderController",
                 controllerAs:"model"
             })
+            .when("/writer/:uid/published", { // listing all the books having this user as an author
+                templateUrl: "views/user/templates/writer/publish-list.view.client.html",
+                controller: "WriterController",
+                controllerAs:"model"
+            })
+            .when("/reader/:uid/book/:bid", { // show all the visible chapters of this book for the reader
+                templateUrl: "views/book/templates/book-list.view.client.html",
+                controller: "ViewBookController",
+                controllerAs: "models"
+            })
+            .when("/writer/:uid/book/new", { // add new book with this user as the 1st author
+                templateUrl: "views/book/templates/book-new.view.client.html",
+                controller: "NewBookController",
+                controllerAs: "models"
+            })
+            .when("/writer/:uid/book/:bid", { // change title, ISBN etc. add/remove new articles to this book
+                templateUrl: "views/book/templates/book-edit.view.client.html",
+                controller: "EditBookController",
+                controllerAs: "models"
+            })
+
             /*
-            .when("/user/:uid/website", {
-                templateUrl: "views/website/templates/website-list.view.client.html",
-                controller: "WebsiteListController",
-                controllerAs: "models"
-            })
-            .when("/user/:uid/website/new", {
-                templateUrl: "views/website/templates/website-new.view.client.html",
-                controller: "NewWebsiteController",
-                controllerAs: "models"
-            })
-            .when("/user/:uid/website/:wid", {
-                templateUrl: "views/website/templates/website-edit.view.client.html",
-                controller: "EditWebsiteController",
-                controllerAs: "models"
-            })
-            .when("/user/:uid/website/:wid/page", {
-                templateUrl: "views/page/templates/page-list.view.client.html",
-                controller: "PageListController",
-                controllerAs: "models"
-            })
+            TODO: add article controllers/pages
+             .when("/writer/:uid/book/:bid/page", {
+             templateUrl: "views/page/templates/page-list.view.client.html",
+             controller: "PageListController",
+             controllerAs: "models"
+             })
             .when("/user/:uid/website/:wid/page/new", {
                 templateUrl: "views/page/templates/page-new.view.client.html",
                 controller: "NewPageController",

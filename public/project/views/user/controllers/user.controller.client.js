@@ -26,7 +26,11 @@
             // execute when the server side actually returns the user object
             promise.success(function (user) {
                 if (user) {
-                    $location.url("/user/" + user._id);
+                    if(user.role == "reader") {
+                        $location.url("/reader/" + user._id);
+                    } else if(user.role == "writer") {
+                        $location.url("/writer/" + user._id);
+                    }
                 } else {
                     vm.error = "User not found";
                 }
@@ -58,11 +62,12 @@
 
                 // create user successful, redirect to the new user page
                 createUserPromise.success(function (user) {
-                    if(user.role === "writer") {
-                        $location.url("/writer/" + user._id);
-                    } else {
-                        $location.url("/reader/" + user._id);
-                    }
+                    $location.url("/user/" + user._id);
+                    // if(user.role === "writer") {
+                    //     $location.url("/writer/" + user._id);
+                    // } else {
+                    //     $location.url("/reader/" + user._id);
+                    // }
                 });
 
                 // Some other error happened while creating the user at server side
@@ -75,7 +80,7 @@
         }
     }
 
-    function ProfileController($routeParams, $location, UserService) {
+    function ProfileController($routeParams, $location, UserService, BookService) {
         var vm = this;
 
         // /user/:uid
@@ -89,6 +94,12 @@
             var promise = UserService.findUserById(vm.userId);
             promise.success(function (user) {
                 vm.user = user;
+
+                if(user.role === "reader") {
+                    vm.bookshelfUrl = "/reader/" + user._id + "/bookshelf";
+                } else if (user.role === "writer") {
+                    vm.bookshelfUrl = "/writer/" + user._id + "/published";
+                }
             });
         }
 
@@ -115,9 +126,21 @@
                 vm.error = res;
             });
         }
+
+        /*
+        function getBookshelf() {
+            vm.bookshelf = [];
+            for (var bookId in vm.bookshelf) {
+                // get book info from book database
+                bookPromise = BookService.findBookById(bookId);
+                bookPromise.success(function (matchedBook) {
+                    vm.bookshelf.push(matchedBook);
+                });
+            }
+        }
+        */
     }
     
-    function BoobshelfController($routeParams, $location, UserService, BookService) {
-
-    }
+    // function BoobshelfController($routeParams, $location, UserService, BookService) {
+    // }
 })();
