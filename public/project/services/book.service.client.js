@@ -19,31 +19,31 @@
         return api;
 
         function createBook(newBook) {
-            return $http.post("/api/book", newBook);
+            return $http.post("/aw/api/book", newBook);
         }
 
         function findBookById(bookId) {
-            return $http.get("/api/book", bookId);
+            return $http.get("/aw/api/book", bookId);
         }
 
         function updateBook(newBook) {
-            return $http.put("/api/book", newBook);
+            return $http.put("/aw/api/book", newBook);
         }
 
         function deleteBook(bookId) {
-            return $http.delete("/api/book", bookId);
+            return $http.delete("/aw/api/book", bookId);
         }
 
         function findBookByTitle(title) {
-            return $http.get("/api/book?title=" + title);
+            return $http.get("/aw/api/book?title=" + title);
         }
 
         function findBooksByAuthor(author) {
-            return $http.get("/api/book?author=" + author);
+            return $http.get("/aw/api/book?author=" + author);
         }
         
         function findBookByISBN(isbn) {
-            return $http.get("/api/book?isbn=" + isbn);
+            return $http.get("/aw/api/book?isbn=" + isbn);
         }
     }
 })();

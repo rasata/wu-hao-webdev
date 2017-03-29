@@ -2,6 +2,8 @@ module.exports = function (app) {
     var mongoose = require("mongoose");
     mongoose.Promise = require('q').Promise;
 
+    console.log("user model being called");
+
     var UserSchema = require("./user.schema.server")();
     var UserModel = mongoose.model("UserModel", UserSchema);
 
@@ -18,6 +20,7 @@ module.exports = function (app) {
 
     // Creates a new user instance
     function createUser(user) {
+        console.log("got it in assignment user model");
         return UserModel.create(user);
     }
 

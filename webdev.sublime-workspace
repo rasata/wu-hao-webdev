@@ -520,60 +520,35 @@
 	"buffers":
 	[
 		{
-			"file": "code_samples/quiz2.js",
+			"file": "public/assignment/views/website/templates/website-list.view.client.html",
 			"settings":
 			{
-				"buffer_size": 4633,
+				"buffer_size": 1918,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "JavaScript allows programming in the browser. Use the alert() function to display an alert box with a message\n<script>\n  alert(\"Hello World\");\n</script>\n\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>Scripts</title>\n    <script>\n      alert(\"Hello World\");\n    </script>\n  </head>\n  <body>\n    <h1>Intro to JavaScript</h1>\n    \n    <p>\n      JavaScript allows programming in the browser.\n      Use the <code>alert()</code> function to\n      display an alert box with a message\n    </p>\n<pre>\n\n<!--For loop-->\n<script>\n  alert(&quot;Hello World&quot;);\n\n  var factorial = 1;\n  for(var i=1; i<=5; i++)\n  {\n    factorial *= i;\n  }\n  alert(factorial);\n</script>\n</pre>\n\n  </body>\n</html>\n\n<!--Array-->\n<script>\n  var values = [12,32,34,54,56,76,78,98,90,100];\n  var min = 200;\n  var max = -1;\n  for(var i=0; i<values.length; i++)\n  {\n    if(values[i] < min)\n    {\n      min = values[i];\n    }\n    if(values[i] > max)\n    {\n      max = values[i];\n    }\n  }\n  alert(min);\n  alert(max);\n</script>\n\n\n<!--Document-->\n<script>\n  document.write(\"Hello World!\");\n\n  document.write(\"<ul>\");\n  for(var i=0; i<10; i++)\n  {\n    document.write(\"<li>\")\n    document.write(\"Hello \" + i)\n    document.write(\"</li>\")\n  }\n  document.write(\"</ul>\");\n\n    for(var row=1; row<=10; row++)\n    {\n      var html =\"  <tr>\";\n      for(var col=1; col<=10; col++)\n      {\n        html+=\"    <td>\"+row * col+\"</td>\";\n      }\n      html+=\"  </tr>\";\n      document.write(html);\n    }\n</script>\n\n\n<!--Function-->\n<script>\n  var a = 12;\n  var b = 23;\n  var c = add(a, b);\n  \n  alert(a + \" + \" + b + \" = \" + c);\n  \n  function add(a, b)\n  {\n    return a + b;\n  }\n</script>\n\n\n<!--Get Element By ID-->\n<script>\n  function add()\n  {\n    var a = document.getElementById(\"a\").value;\n    var b = document.getElementById(\"b\").value;\na = parseInt(a);\n    b = parseInt(b);\nvar c = a + b;\n    document.getElementById(\"c\").value = c;\nreturn false;\n  }\n</script>\n\n<!--On Click-->\n<script>\n  function sayHello()\n  {\n    alert(\"Hello World\");\n  }\n  \n  function sayMessage(message)\n  {\n    alert(message);\n  }\n  \n  function sayInput()\n  {\n    var message = document.getElementById(\"message\").value;\n    alert(message);\n  }\n</script>\n<button onclick=\"sayHello()\">Say Hello</button>\n<button onclick=\"sayMessage('Hello')\">Say Message</button>\n\n<!--Src-->\n<script src=\"30.js\">\n</script>\n\n<pre>\nvar message = document.getElementById(\"message\");\nmessage.innerHTML = \"Hello\";\n</pre>\n\nin 30.js\nvar message = document.getElementById(\"message\");\nmessage.innerHTML = \"Hello\";\n\n<!--JSON-->\n<script>\n  var alice = {\n    first: \"Alice\",\n    last: \"Wonderland\",\n    salary: 100000\n  }\n  var bob = {\n    first: \"Bob\",\n    last: \"Marley\"\n  }\n</script>\n\n<!--Namespace-->\n<!--The namespace does not populate the global namespace.-->\n(function()\n{\n  var p = document.getElementById(\"message\");\n  p.innerHTML = \"Hello World\";\n})();\n\n<!--Callbacks-->\npassing function to another function\n\n\n<!--Modules-->\n(function()\n{\n  alert(math.add(2,3));\n})();\n\n\nin module\nvar math = (function()\n{\n  var api = {\n    add: add,\n    subtract: subtract\n  };\n  \n  return api;\n  \n  function add(a, b)\n  {\n    return a + b;\n  }\n  \n  function subtract(a, b)\n  {\n    return a - b;\n  }\n})();\n\n\n<!--Modules 2-->\n<script src=\"80-app.js\"></script>\n<script src=\"80-module2.js\"></script>\n<script src=\"80-module1.js\"></script>\n\n\n<button onclick=\"app.events.event1()\">Event 1</button>\n<button onclick=\"app.events.event2()\">Event 2</button>\n\n\n80-app.js\nvar app = (function(){\n  var api = {};\n  return api;\n})();\n\n80-module1.js\napp.events = (function()\n{\n  var events = {\n    event1: event1,\n    event2: event2\n  };\n  \n  return events;\n  \n  function event1()\n  {\n   // app.add();\n    app.math.add();\n//    alert(c);\n  }\n  \n  function event2()\n  {\n    alert(\"event2\");\n  }\n})();\n\n80-module2.js\napp.math = (function(){\n  var api = {\n    add: add,\n    sub: sub\n  };\n  \n  return api;\n  \n  function add()\n  {\n    alert(\"add\");\n  }\n  \n  function sub()\n  {\n    alert(\"sub\");\n  }\n})();\n\n",
-			"settings":
-			{
-				"buffer_size": 3969,
-				"line_ending": "Unix",
-				"name": "JavaScript allows programming in the browser. Use"
 			}
 		},
 		{
 			"file": "public/assignment/config.js",
 			"settings":
 			{
-				"buffer_size": 3507,
+				"buffer_size": 3789,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/assignment/views/user/controllers/user.controller.client.js",
+			"file": "public/assignment/views/website/controllers/website.controller.client.js",
 			"settings":
 			{
-				"buffer_size": 2255,
+				"buffer_size": 3188,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "public/assignment/index.html",
+			"file": "test/app.js",
 			"settings":
 			{
-				"buffer_size": 2220,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/assignment/app.js",
-			"settings":
-			{
-				"buffer_size": 120,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "public/assignment/services/page.service.client.js",
-			"settings":
-			{
-				"buffer_size": 3107,
+				"buffer_size": 1760,
 				"line_ending": "Unix"
 			}
 		}
@@ -585,7 +560,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 327.0,
+		"height": 392.0,
 		"last_filter": ":w",
 		"selected_items":
 		[
@@ -776,16 +751,53 @@
 	"expanded_folders":
 	[
 		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/code_samples",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model/user",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model/website",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/services",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/project",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/project/models",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/project/models/user",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/project/services",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/services",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/user",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/user/controllers"
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/website",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/website/controllers",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/website/templates",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/widget",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/widget/controllers",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/project",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/test"
 	],
 	"file_history":
 	[
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/website/templates/website-list.view.client.html",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/widget/controllers/widget.controller.client.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/project/services/user.service.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/services/user.service.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/website/controllers/website.controller.client.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/services/user.service.client.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/user/templates/profile.view.client.html",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/user/controllers/user.controller.client.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/widget/controllers/widget-flickr-search.controller.client.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/app.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model/models.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model/user/user.model.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/services/widget.service.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/user/templates/register.view.client.html",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/views/user/templates/login.view.client.html",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model/widget/widget.schema.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/index.html",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/index.html",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/assignment/model/user/user.schema.server.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/config.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/app.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/public/assignment/services/page.service.client.js",
+		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/code_samples/quiz2.js",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/webdev/bootstrap/index.html",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700-computerNetworking/cs5700Projects/project2/README",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs6740-networkSecurity/problemSets/ps1/ChatUtil.py",
@@ -889,31 +901,7 @@
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project5-examples/dnsserver.py",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project5-examples/dnsformat.txt",
 		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project5-examples/simpleClient.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4-examples/sniffer.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4/bpSocketLib.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4-examples/raw_socket.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project1/pythonSolution/client.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project1/pythonSolution/dnsserver.sh",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project1/pythonSolution/client",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4/rawhttpget",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project2/Makefile",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project2/webcrawler",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/rawhttpget",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/utility.py",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/tcp.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4/examples/sniffer.py",
-		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4/examples/raw_socket.py",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/ethernet.py",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/http.py",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/ip.py",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/Makefile",
-		"/Users/wuhao/Documents/GitHub/cs5700/CS5700-yumminghuang/project4/check.sh",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/Util.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/TCPPacket.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/TCPHeader.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/SocketClient.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/RawSocketClient.java",
-		"/Users/wuhao/Documents/GitHub/cs5700/RawSocket-master/ccs/neu/edu/andang/IPPacket.java"
+		"/Users/wuhao/Documents/northeastern/ccsGithub/cs5700/cs5700Projects/project4-examples/sniffer.py"
 	],
 	"find":
 	{
@@ -931,6 +919,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"findUserByUsername",
+			"finderUserByUsername",
+			"bycredent",
 			"ng-route",
 			"ng-app",
 			"config.js",
@@ -1055,10 +1046,7 @@
 			"tcp_running_time",
 			"double",
 			"tcp_throughput",
-			"dropped",
-			"total_sent",
-			"droped_packets_count",
-			"throughput"
+			"dropped"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1082,144 +1070,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "code_samples/quiz2.js",
+					"file": "public/assignment/views/website/templates/website-list.view.client.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4633,
+						"buffer_size": 1918,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								847,
-								851
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 44.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3969,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								218,
-								224
-							]
-						],
-						"settings":
-						{
-							"auto_name": "JavaScript allows programming in the browser. Use",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "public/assignment/config.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3507,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								402,
-								409
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 204.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "public/assignment/views/user/controllers/user.controller.client.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2255,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1555,
-								1559
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "public/assignment/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2220,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								32,
-								38
+								901,
+								901
 							]
 						],
 						"settings":
@@ -1232,52 +1100,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "public/assignment/app.js",
+					"buffer": 1,
+					"file": "public/assignment/config.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 120,
+						"buffer_size": 3789,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								103,
-								110
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "public/assignment/services/page.service.client.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3107,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								775,
-								781
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1287,10 +1127,70 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 714.0,
+						"translation.y": 479.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/assignment/views/website/controllers/website.controller.client.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3188,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 294.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "test/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1760,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1569,7 +1469,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 244.0,
+	"side_bar_width": 335.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

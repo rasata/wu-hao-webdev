@@ -2,10 +2,10 @@
  * Created by wuhao on 2017-03-26.
  */
 module.exports = function (app, model) {
-    app.post("/api/book", createBook);
-    app.get("/api/book", findBookByBookId);
-    app.put("/api/book", updateBook);
-    app.delete("/api/book", deleteBook);
+    app.post("/aw/api/book", createBook);
+    app.get("/aw/api/book", findBookByBookId);
+    app.put("/aw/api/book", updateBook);
+    app.delete("/aw/api/book", deleteBook);
 
     function createBook(req, res) {
         var newBook = req.body;

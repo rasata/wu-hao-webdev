@@ -1,6 +1,6 @@
 module.exports = function (app, model) {
-    var passport      = require('passport');
-    var auth = authorized;
+    // var passport      = require('passport');
+    // var auth = authorized;
 
     app.post("/api/user", createUser);
     app.get("/api/user?username=username", findUserByUsername);
@@ -10,21 +10,24 @@ module.exports = function (app, model) {
     app.delete("/api/user/:userId", deleteUser);
     // app.get("/api/user", findUser);
 
-    function authorized (req, res, next) {
-        if (!req.isAuthenticated()) {
-            res.send(401);
-        } else {
-            next();
-        }
-    };
+    // function authorized (req, res, next) {
+    //     if (!req.isAuthenticated()) {
+    //         res.send(401);
+    //     } else {
+    //         next();
+    //     }
+    // }
 
+    console.log("user.service.server being called");
     function createUser(req, res) {
+        console.log("got signal in user service server");
         var newUser = req.body;
         model.UserModel
             .createUser(newUser)
             .then(
                 function (response) {
                     res.send(response);
+                    console.log("response being sent: ", JSON.stringify(response));
                 }
             )
             .catch(
@@ -34,6 +37,7 @@ module.exports = function (app, model) {
     }
 
     function findUserByUsername(req, res) {
+        console.log("got signal in user service server, find user by username");
         var username = req.query.username;
 
         model.UserModel

@@ -18,10 +18,12 @@
         return api;
 
         function createUser(newUser) {
+            console.log("sending message from client side, create user", JSON.stringify(newUser));
             return $http.post("/api/user", newUser);
         }
 
         function findUserByUsername(username) {
+            console.log("sending message from client side, findUserByUsername", username);
             return $http.get("/api/user?username=" + username);
         }
 

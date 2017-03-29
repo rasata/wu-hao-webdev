@@ -18,8 +18,8 @@ module.exports = function (app) {
             process.env.MLAB_APP_NAME;
     }
 
-    mongoose.createConnection(connectionString);
-    // mongoose.connect(connectionString);
+    // mongoose.createConnection(connectionString);
+    mongoose.connect(connectionString);
 
     // userModel.createUser({username: "mojo", password: "mojo", firstname: "mo", lastName: "jo"});
     // userModel.findUserByUsername("mojo")

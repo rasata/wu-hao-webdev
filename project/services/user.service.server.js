@@ -23,13 +23,13 @@ module.exports = function (app, model) {
     */
 
     // old
-    app.post("/api/user", createUser);
-    app.get("/api/user?username=username", findUserByUsername);
-    app.get("/api/user", findUserByCredentials);
-    app.get("/api/user/:userId", findUserByUserId);
-    app.put("/api/user/:userId", updateUser);
-    app.delete("/api/user/:userId", deleteUser);
-    app.get("/api/user", findUser);
+    app.post("/aw/api/user", createUser);
+    app.get("/aw/api/user?username=username", findUserByUsername);
+    app.get("/aw/api/user", findUserByCredentials);
+    app.get("/aw/api/user/:userId", findUserByUserId);
+    app.put("/aw/api/user/:userId", updateUser);
+    app.delete("/aw/api/user/:userId", deleteUser);
+    app.get("/aw/api/user", findUser);
 
     function createUser(req, res) {
         var newUser = req.body;

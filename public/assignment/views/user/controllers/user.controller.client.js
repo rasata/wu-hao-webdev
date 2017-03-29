@@ -46,11 +46,12 @@
         init();
 
         function register(user) {
-            var promise = UserService.findUserByUsername(user.username);
-            promise.success(function (retUser) {
-                if (retUser) {
-                    vm.error = "User already exist";
-                } else {
+            console.log("front-end: ", JSON.stringify(user));
+            // var promise = UserService.findUserByUsername(user.username);
+            // promise.success(function (retUser) {
+            //     if (retUser) {
+            //         vm.error = "User already exist";
+            //     } else {
                     var createUserPromise = UserService.createUser(user);
                         // create user successful, redirect to the new user page
                         createUserPromise.success(function (user) {
@@ -61,8 +62,13 @@
                         createUserPromise.error(function (createUserRes, createUserStatus) {
                             vm.error = createUserRes;
                         });
-                }
-            });
+            //     }
+            // });
+
+            // promise.error(function (res, status) {
+            //     vm.error = res;
+            //     JSON.stringify(res);
+            // });
         }
     }
 
