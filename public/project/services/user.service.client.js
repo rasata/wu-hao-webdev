@@ -14,12 +14,14 @@
             "findUserById": findUserById,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
-            // "login": login
+            "login": login
         };
         return api;
 
-        function login(username, password) {
-            return $http.post("/aw/api/login", [username, password]);
+        function login(user) {
+            console.log("user client service logging in");
+            return $http.post("/aw/api/login", user);
+            // return $http.get("/aw/api/user?username=" + user.username + "&password=" + user.password);
         }
 
         function createUser(newUser) {

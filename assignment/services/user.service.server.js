@@ -18,7 +18,6 @@ module.exports = function (app, model) {
     //     }
     // }
 
-    console.log("user.service.server being called");
     function createUser(req, res) {
         console.log("got signal in user service server");
         var newUser = req.body;

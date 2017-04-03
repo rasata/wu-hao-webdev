@@ -13,12 +13,13 @@ module.exports = function () {
     mongoose.Promise = require('q').Promise;
 
     var UserSchema = require('./user.schema.server')();
-    var UserModel = mongoose.model('UserModel', UserSchema);
+    var UserModel = mongoose.model('ProjectUserModel', UserSchema);
 
     return api;
 
     // Creates a new user instance
     function createUser(user) {
+        console.log("creating user: " + JSON.stringify(user));
         return UserModel.create(user);
     }
 

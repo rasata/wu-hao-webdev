@@ -8,7 +8,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($location, UserService) {
+    function LoginController($rootScope, $location, UserService) {
         var vm = this;
 
         // event handlers
@@ -20,12 +20,15 @@
         init();
 
         function login(user) {
-            var promise = UserService.findUserByCredentials(user.username, user.password);
-            // var promise = UserService.login(user.username, user.password);
+            // var promise = UserService.findUserByCredentials(user.username, user.password);
+            var promise = UserService.login(user);
 
             // execute when the server side actually returns the user object
             promise.success(function (user) {
                 if (user) {
+                    console.log("logged in" + user);
+                    $rootScope.currentUser = user;
+
                     if(user.role == "reader") {
                         $location.url("/reader/" + user._id);
                     } else if(user.role == "writer") {
@@ -140,7 +143,7 @@
         }
         */
     }
-    
+
     // function BoobshelfController($routeParams, $location, UserService, BookService) {
     // }
 })();

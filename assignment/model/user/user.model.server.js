@@ -2,8 +2,6 @@ module.exports = function (app) {
     var mongoose = require("mongoose");
     mongoose.Promise = require('q').Promise;
 
-    console.log("user model being called");
-
     var UserSchema = require("./user.schema.server")();
     var UserModel = mongoose.model("UserModel", UserSchema);
 

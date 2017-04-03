@@ -24,7 +24,7 @@ module.exports = function (app) {
     // mongoose.createConnection(connectionString);
     // mongojs(connectionString);
 
-    // var newUser = new Object({username: "james", passport: "alice", firstName: "Alice", lastName: "Wonderland", role: "admin"});
+    // var newUser = new Object({username: "dave", password: "dave", firstName: "dave", lastName: "dave", role: "reader"});
     // userModel.createUser(newUser);
 
     var model = {
