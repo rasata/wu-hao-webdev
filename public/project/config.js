@@ -10,15 +10,15 @@
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/home.view.client.html",
-                controller: "LoginController"
+                controller: "LoginController",
                 // controller: "HomeController",
-                // controllerAs: "models"
+                controllerAs: "models"
             })
             .when("/home", {
                 templateUrl: "views/home/home.view.client.html",
-                controller: "LoginController"
+                controller: "LoginController",
                 // controller: "HomeController",
-                // controllerAs: "models"
+                controllerAs: "models"
             })
             .when("/login", {
                 templateUrl: "views/user/templates/login.view.client.html",
@@ -34,6 +34,17 @@
                 templateUrl: "views/user/templates/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model"
+                // resolve: {
+                //     loggedin: checkLoggedIn
+                // }
+            })
+            .when("/admin", {
+                templateUrl:  "views/admin/templates/admin.view.client.html",
+                controller: "AdminController",
+                controllerAs: "model"
+                // resolve: {
+                //     isAdmin: checkIsAdmin
+                // }
             })
             .when("/reader/:uid/bookshelf", { // show all books that is on user's shelf
                 templateUrl: "views/user/templates/reader/bookshelf.view.client.html",
@@ -100,7 +111,7 @@
             })
             */
             .otherwise({
-                templateUrl: "views/home/home.view.client.html",
+                templateUrl: "views/home/home.view.client.html"
                 // controller: "HomeController",
                 // controllerAs: "model"
             });

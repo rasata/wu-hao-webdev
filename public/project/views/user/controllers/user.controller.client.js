@@ -13,6 +13,7 @@
 
         // event handlers
         vm.login = login;
+        vm.logout = logout;
 
         function init() {
         }
@@ -26,13 +27,11 @@
             // execute when the server side actually returns the user object
             promise.success(function (user) {
                 if (user) {
-                    console.log("logged in" + user);
                     $rootScope.currentUser = user;
-
                     if(user.role == "reader") {
                         $location.url("/reader/" + user._id);
-                    } else if(user.role == "writer") {
-                        $location.url("/writer/" + user._id);
+                    } else if(user.role == "admin") {
+                        $location.url("/admin");
                     }
                 } else {
                     vm.error = "User not found";
@@ -41,6 +40,15 @@
 
             promise.error(function (response, status) {
                 vm.error = response;
+            });
+        }
+
+        function logout(user) {
+            var promise = UserService.logout(user);
+
+            promise.success(function (response) {
+                $rootScope.currentUser = null;
+                $location.url("/home");
             });
         }
     }

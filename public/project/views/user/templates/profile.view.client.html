@@ -55,13 +55,17 @@
     </form>
 
     <a class="btn btn-primary btn-block"
+       ng-click="model.update(model.user)">Update Profile</a>
+    <!--href="#/user/{{model.userId}}/shelf">My Book Shelf</a>-->
+
+    <a class="btn btn-primary btn-block"
        href="#/user/{{model.userId}}/shelf">My Book Shelf</a>
        <!--href="#/user/{{model.userId}}/shelf">My Book Shelf</a>-->
 
     <!--TODO: create a delete user button to test delete user function-->
 
     <a class="btn btn-danger  btn-block"
-       href="#/login">Logout</a>
+       href="#/logout">Logout</a>
 </div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom">

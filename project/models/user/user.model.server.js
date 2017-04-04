@@ -6,7 +6,8 @@ module.exports = function () {
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCreadentials,
         updateUser: updateUser,
-        deleteUser: deleteUser
+        deleteUser: deleteUser,
+        findAllUsers: findAllUsers
     };
 
     var mongoose = require('mongoose');
@@ -39,6 +40,13 @@ module.exports = function () {
         return UserModel.findOne({
             username: username,
             password: password
+        });
+    }
+
+    function findAllUsers() {
+        console.log("find all users in user model");
+        return UserModel.find({
+            role: { $in: ['reader', 'writer']}
         });
     }
 

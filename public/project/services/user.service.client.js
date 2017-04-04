@@ -14,14 +14,35 @@
             "findUserById": findUserById,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
-            "login": login
+            "login": login,
+            "logout": logout,
+            "checkLoggedIn": checkLoggedIn,
+            "findAllUsers": findAllUsers
         };
         return api;
 
+        function findAllUsers(callback) {
+            var users = [
+                {first: "Alice", last: "Wonderland", username: "alice", email: "alice@wonderland.com"}
+            ];
+            // callback(users);
+            return $http.get("/aw/api/allusers");
+        }
+
         function login(user) {
-            console.log("user client service logging in");
             return $http.post("/aw/api/login", user);
             // return $http.get("/aw/api/user?username=" + user.username + "&password=" + user.password);
+        }
+
+        function logout(user) {
+            return $http.post("/aw/api/logout", user);
+        }
+
+        function checkLoggedIn() {
+            return $http.get('/aw/api//loggedin')
+                .then(function (response) {
+                    return response.data;
+                });
         }
 
         function createUser(newUser) {
@@ -43,11 +64,11 @@
         }
 
         function updateUser(userId, newUser) {
-            return $http.put("/aw/api/user/"+userId, newUser);
+            return $http.put("/aw/api/user/" + userId, newUser);
         }
 
         function deleteUser(userId) {
-            return $http.delete("/aw/api/user/"+userId);
+            return $http.delete("/aw/api/user/" + userId);
         }
     }
 })();

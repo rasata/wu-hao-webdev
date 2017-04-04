@@ -42,6 +42,7 @@ module.exports = function (app, model) {
     app.put("/aw/api/user/:userId", updateUser);
     app.delete("/aw/api/user/:userId", deleteUser);
     app.get("/aw/api/user", findUser);
+    app.get("/aw/api/allusers", findAllUsers);
 
 
     function localStrategy(username, password, done) {
@@ -75,7 +76,7 @@ module.exports = function (app, model) {
     }
 
     function logout(req, res) {
-        req.logOut();
+        req.logOut(); // nullify the cookie
         res.send(200);
     }
 
@@ -156,6 +157,17 @@ module.exports = function (app, model) {
             .then(
                 function (user) {
                     res.json(user);
+                }
+            );
+    }
+
+    function findAllUsers(req, res) {
+        console.log("finding all users in user service server");
+        model.UserModel
+            .findAllUsers()
+            .then(
+                function (users) {
+                    res.send(users);
                 }
             );
     }
