@@ -9,6 +9,7 @@
    function AdminController(UserService) {
 
        var vm = this;
+       vm.createUser = createUser;
 
        function init() {
            var promise = UserService.findAllUsers();
@@ -17,16 +18,21 @@
            });
 
            promise.error(function (data, status) {
-               
+               vm.error = data;
            });
        }
-
        init();
+       
+       function createUser(user) {
+           console.log(user);
+           var promise = UserService.createUser(user);
+           promise.success(function (user) {
+               init();
+           });
 
-       vm.users = [
-           {first: "Alice", last: "Wonderland", username: "alice", email: "alice@wonderland.com"}
-       ];
-       promise = UserService.findAllUsers();
-       // UserService.findAllUsers();
+           promise.error(function (data, status) {
+               vm.error = data;
+           });
+       }
    }
 })();

@@ -113,7 +113,6 @@
                 }
             });
         }
-
         init();
 
         function updateUser(newUser) {
