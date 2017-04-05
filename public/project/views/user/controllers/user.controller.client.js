@@ -30,7 +30,7 @@
                     $rootScope.currentUser = user;
 
                     if(user.role == "reader") {
-                        $location.url("/reader/" + user._id);
+                        $location.url("/reader/" + user._id + "/bookshelf");
                     } else if(user.role == "admin") {
                         $location.url("/admin");
                     }
@@ -54,7 +54,7 @@
         }
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($rootScope, $location, UserService) {
         var vm = this;
 
         // event handlers
@@ -74,13 +74,15 @@
 
                 // create user successful, redirect to the new user page
                 registerPromise.success(function (user) {
-                    var user = response.data;
+                    console.log("regist user successful: " + user);
+                    // var user = response.data;
                     $rootScope.currentUser = user;
                     $location.url("/user/" + user._id);
                 });
 
                 // Some other error happened while creating the user at server side
                 registerPromise.error(function (createUserRes, createUserStatus) {
+                    console.log("regist user failed.");
                     vm.error = createUserRes;
                 });
             } else {

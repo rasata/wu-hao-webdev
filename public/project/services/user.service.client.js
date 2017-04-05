@@ -23,7 +23,7 @@
         return api;
 
         function register(user) {
-            return $http.post("/api/register", user);
+            return $http.post("/aw/api/register", user);
         }
 
         function findAllUsers(callback) {

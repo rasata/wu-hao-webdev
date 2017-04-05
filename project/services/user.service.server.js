@@ -23,9 +23,9 @@ module.exports = function (app, model) {
      */
 
     var facebookConfig = {
-        clientID     : process.env.FACEBOOK_CLIENT_ID,
-        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: process.env.FACEBOOK_CALLBACK_URL
     };
 
     var bcrypt = require("bcrypt-nodejs");
@@ -44,7 +44,7 @@ module.exports = function (app, model) {
     app.get('/aw/api/loggedin', loggedin);
     app.post('/aw/api/logout', logout);
     app.post("/aw/api/register", register);
-    app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
             successRedirect: '/#/user', // TODO: add user id to this?
@@ -63,8 +63,9 @@ module.exports = function (app, model) {
     function register(req, res) {
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
+        console.log("user: " + user.username + ", password hash: " + user.password);
 
-        userModel
+        model.UserModel
             .createUser(user)
             .then(
                 function (user) {
@@ -85,17 +86,22 @@ module.exports = function (app, model) {
         console.log(username);
         console.log(password);
         model.UserModel
-            .findUserByCredentials(username, password)
+            .findUserByUsername(username)
             .then(
                 function (user) {
-                    if (user.username === username && user.password === password) {
+                    if (user && bcrypt.compareSync(password, user.password)) {
+                        // if (user) {
+                        console.log("found user with right password");
                         return done(null, user);
                     } else {
+                        console.log("found user with wrong password");
                         return done(null, false);
                     }
                 },
                 function (err) {
+                    console.log("Wat err" + err);
                     if (err) {
+                        console.log("did not find the user");
                         return done(err);
                     }
                 }
@@ -118,14 +124,21 @@ module.exports = function (app, model) {
     }
 
     function login(req, res) {
-        if(user && bcrypt.compareSync(password, user.password)) {
-            return done(null, user);
-        } else {
-            return done(null, false);
-        }
+        // model.UserModel.findUserByUsername(user.username)
+        //     .then(
+        //         function (responseUser) {
+        //             if(user && bcrypt.compareSync(responseUser.password, user.password)) {
+        //                 return done(null, user);
+        //             } else {
+        //                 return done(null, false);
+        //             }
+        //         }
+        //     );
+
         // TODO: is this really checking the user from the database?
-        // var user = req.user;
-        // res.json(user);
+        console.log("service server login");
+        var user = req.user;
+        res.json(user);
     }
 
     function loggedin(req, res) {

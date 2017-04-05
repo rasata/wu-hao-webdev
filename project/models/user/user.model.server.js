@@ -37,7 +37,6 @@ module.exports = function () {
     // Retrieves a user instance whose username is equal to parameter username
     function findUserByUsername(username) {
         return UserModel.findOne({username: username});
-
     }
 
     // Retrieves a user instance whose username and password are equal to parameters userId and password

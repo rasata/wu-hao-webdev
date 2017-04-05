@@ -10,7 +10,7 @@
         var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
             console.log("checking logged in");
             var deferred = $q.defer();
-            $http.get('/api/loggedin').success(function (user) {
+            $http.get('/aw/api/loggedin').success(function (user) {
                 $rootScope.errorMessage = null;
                 if (user !== '0') {
                     $rootScope.currentUser = user;
@@ -65,17 +65,26 @@
             .when("/reader/:uid/bookshelf", { // show all books that is on user's shelf
                 templateUrl: "views/user/templates/reader/bookshelf.view.client.html",
                 controller: "ReaderController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/writer/:uid/published", { // listing all the books having this user as an author
                 templateUrl: "views/user/templates/writer/publish-list.view.client.html",
                 controller: "WriterController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/reader/:uid/book/:bid", { // show all the visible chapters of this book for the reader
                 templateUrl: "views/book/templates/book-list.view.client.html",
                 controller: "ViewBookController",
-                controllerAs: "models"
+                controllerAs: "models",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
             })
             .when("/writer/:uid/book/new", { // add new book with this user as the 1st author
                 templateUrl: "views/book/templates/book-new.view.client.html",
