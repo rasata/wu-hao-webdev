@@ -24,7 +24,11 @@ module.exports = function (app) {
         writerInfo: {
             publishedList: [{type: mongoose.Schema.Types.ObjectId, ref: 'book'}]
         },
-        dateCreated: {type: Date, default: Date.now}
+        dateCreated: {type: Date, default: Date.now},
+        facebook: {
+            id: String,
+            token: String
+        }
     }, {collection: "user"});
 
     return UserSchema;

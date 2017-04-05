@@ -15,11 +15,16 @@
             "updateUser": updateUser,
             "deleteUser": deleteUser,
             "login": login,
+            "register": register,
             "logout": logout,
             "checkLoggedIn": checkLoggedIn,
             "findAllUsers": findAllUsers
         };
         return api;
+
+        function register(user) {
+            return $http.post("/api/register", user);
+        }
 
         function findAllUsers(callback) {
             var users = [

@@ -22,10 +22,19 @@ module.exports = function (app, model) {
      };
      */
 
+    var facebookConfig = {
+        clientID     : process.env.FACEBOOK_CLIENT_ID,
+        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+    };
+
+    var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
+    var FacebookStrategy = require('passport-facebook').Strategy;
+
     passport.use(new LocalStrategy(localStrategy));
-    // var userModel = require('../models/user.model.server');
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
@@ -34,6 +43,13 @@ module.exports = function (app, model) {
     app.post('/aw/api/login', passport.authenticate('local'), login);
     app.get('/aw/api/loggedin', loggedin);
     app.post('/aw/api/logout', logout);
+    app.post("/aw/api/register", register);
+    app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/#/user', // TODO: add user id to this?
+            failureRedirect: '/#/login'
+        }));
 
     app.post("/aw/api/user", createUser);
     app.get("/aw/api/user?username=username", findUserByUsername);
@@ -44,11 +60,32 @@ module.exports = function (app, model) {
     app.get("/aw/api/user", findUser);
     app.get("/aw/api/allusers", findAllUsers);
 
+    function register(req, res) {
+        var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
+
+        userModel
+            .createUser(user)
+            .then(
+                function (user) {
+                    if (user) {
+                        req.login(user, function (err) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                }
+            );
+    }
 
     function localStrategy(username, password, done) {
         console.log(username);
         console.log(password);
-        model.UserModel.findUserByCredentials(username, password)
+        model.UserModel
+            .findUserByCredentials(username, password)
             .then(
                 function (user) {
                     if (user.username === username && user.password === password) {
@@ -65,10 +102,30 @@ module.exports = function (app, model) {
             );
     }
 
+    function facebookStrategy(token, refreshToken, profile, done) {
+        model.UserModel
+            .findUserByFacebookId(profile.id) // TODO: Use the ID to look up the user in the database.
+            .then(
+                function (user) {
+                    console.log("facebook login successful");
+                    // TODO: user is there, log them in
+                },
+                function (err) {
+                    console.log("facebook login failed");
+                    // TODO: user is not there store as a new user
+                }
+            );
+    }
+
     function login(req, res) {
-        console.log('[login]');
-        var user = req.user;
-        res.json(user);
+        if(user && bcrypt.compareSync(password, user.password)) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+        }
+        // TODO: is this really checking the user from the database?
+        // var user = req.user;
+        // res.json(user);
     }
 
     function loggedin(req, res) {

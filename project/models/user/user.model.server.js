@@ -7,7 +7,8 @@ module.exports = function () {
         findUserByCredentials: findUserByCreadentials,
         updateUser: updateUser,
         deleteUser: deleteUser,
-        findAllUsers: findAllUsers
+        findAllUsers: findAllUsers,
+        findUserByFacebookId: findUserByFacebookId
     };
 
     var mongoose = require('mongoose');
@@ -17,6 +18,10 @@ module.exports = function () {
     var UserModel = mongoose.model('ProjectUserModel', UserSchema);
 
     return api;
+
+    function findUserByFacebookId(facebookId) {
+        return User.findOne({"facebook.id": facebookId});
+    }
 
     // Creates a new user instance
     function createUser(user) {

@@ -28,6 +28,7 @@
             promise.success(function (user) {
                 if (user) {
                     $rootScope.currentUser = user;
+
                     if(user.role == "reader") {
                         $location.url("/reader/" + user._id);
                     } else if(user.role == "admin") {
@@ -65,24 +66,21 @@
         init();
 
         function register(user) {
-
             if(user.password === user.passwordCheck) {
                 // the two entered password are the same
 
-                var createUserPromise = UserService.createUser(user);
+                // var createUserPromise = UserService.createUser(user);
+                var registerPromise = UserService.register(user);
 
                 // create user successful, redirect to the new user page
-                createUserPromise.success(function (user) {
+                registerPromise.success(function (user) {
+                    var user = response.data;
+                    $rootScope.currentUser = user;
                     $location.url("/user/" + user._id);
-                    // if(user.role === "writer") {
-                    //     $location.url("/writer/" + user._id);
-                    // } else {
-                    //     $location.url("/reader/" + user._id);
-                    // }
                 });
 
                 // Some other error happened while creating the user at server side
-                createUserPromise.error(function (createUserRes, createUserStatus) {
+                registerPromise.error(function (createUserRes, createUserStatus) {
                     vm.error = createUserRes;
                 });
             } else {
@@ -100,6 +98,7 @@
         // Event handler
         vm.update = updateUser;
         vm.delete = deleteUser;
+        vm.logout = logout;
 
         function init() {
             var promise = UserService.findUserById(vm.userId);
@@ -137,6 +136,16 @@
             });
         }
 
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function (response) {
+                        $rootScope.currentUser = null;
+                        $location.url('/');
+                    }
+                )
+        }
         /*
         function getBookshelf() {
             vm.bookshelf = [];

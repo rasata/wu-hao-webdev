@@ -64,7 +64,26 @@
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '814771058677257',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<nav class="navbar navbar-fixed-top">
     <div class="container-fluid">
         <!--<div class="navbar-text pull-right">-->
         <!--<a ng-climodelsodel.updmodelsodel.user)"><span class="glyphicon glyphicon-ok"></span></a>-->
@@ -91,8 +110,16 @@
 
 <div ng-view></div>
 
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
+
+<nav class="navbar navbar-fixed-bottom">
     <div class="container-fluid">
+        <div
+                class="fb-like navbar-left"
+                data-share="true"
+                data-width="450"
+                data-show-faces="true">
+        </div>
+
         <div class="row navbar-right navbar-text">
             <div class="col-xs-12 text-right">
                 <a href="#/user/{{currentUser._id}}/profile"><span class="glyphicon glyphicon-user"></span></a>
