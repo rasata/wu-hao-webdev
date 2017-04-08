@@ -28,27 +28,104 @@ module.exports = function (app, model) {
         callbackURL: process.env.FACEBOOK_CALLBACK_URL
     };
 
+    // var googleConfig = {
+    //     clientID     : process.env.GOOGLE_CLIENT_ID_SPRING_2017,
+    //     clientSecret : process.env.GOOGLE_CLIENT_SECRET_SPRING_2017,
+    //     callbackURL  : process.env.GOOGLE_CALLBACK_URL_SPRING_2017
+    // };
+
+    var googleConfig = {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL
+    };
+
+    var goodreadsConfig = {
+        consumerKey: process.env.GOODREADS_KEY,
+        consumerSecret: process.env.GOODREADS_CLIENT_SECRET,
+        callbackURL: process.env.GOODREADS_CALLBACK_URL
+    };
+
+    // console.log("facebook config: \n");
+    // console.log(facebookConfig);
+
+    console.log("google config: \n");
+    console.log(googleConfig);
+
+    console.log("google config: \n");
+    console.log(goodreadsConfig);
+
     var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
+    var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
     var FacebookStrategy = require('passport-facebook').Strategy;
+    var GoodreadsStrategy = require("passport-goodreads").Strategy;
 
     passport.use(new LocalStrategy(localStrategy));
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+    passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+    passport.use(new GoodreadsStrategy(goodreadsConfig, goodreadsStrategy));
 
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
     // old
-    app.post('/aw/api/login', passport.authenticate('local'), login);
     app.get('/aw/api/loggedin', loggedin);
     app.post('/aw/api/logout', logout);
     app.post("/aw/api/register", register);
+    app.get("/aw/api/isadmin", isadmin);
+
+    app.post('/aw/api/login', passport.authenticate('local'), login);
+    app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}), function (req, res) {
+        console.log(req.user);
+        res.send(req.user);
+    });
+
+    // app.get('/google/oauth/callback',
+    //     passport.authenticate('google', {
+    //         successRedirect: '/project/',
+    //         failureRedirect: '/project/index.html#/login'
+    //     }), function (req, res) {
+    //         console.log(req.user);
+    //         res.send(req.user);
+    //     });
+
+    app.get('/google/oauth/callback', function (req, res, next) {
+        passport.authenticate('google', function (err, user, info) {
+            if (err) {
+                return next(err)
+            }
+            if (!user) {
+                return res.json({message: info.message})
+            }
+            res.json(user);
+        })(req, res, next);
+    });
+
+    app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}), function (req, res) {
+        console.log(req.user);
+        res.send(req.user);
+    });
+
+    app.get('/auth/goodreads/callback', function (req, res, next) {
+        passport.authenticate('goodreads', function (err, user, info) {
+            if (err) {
+                return next(err)
+            }
+            if (!user) {
+                return res.json({message: info.message})
+            }
+            res.json(user);
+        })(req, res, next);
+    });
+
+
     app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect: '/#/user', // TODO: add user id to this?
-            failureRedirect: '/#/login'
+            successRedirect: '/home', // TODO: add user id to this?
+            failureRedirect: '/login'
         }));
 
     app.post("/aw/api/user", createUser);
@@ -59,6 +136,98 @@ module.exports = function (app, model) {
     app.delete("/aw/api/user/:userId", deleteUser);
     app.get("/aw/api/user", findUser);
     app.get("/aw/api/allusers", findAllUsers);
+
+    function googleStrategy(token, refreshToken, profile, done) {
+        model.UserModel
+            .findUserByGoogleId(profile.id)
+            .then(function (user) {
+                if (user) {
+                    done(null, user);
+                } else {
+                    console.log("creating a new user");
+                    var user = {
+                        username: profile.emails[0].value,
+                        photo: profile.photos[0].value,
+                        firstName: profile.name.givenName,
+                        lastName: profile.name.familyName,
+                        email: profile.emails[0].value,
+                        google: {
+                            id: profile.id
+                        }
+                    };
+                    return model.UserModel.createUser(user);
+                }
+            }, function (err) {
+                done(err, null);
+            })
+            .then(function (user) {
+                done(null, user);
+                // return user;
+            }, function (err) {
+                done(err, null);
+            });
+    }
+
+    function goodreadsStrategy(token, tokenSecret, profile, done) {
+        model.UserModel
+            .findUserByGoodreadsId(profile.id)
+            .then(function (user) {
+                if (user) {
+                    done(null, user);
+                } else {
+                    console.log(profile);
+                    console.log(user);
+                    var user = {
+                        username: profile.displayName,
+                        goodreads: {
+                            id: profile.id
+                        }
+                    };
+                    return model.UserModel.createUser(user);
+                }
+            }, function (err) {
+                done(err, null);
+            })
+            .then(function (user) {
+                done(null, user);
+            }, function (err) {
+                done(err, null);
+            });
+    }
+
+    function localStrategy(username, password, done) {
+        model.UserModel
+            .findUserByUsername(username)
+            .then(
+                function (user) {
+                    if (user && bcrypt.compareSync(password, user.password)) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false);
+                    }
+                },
+                function (err) {
+                    if (err) {
+                        return done(err);
+                    }
+                }
+            );
+    }
+
+    function facebookStrategy(token, refreshToken, profile, done) {
+        model.UserModel
+            .findUserByFacebookId(profile.id) // TODO: Use the ID to look up the user in the database.
+            .then(
+                function (user) {
+                    console.log("facebook login successful");
+                    // TODO: user is there, log them in
+                },
+                function (err) {
+                    console.log("facebook login failed");
+                    // TODO: user is not there store as a new user
+                }
+            );
+    }
 
     function register(req, res) {
         var user = req.body;
@@ -82,47 +251,6 @@ module.exports = function (app, model) {
             );
     }
 
-    function localStrategy(username, password, done) {
-        console.log(username);
-        console.log(password);
-        model.UserModel
-            .findUserByUsername(username)
-            .then(
-                function (user) {
-                    if (user && bcrypt.compareSync(password, user.password)) {
-                        // if (user) {
-                        console.log("found user with right password");
-                        return done(null, user);
-                    } else {
-                        console.log("found user with wrong password");
-                        return done(null, false);
-                    }
-                },
-                function (err) {
-                    console.log("Wat err" + err);
-                    if (err) {
-                        console.log("did not find the user");
-                        return done(err);
-                    }
-                }
-            );
-    }
-
-    function facebookStrategy(token, refreshToken, profile, done) {
-        model.UserModel
-            .findUserByFacebookId(profile.id) // TODO: Use the ID to look up the user in the database.
-            .then(
-                function (user) {
-                    console.log("facebook login successful");
-                    // TODO: user is there, log them in
-                },
-                function (err) {
-                    console.log("facebook login failed");
-                    // TODO: user is not there store as a new user
-                }
-            );
-    }
-
     function login(req, res) {
         // model.UserModel.findUserByUsername(user.username)
         //     .then(
@@ -141,13 +269,34 @@ module.exports = function (app, model) {
         res.json(user);
     }
 
+    function loginFacebook(req, res) {
+        console.log("service server, loginFacebook got called");
+        console.log(req);
+    }
+
+    function loginGoogle(req, res) {
+        console.log("service server, loginGoogle got called");
+        console.log(req.user);
+
+        res.send(req.user);
+    }
+
+    function isadmin(req, res) {
+        if (req.isAuthenticated() && req.user.role === "admin") {
+            res.send(req.user);
+        } else {
+            res.send('0');
+        }
+    }
+
     function loggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
     function logout(req, res) {
+        console.log("server service logging out, " + req);
         req.logOut(); // nullify the cookie
-        res.send(200);
+        res.sendStatus(200);
     }
 
     function serializeUser(user, done) {
@@ -162,7 +311,6 @@ module.exports = function (app, model) {
                     done(null, user);
                 },
                 function (err) {
-                    console.log(err);
                     done(err, null);
                 }
             );
@@ -232,7 +380,6 @@ module.exports = function (app, model) {
     }
 
     function findAllUsers(req, res) {
-        console.log("finding all users in user service server");
         model.UserModel
             .findAllUsers()
             .then(

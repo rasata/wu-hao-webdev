@@ -11,8 +11,8 @@
                 <a class="btn btn-default" href="#/register">Register</a>
             </span>
             <span ng-show="currentUser">
-                <a class="btn btn-default" href="#/profile">Profile</a>
-                <a class="btn btn-default" href="#/logout">Logout</a>
+                <a class="btn btn-default" ng-click="model.gotoProfile()">Profile</a>
+                <a class="btn btn-default" ng-click="model.logout()">Logout</a>
             </span>
             <span ng-show="currentUser.role.indexOf('admin') > -1">
                 <a href="#/admin">Admin</a>
@@ -30,13 +30,3 @@
     <!--TODO: add contents to the main pages:-->
     <!--goodreads comments, availabookooks by categories, hot authors, etc.-->
 </div>
-
-<nav class="navbar navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="row navbar-right navbar-text">
-            <div class="col-xs-12 text-right">
-                <!--<a href="#/usemodelsodel.user._id}}"><span class="glyphicon glyphicon-user"></span></a>-->
-            </div>
-        </div>
-    </div>
-</nav>

@@ -41,7 +41,6 @@ module.exports = function (app, model) {
             function (oldWidget) {
                 if (oldWidget === undefined) {
                     // this is a new widget
-                    console.log("DEBUG: undefined widget, meaning this is a new widget");
                     model.WidgetModel.createWidget(pageId, newWidget)
                         .then(
                             function (widget) {
@@ -52,7 +51,6 @@ module.exports = function (app, model) {
                             }
                         )
                 } else {
-                    console.log("DEBUG: found widget, meaning this is an old widget");
                     model.WidgetModel.updateWidget(widgetId, newWidget)
                         .then(
                             function (widget) {

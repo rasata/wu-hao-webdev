@@ -15,6 +15,7 @@
             "updateUser": updateUser,
             "deleteUser": deleteUser,
             "login": login,
+            "loginGoogle": loginGoogle,
             "register": register,
             "logout": logout,
             "checkLoggedIn": checkLoggedIn,
@@ -39,12 +40,16 @@
             // return $http.get("/aw/api/user?username=" + user.username + "&password=" + user.password);
         }
 
+        function loginGoogle() {
+            return $http.get("/auth/google");
+        }
+
         function logout(user) {
             return $http.post("/aw/api/logout", user);
         }
 
         function checkLoggedIn() {
-            return $http.get('/aw/api//loggedin')
+            return $http.get('/aw/api/loggedin')
                 .then(function (response) {
                     return response.data;
                 });

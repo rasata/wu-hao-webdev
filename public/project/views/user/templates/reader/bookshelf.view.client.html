@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 
-<body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-text pull-left">
-            <a href="#/home">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
+        <!--<div class="navbar-text pull-right">-->
+        <!--<a ng-climodelsodel.updmodelsodel.user)"><span class="glyphicon glyphicon-ok"></span></a>-->
+        <!--</div>-->
+        <div class="btn-group pull-right hw-button-group" role="group" aria-label="...">
+            <span ng-hide="currentUser">
+                <a class="btn btn-default" href="#/login">Login</a>
+                <a class="btn btn-default" href="#/register">Register</a>
+            </span>
+            <span ng-show="currentUser">
+                <a class="btn btn-default" href="#/user/{{model.userId}}">Profile</a>
+                <a class="btn btn-default" ng-click="model.logout(model.userId)">Logout</a>
+            </span>
+            <span ng-show="currentUser.role.indexOf('admin') > -1">
+                <a href="#/admin">Admin</a>
+            </span>
         </div>
+
         <div class="navbar-header">
-            <a class="navbar-brand" href="#/reader/{{model.userId}}/shelf">Book Shelf</a>
+            <a class="navbar-brand" href="#/home">Autonomous Writers</a>
         </div>
     </div>
 </nav>
@@ -39,13 +50,3 @@
         </li>
     </ul>
 </div>
-
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="row navbar-right navbar-text">
-            <div class="col-xs-12 text-right">
-                <a href="#/{{model.reader.role}}/{{model.readerId}}"><span class="glyphicon glyphicon-user"></span></a>
-            </div>
-        </div>
-    </div>
-</nav>

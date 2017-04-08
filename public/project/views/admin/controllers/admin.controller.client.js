@@ -9,7 +9,9 @@
    function AdminController(UserService) {
 
        var vm = this;
-       vm.createUser = createUser;
+       vm.register = register;
+       vm.updateUser = updateUser;
+       vm.deleteUser = deleteUser;
 
        function init() {
            var promise = UserService.findAllUsers();
@@ -23,9 +25,30 @@
        }
        init();
        
-       function createUser(user) {
-           console.log(user);
-           var promise = UserService.createUser(user);
+       function register(user) {
+           var promise = UserService.register(user);
+           promise.success(function (user) {
+               init();
+           });
+
+           promise.error(function (data, status) {
+               vm.error = data;
+           });
+       }
+
+       function updateUser(user) {
+           var promise = UserService.updateUser(user._id, user);
+           promise.success(function (user) {
+               init();
+           });
+
+           promise.error(function (data, status) {
+               vm.error = data;
+           });
+       }
+
+       function deleteUser(userId) {
+           var promise = UserService.deleteUser(userId);
            promise.success(function (user) {
                init();
            });

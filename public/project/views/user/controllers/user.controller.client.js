@@ -13,6 +13,7 @@
 
         // event handlers
         vm.login = login;
+        vm.loginGoogle = loginGoogle;
         vm.logout = logout;
 
         function init() {
@@ -41,6 +42,26 @@
 
             promise.error(function (response, status) {
                 vm.error = response;
+            });
+        }
+
+        function loginGoogle() {
+            var promise = UserService.loginGoogle();
+            promise.success(function (user) {
+                if(user) {
+                    $rootScope.currentUser = user;
+
+                    if(user.role == "reader") {
+                        $location.url("/reader/" + user._id + "/bookshelf");
+                    } else if(user.role == "writer") {
+                        $location.url("/writer/" + user._id + "/published");
+                    } else if(user.role == "admin") {
+                        $location.url("/admin");
+                    }
+                } else {
+                    vm.error = "Login Failed!";
+                    $location.url("/login");
+                }
             });
         }
 
@@ -74,7 +95,6 @@
 
                 // create user successful, redirect to the new user page
                 registerPromise.success(function (user) {
-                    console.log("regist user successful: " + user);
                     // var user = response.data;
                     $rootScope.currentUser = user;
                     $location.url("/user/" + user._id);
@@ -82,7 +102,6 @@
 
                 // Some other error happened while creating the user at server side
                 registerPromise.error(function (createUserRes, createUserStatus) {
-                    console.log("regist user failed.");
                     vm.error = createUserRes;
                 });
             } else {
@@ -91,7 +110,7 @@
         }
     }
 
-    function ProfileController($routeParams, $location, UserService, BookService) {
+    function ProfileController($rootScope, $route, $routeParams, $location, UserService, BookService) {
         var vm = this;
 
         // /user/:uid
@@ -140,11 +159,12 @@
 
         function logout() {
             UserService
-                .logout()
+                .logout($rootScope.currentUser)
                 .then(
                     function (response) {
                         $rootScope.currentUser = null;
                         $location.url('/');
+                        $route.reload();
                     }
                 )
         }

@@ -10,7 +10,19 @@ module.exports = function (app) {
         phone: String,
         // websites: [{type: array, "default": []}], // TODO: will this work?
         websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'website'}],
-        dateCreated: {type: Date, default: Date.now}
+        dateCreated: {type: Date, default: Date.now},
+        google: {
+            id: String
+        },
+        facebook: {
+            id: String
+        },
+        twitter: {
+            id: String
+        },
+        goodreads: {
+            id: String
+        }
     }, {collection: "user"});
 
     return UserSchema;

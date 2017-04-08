@@ -46,7 +46,6 @@
         init();
 
         function register(user) {
-            console.log("front-end: ", JSON.stringify(user));
             // var promise = UserService.findUserByUsername(user.username);
             // promise.success(function (retUser) {
             //     if (retUser) {

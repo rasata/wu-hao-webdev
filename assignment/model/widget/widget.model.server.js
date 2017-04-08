@@ -36,7 +36,6 @@ module.exports = function (app) {
         }
 
         // WidgetModel.find({_page: pageId}, function (err, widgetsInPage) {
-        //     console.log("Please work!");
         //     console.log(JSON.stringify(widgetsInPage));
         //     for (var w in widgetsInPage) {
         //         if (widgetsInPage[w].index >= max) {

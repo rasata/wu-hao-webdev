@@ -24,7 +24,6 @@ module.exports = function (app) {
     // userModel.createUser({username: "mojo", password: "mojo", firstname: "mo", lastName: "jo"});
     // userModel.findUserByUsername("mojo")
     //     .then(function (user) {
-    //         console.log(user);
     //     });
 
     // var users = db.collection("user");

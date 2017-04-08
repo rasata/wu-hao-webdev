@@ -8,24 +8,37 @@ module.exports = function () {
         updateUser: updateUser,
         deleteUser: deleteUser,
         findAllUsers: findAllUsers,
-        findUserByFacebookId: findUserByFacebookId
+        findUserByFacebookId: findUserByFacebookId,
+        findUserByGoogleId: findUserByGoogleId,
+        findUserByGoodreadsId: findUserByGoodreadsId
     };
 
     var mongoose = require('mongoose');
     mongoose.Promise = require('q').Promise;
 
     var UserSchema = require('./user.schema.server')();
-    var UserModel = mongoose.model('ProjectUserModel', UserSchema);
+    var UserModel = mongoose.model('AWUserModel', UserSchema);
 
     return api;
 
+    function findUserByGoodreadsId(goodreadsId) {
+        return UserModel.findOne({
+            'goodreads.id': goodreadsId
+        });
+    }
+
+    function findUserByGoogleId(googleId) {
+        return UserModel.findOne({
+            'google.id': googleId
+        });
+    }
+
     function findUserByFacebookId(facebookId) {
-        return User.findOne({"facebook.id": facebookId});
+        return UserModel.findOne({"facebook.id": facebookId});
     }
 
     // Creates a new user instance
     function createUser(user) {
-        console.log("creating user: " + JSON.stringify(user));
         return UserModel.create(user);
     }
 
@@ -48,7 +61,6 @@ module.exports = function () {
     }
 
     function findAllUsers() {
-        console.log("find all users in user model");
         return UserModel.find({
             role: { $in: ['reader', 'writer']}
         });

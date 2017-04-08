@@ -8,9 +8,23 @@
 
     function configuration($routeProvider, $locationProvider) {
         var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
-            console.log("checking logged in");
             var deferred = $q.defer();
             $http.get('/aw/api/loggedin').success(function (user) {
+                $rootScope.errorMessage = null;
+                if (user !== '0') {
+                    $rootScope.currentUser = user;
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+            return deferred.promise;
+        };
+
+        var checkIsAdmin = function ($q, $timeout, $http, $location, $rootScope) {
+            var deferred = $q.defer();
+            $http.get('/aw/api/isadmin').success(function (user) {
                 $rootScope.errorMessage = null;
                 if (user !== '0') {
                     $rootScope.currentUser = user;
@@ -57,10 +71,10 @@
             .when("/admin", {
                 templateUrl: "views/admin/templates/admin.view.client.html",
                 controller: "AdminController",
-                controllerAs: "model"
-                // resolve: {
-                //     isAdmin: checkIsAdmin
-                // }
+                controllerAs: "model",
+                resolve: {
+                    isAdmin: checkIsAdmin
+                }
             })
             .when("/reader/:uid/bookshelf", { // show all books that is on user's shelf
                 templateUrl: "views/user/templates/reader/bookshelf.view.client.html",
@@ -71,7 +85,7 @@
                 }
             })
             .when("/writer/:uid/published", { // listing all the books having this user as an author
-                templateUrl: "views/user/templates/writer/publish-list.view.client.html",
+                templateUrl: "views/user/templates/writer/published.view.client.html",
                 controller: "WriterController",
                 controllerAs: "model",
                 resolve: {

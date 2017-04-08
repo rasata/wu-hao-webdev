@@ -16,7 +16,6 @@
         return service;
 
         function createCourse(course, callback) {
-            console.log("Hi mom, in service " + course);
             $http.post("/rest/course", course)
                 .success(callback);
         }

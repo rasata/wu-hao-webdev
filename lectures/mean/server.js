@@ -49,7 +49,6 @@ app.delete("/rest/course/:id", function (req, res) {
 
 app.post("/rest/course", function (req, res) {
     var course = req.body;
-    console.log("hi mom! " + req.body);
     Course.create(course, function (err, result) {
         Course.find(function (err, data) {
             res.json(data);
