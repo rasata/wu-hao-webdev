@@ -37,6 +37,21 @@
             return deferred.promise;
         };
 
+        var checkIsWriter = function ($q, $timeout, $http, $location, $rootScope) {
+            var deferred = $q.defer();
+            $http.get('/aw/api/iswriter').success(function (user) {
+                $rootScope.errorMessage = null;
+                if (user !== '0') {
+                    $rootScope.currentUser = user;
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+            return deferred.promise;
+        };
+
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/home.view.client.html",
@@ -103,7 +118,11 @@
             .when("/writer/:uid/book/new", { // add new book with this user as the 1st author
                 templateUrl: "views/book/templates/book-new.view.client.html",
                 controller: "NewBookController",
-                controllerAs: "models"
+                controllerAs: "models",
+                resolve: {
+                    loggedin: checkLoggedin,
+                    checkIsWriter: checkIsWriter
+                }
             })
             .when("/writer/:uid/book/:bid", { // change title, ISBN etc. add/remove new articles to this book
                 templateUrl: "views/book/templates/book-edit.view.client.html",

@@ -28,12 +28,6 @@ module.exports = function (app, model) {
         callbackURL: process.env.FACEBOOK_CALLBACK_URL
     };
 
-    // var googleConfig = {
-    //     clientID     : process.env.GOOGLE_CLIENT_ID_SPRING_2017,
-    //     clientSecret : process.env.GOOGLE_CLIENT_SECRET_SPRING_2017,
-    //     callbackURL  : process.env.GOOGLE_CALLBACK_URL_SPRING_2017
-    // };
-
     var googleConfig = {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -75,6 +69,7 @@ module.exports = function (app, model) {
     app.post('/aw/api/logout', logout);
     app.post("/aw/api/register", register);
     app.get("/aw/api/isadmin", isadmin);
+    app.get("/aw/api/iswriter", iswriter);
 
     app.post('/aw/api/login', passport.authenticate('local'), login);
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}), function (req, res) {
@@ -82,30 +77,33 @@ module.exports = function (app, model) {
         res.send(req.user);
     });
 
-    // app.get('/google/oauth/callback',
-    //     passport.authenticate('google', {
-    //         successRedirect: '/project/',
-    //         failureRedirect: '/project/index.html#/login'
-    //     }), function (req, res) {
-    //         console.log(req.user);
-    //         res.send(req.user);
-    //     });
+    app.get('/google/oauth/callback',
+        passport.authenticate('google', {
+            successRedirect: '/project/',
+            failureRedirect: '/project/index.html#/login'
+        }), function (req, res) {
+            console.log(req.user);
+            res.send(req.user);
+        });
 
-    app.get('/google/oauth/callback', function (req, res, next) {
-        passport.authenticate('google', function (err, user, info) {
-            if (err) {
-                return next(err)
-            }
-            if (!user) {
-                return res.json({message: info.message})
-            }
-            res.json(user);
-        })(req, res, next);
-    });
+    // app.get('/google/oauth/callback', function (req, res, next) {
+    //     passport.authenticate('google', function (err, user, info) {
+    //         if (err) {
+    //             return next(err)
+    //         }
+    //         if (!user) {
+    //             return res.json({message: info.message})
+    //         }
+    //         res.json(user);
+    //     })(req, res, next);
+    // });
 
     app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}), function (req, res) {
-        console.log(req.user);
-        res.send(req.user);
+        if (req.user) {
+            res.send(req.user);
+        } else {
+            res.redirect("/project/index.html#/login");
+        }
     });
 
     app.get('/auth/goodreads/callback', function (req, res, next) {
@@ -289,6 +287,14 @@ module.exports = function (app, model) {
         }
     }
 
+    function iswriter(req, res) {
+        if (req.isAuthenticated() && req.user.role === "writer") {
+            res.send(req.user);
+        } else {
+            res.send('0');
+        }
+    }
+
     function loggedin(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
     }
@@ -353,6 +359,9 @@ module.exports = function (app, model) {
 
     function findUserByUsername(req, res) {
         var username = req.query['username'];
+
+        console.log("find user by username");
+        console.log(username);
 
         model.UserModel
             .findUserByUsername(username)

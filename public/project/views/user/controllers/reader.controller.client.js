@@ -6,8 +6,9 @@
         .module("AutonomousWriters")
         .controller("ReaderController", ReaderController);
 
-    function ReaderController($routeParams, $location, UserService) {
+    function ReaderController($rootScope, $routeParams, $location, UserService) {
         var vm = this;
+        vm.logout = logout;
 
         vm.userId = $routeParams.uid;
 
@@ -15,26 +16,24 @@
             var promise = UserService.findUserById(vm.userId);
             promise.success(function (user) {
                 vm.user = user;
+            });
 
-                if(user.role === "reader") {
-                    vm.bookshelfUrl = "/reader/" + user._id + "/bookshelf";
-                } else if (user.role === "writer") {
-                    vm.bookshelfUrl = "/writer/" + user._id + "/published";
-                }
+            promise.error(function (res, status) {
+                vm.error = res;
             });
         }
         init();
 
-        function logout(userId) {
-            if (!userId) {
-                userId = $rootScope.currentUser._id;
-            }
-
-            var promise = UserService.logout(userId);
+        function logout(user) {
+            var promise = UserService.logout(user);
 
             promise.success(function (response) {
                 $rootScope.currentUser = null;
                 $location.url("/home");
+            });
+
+            promise.error(function (res, status) {
+                vm.error = res;
             });
         }
     }

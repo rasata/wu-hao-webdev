@@ -12,7 +12,7 @@
             </span>
             <span ng-show="currentUser">
                 <a class="btn btn-default" href="#/user/{{model.userId}}">Profile</a>
-                <a class="btn btn-default" ng-click="model.logout(model.userId)">Logout</a>
+                <a class="btn btn-default" ng-click="model.logout(model.user)">Logout</a>
             </span>
             <span ng-show="currentUser.role.indexOf('admin') > -1">
                 <a href="#/admin">Admin</a>
@@ -24,6 +24,10 @@
         </div>
     </div>
 </nav>
+
+<div ng-show="model.error" class="alert alert-danger" role="alert">
+    {{model.error}}
+</div>
 
 <div class="container-fluid">
     <ul class="list-group">

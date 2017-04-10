@@ -19,12 +19,18 @@
     </div>
 </nav>
 
+<div ng-show="model.error" class="alert alert-danger" role="alert">
+    {{model.error}}
+</div>
+
 <div class="container-fluid">
+    <a class="btn btn-primary" href="#/writer/{{model.userId}}/book/new">Add New Book</a>
+
     <ul class="list-group">
         <li ng-repeat="book in model.bookshelf" class="list-group-item">
             <div class="row">
                 <div class="col-xs-11 col-sm-6">
-                    <a href="#/user/{{model.userId}}/book/{{book._id}}/page">
+                    <a href="#/writer/{{model.userId}}/book/{{book._id}}/article">
                         {{book.title}}
                     </a>
                 </div>
@@ -35,7 +41,7 @@
                     {{book.ISBN}}
                 </div>
                 <div class="col-xs-1">
-                    <a href="#/user/{{model.userId}}/book/{{book._id}}">
+                    <a href="#/writer/{{model.userId}}/book/{{book._id}}/book">
                         <span class="glyphicon glyphicon-cog pull-right"></span>
                     </a>
                 </div>

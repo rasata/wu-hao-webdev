@@ -30,9 +30,9 @@
                 if (user) {
                     $rootScope.currentUser = user;
 
-                    if(user.role == "reader") {
+                    if (user.role == "reader") {
                         $location.url("/reader/" + user._id + "/bookshelf");
-                    } else if(user.role == "admin") {
+                    } else if (user.role == "admin") {
                         $location.url("/admin");
                     }
                 } else {
@@ -48,14 +48,14 @@
         function loginGoogle() {
             var promise = UserService.loginGoogle();
             promise.success(function (user) {
-                if(user) {
+                if (user) {
                     $rootScope.currentUser = user;
 
-                    if(user.role == "reader") {
+                    if (user.role == "reader") {
                         $location.url("/reader/" + user._id + "/bookshelf");
-                    } else if(user.role == "writer") {
+                    } else if (user.role == "writer") {
                         $location.url("/writer/" + user._id + "/published");
-                    } else if(user.role == "admin") {
+                    } else if (user.role == "admin") {
                         $location.url("/admin");
                     }
                 } else {
@@ -87,22 +87,32 @@
         init();
 
         function register(user) {
-            if(user.password === user.passwordCheck) {
+            if (user.password === user.passwordCheck) {
                 // the two entered password are the same
 
                 // var createUserPromise = UserService.createUser(user);
-                var registerPromise = UserService.register(user);
+                console.log("wat");
+                console.log(user.username);
+                var findUsernamePromise = UserService.findUserByUsername(user.username);
 
-                // create user successful, redirect to the new user page
-                registerPromise.success(function (user) {
-                    // var user = response.data;
-                    $rootScope.currentUser = user;
-                    $location.url("/user/" + user._id);
-                });
+                findUsernamePromise.success(function (checkUserRes) {
+                    if (checkUserRes) {
+                        vm.error = "username already exists";
+                    } else {
+                        var registerPromise = UserService.register(user);
 
-                // Some other error happened while creating the user at server side
-                registerPromise.error(function (createUserRes, createUserStatus) {
-                    vm.error = createUserRes;
+                        // create user successful, redirect to the new user page
+                        registerPromise.success(function (resUser) {
+                            // var user = response.data;
+                            $rootScope.currentUser = resUser;
+                            $location.url("/user/" + resUser._id);
+                        });
+
+                        // Some other error happened while creating the user at server side
+                        registerPromise.error(function (createUserRes, createUserStatus) {
+                            vm.error = createUserRes;
+                        });
+                    }
                 });
             } else {
                 vm.error = "You entered invalid username or password.";
@@ -126,13 +136,14 @@
             promise.success(function (user) {
                 vm.user = user;
 
-                if(user.role === "reader") {
+                if (user.role === "reader") {
                     vm.bookshelfUrl = "/reader/" + user._id + "/bookshelf";
                 } else if (user.role === "writer") {
                     vm.bookshelfUrl = "/writer/" + user._id + "/published";
                 }
             });
         }
+
         init();
 
         function updateUser(newUser) {
@@ -168,18 +179,19 @@
                     }
                 )
         }
+
         /*
-        function getBookshelf() {
-            vm.bookshelf = [];
-            for (var bookId in vm.bookshelf) {
-                // get book info from book database
-                bookPromise = BookService.findBookById(bookId);
-                bookPromise.success(function (matchedBook) {
-                    vm.bookshelf.push(matchedBook);
-                });
-            }
-        }
-        */
+         function getBookshelf() {
+         vm.bookshelf = [];
+         for (var bookId in vm.bookshelf) {
+         // get book info from book database
+         bookPromise = BookService.findBookById(bookId);
+         bookPromise.success(function (matchedBook) {
+         vm.bookshelf.push(matchedBook);
+         });
+         }
+         }
+         */
     }
 
     // function BoobshelfController($routeParams, $location, UserService, BookService) {

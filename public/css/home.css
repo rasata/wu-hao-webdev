@@ -25,6 +25,21 @@ body {
     padding-bottom: 60px;
 }
 
+.head-img {
+    width: 75%;
+    height: 75%;
+}
+
+.hw-p {
+    font-family: "Arial", serif;
+    font-size: 1.1em;
+}
+
+.hw-small-p {
+    font-family: "Arial", serif;
+    font-size: 0.9em;
+}
+
 input.form-control {
     margin-bottom: 5px;
 }

@@ -13,12 +13,12 @@
             "updateBook": updateBook,
             "deleteBook": deleteBook,
             "findBookByTitle": findBookByTitle,
-            "findBooksByAuthor": findBooksByAuthor,
+            "findBooksByAuthorId": findBooksByAuthorId,
             "findBookByISBN": findBookByISBN
         };
         return api;
 
-        function createBook(newBook) {
+        function createBook(userId, newBook) {
             return $http.post("/aw/api/book", newBook);
         }
 
@@ -38,8 +38,8 @@
             return $http.get("/aw/api/book?title=" + title);
         }
 
-        function findBooksByAuthor(author) {
-            return $http.get("/aw/api/book?author=" + author);
+        function findBooksByAuthorId(author) {
+            return $http.get("/aw/api/book?authorid=" + author);
         }
         
         function findBookByISBN(isbn) {

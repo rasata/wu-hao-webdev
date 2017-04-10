@@ -2,15 +2,33 @@
  * Created by wuhao on 2017-03-26.
  */
 module.exports = function (app, model) {
-    app.post("/aw/api/book", createBook);
-    app.get("/aw/api/book", findBookByBookId);
+    app.post("/aw/api/writer/:userId/book", createBook);
+    app.get("/aw/api/book/:boodid", findBookByBookId);
     app.put("/aw/api/book", updateBook);
     app.delete("/aw/api/book", deleteBook);
+    app.get("/aw/api/book?authorid=authorid", findBoosByAuthodId);
+
+    function findBoosByAuthodId(req, res) {
+        var authorId = req.query.authorid;
+
+        model.BookModel
+            .findBooksByAuthorId(authorId)
+            .then(
+                function (response) {
+                    res.send(response);
+                }
+            )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+    }
 
     function createBook(req, res) {
+        var userId = req.params.userId;
         var newBook = req.body;
+
         model.BookModel
-            .createBook(newBook)
+            .createBook(userId, newBook)
             .then(function (book) {
                 res.json(book);
             }, function (error) {
@@ -19,7 +37,7 @@ module.exports = function (app, model) {
     }
 
     function findBookByBookId(req, res) {
-        var bookId = req.params.bookId;
+        var bookId = req.params.bookid;
 
         model.BookModel
             .findBookById(bookId)

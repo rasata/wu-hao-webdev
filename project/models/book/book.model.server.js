@@ -7,12 +7,13 @@ module.exports = function () {
     var mongoose = require('mongoose');
     mongoose.Promise = require('q').Promise;
 
-    var BookSchema = require('./book.model.server')();
-    var BookModel = mongoose.model('UserModel', BookSchema);
+    var BookSchema = require('./book.schema.server')();
+    var BookModel = mongoose.model('AWBookModel', BookSchema);
 
     return api;
 
-    function createBook(newBook) {
+    function createBook(userId, newBook) {
+        newBook.authors.push(userId);
         return BookModel.create(newBook);
     }
 
@@ -26,6 +27,10 @@ module.exports = function () {
 
     function deleteBook(bookId) {
         return BookModel.remove({_id: bookId});
+    }
+
+    function findBooksByAuthorId(authorId) {
+        return BookModel.find({authors: authorId});
     }
 
     // TODO: add/remove article, etc.
