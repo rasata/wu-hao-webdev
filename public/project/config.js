@@ -57,13 +57,13 @@
                 templateUrl: "views/home/home.view.client.html",
                 controller: "LoginController",
                 // controller: "HomeController",
-                controllerAs: "models"
+                controllerAs: "model"
             })
             .when("/home", {
                 templateUrl: "views/home/home.view.client.html",
                 controller: "LoginController",
                 // controller: "HomeController",
-                controllerAs: "models"
+                controllerAs: "model"
             })
             .when("/login", {
                 templateUrl: "views/user/templates/login.view.client.html",
@@ -104,13 +104,14 @@
                 controller: "WriterController",
                 controllerAs: "model",
                 resolve: {
-                    loggedin: checkLoggedin
+                    loggedin: checkLoggedin,
+                    isWriter: checkIsWriter
                 }
             })
             .when("/reader/:uid/book/:bid", { // show all the visible chapters of this book for the reader
                 templateUrl: "views/book/templates/book-list.view.client.html",
                 controller: "ViewBookController",
-                controllerAs: "models",
+                controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin
                 }
@@ -118,16 +119,20 @@
             .when("/writer/:uid/book/new", { // add new book with this user as the 1st author
                 templateUrl: "views/book/templates/book-new.view.client.html",
                 controller: "NewBookController",
-                controllerAs: "models",
+                controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin,
-                    checkIsWriter: checkIsWriter
+                    isWriter: checkIsWriter
                 }
             })
             .when("/writer/:uid/book/:bid", { // change title, ISBN etc. add/remove new articles to this book
                 templateUrl: "views/book/templates/book-edit.view.client.html",
                 controller: "EditBookController",
-                controllerAs: "models"
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin,
+                    isWriter: checkIsWriter
+                }
             })
 
             /*
@@ -135,37 +140,37 @@
              .when("/writer/:uid/book/:bid/page", {
              templateUrl: "views/page/templates/page-list.view.client.html",
              controller: "PageListController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              .when("/user/:uid/website/:wid/page/new", {
              templateUrl: "views/page/templates/page-new.view.client.html",
              controller: "NewPageController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              .when("/user/:uid/website/:wid/page/:pid", {
              templateUrl: "views/page/templates/page-edit.view.client.html",
              controller: "EditPageController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              .when("/user/:uid/website/:wid/page/:pid/widget", {
              templateUrl: "views/widget/templates/widget-list.view.client.html",
              controller: "WidgetListController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              .when("/user/:uid/website/:wid/page/:pid/widget/new", {
              templateUrl: "views/widget/templates/widget-chooser.view.client.html",
              controller: "NewWidgetController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
              templateUrl: "views/widget/templates/widget-edit.view.client.html",
              controller: "EditWidgetController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              .when("/user/:uid/website/:wid/page/:pid/widget/:wgid/flickr", {
              templateUrl: "views/widget/templates/widget-flickr-search.view.client.html",
              controller: "FlickrImageSearchController",
-             controllerAs: "models"
+             controllerAs: "model"
              })
              */
             .otherwise({

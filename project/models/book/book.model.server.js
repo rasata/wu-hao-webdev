@@ -2,7 +2,13 @@
  * Created by wuhao on 2017-03-26.
  */
 module.exports = function () {
-    var api = {};
+    var api = {
+        createBook: createBook,
+        updateBook: updateBook,
+        findBookById: findBookById,
+        deleteBook: deleteBook,
+        findBooksByAuthorId: findBooksByAuthorId
+    };
 
     var mongoose = require('mongoose');
     mongoose.Promise = require('q').Promise;
@@ -13,7 +19,12 @@ module.exports = function () {
     return api;
 
     function createBook(userId, newBook) {
-        newBook.authors.push(userId);
+        console.log("adding book: ", JSON.stringify(newBook));
+        if (newBook.authors) {
+            newBook.authors.push(userId);
+        } else {
+            newBook.authors = [userId];
+        }
         return BookModel.create(newBook);
     }
 

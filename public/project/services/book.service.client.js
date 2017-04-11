@@ -19,11 +19,11 @@
         return api;
 
         function createBook(userId, newBook) {
-            return $http.post("/aw/api/book", newBook);
+            return $http.post("/aw/api/writer/" + userId +"/book", newBook);
         }
 
         function findBookById(bookId) {
-            return $http.get("/aw/api/book", bookId);
+            return $http.get("/aw/api/book/" + bookId);
         }
 
         function updateBook(newBook) {
@@ -39,11 +39,11 @@
         }
 
         function findBooksByAuthorId(author) {
-            return $http.get("/aw/api/book?authorid=" + author);
+            return $http.get("/aw/api/book?authorId=" + author);
         }
         
         function findBookByISBN(isbn) {
-            return $http.get("/aw/api/book?isbn=" + isbn);
+            return $http.get("/aw/api/book?ISBN=" + isbn);
         }
     }
 })();

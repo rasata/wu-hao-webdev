@@ -5,11 +5,10 @@
 
     function WriterController($rootScope, $location, $routeParams, UserService, BookService) {
         var vm = this;
-        var userId = $routeParams.uid;
+        vm.userId = $routeParams.uid;
 
         function init() {
-            // TODO: find books by user id
-            var promise = BookService.findBooksByAuthorId(userId);
+            var promise = BookService.findBooksByAuthorId(vm.userId);
             promise.success(function (books) {
                 vm.bookshelf = books;
             });

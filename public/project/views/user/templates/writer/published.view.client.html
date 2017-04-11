@@ -14,7 +14,7 @@
             </a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#/writer/{{model.userId}}/shelf">Book Shelf</a>
+            <a class="navbar-brand" href="#/writer/{{model.userId}}/published">Published Books</a>
         </div>
     </div>
 </nav>
@@ -41,7 +41,7 @@
                     {{book.ISBN}}
                 </div>
                 <div class="col-xs-1">
-                    <a href="#/writer/{{model.userId}}/book/{{book._id}}/book">
+                    <a href="#/writer/{{model.userId}}/book/{{book._id}}">
                         <span class="glyphicon glyphicon-cog pull-right"></span>
                     </a>
                 </div>

@@ -127,8 +127,8 @@ module.exports = function (app, model) {
         }));
 
     app.post("/aw/api/user", createUser);
-    app.get("/aw/api/user?username=username", findUserByUsername);
-    app.get("/aw/api/user", findUserByCredentials);
+    // app.get("/aw/api/user?username=username", findUserByUsername);
+    app.get("/aw/api/user", findUser);
     app.get("/aw/api/user/:userId", findUserByUserId);
     app.put("/aw/api/user/:userId", updateUser);
     app.delete("/aw/api/user/:userId", deleteUser);
@@ -262,8 +262,9 @@ module.exports = function (app, model) {
         //     );
 
         // TODO: is this really checking the user from the database?
-        console.log("service server login");
         var user = req.user;
+        console.log("service server login");
+        console.log(user);
         res.json(user);
     }
 
@@ -359,9 +360,6 @@ module.exports = function (app, model) {
 
     function findUserByUsername(req, res) {
         var username = req.query['username'];
-
-        console.log("find user by username");
-        console.log(username);
 
         model.UserModel
             .findUserByUsername(username)

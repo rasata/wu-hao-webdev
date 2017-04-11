@@ -8,18 +8,46 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($rootScope, $location, UserService) {
+    function LoginController($rootScope, $location, UserService, BookService) {
         var vm = this;
 
         // event handlers
         vm.login = login;
         vm.loginGoogle = loginGoogle;
         vm.logout = logout;
+        vm.test = test;
 
         function init() {
         }
 
         init();
+
+        function test() {
+            var promise = BookService.findBooksByAuthorId("58e9322007347195512aa083");
+            promise.success(function (books) {
+                vm.error = JSON.stringify(books);
+            });
+
+            promise.error(function (res, status) {
+                vm.error = res;
+            });
+
+            // var promise = UserService.findUserById('58e9322007347195512aa083');
+            // promise.success(function (user) {
+            //     vm.error = JSON.stringify(user);
+            // });
+            // promise.error(function (res, status) {
+            //     vm.error = JSON.stringify(res);
+            // });
+
+            // var promise2 = UserService.findUserByCredentials('bob', 'bob');
+            // promise2.success(function (user) {
+            //     vm.error = JSON.stringify(user);
+            // });
+            // promise2.error(function (res, status) {
+            //     vm.error = JSON.stringify(res);
+            // });
+        }
 
         function login(user) {
             // var promise = UserService.findUserByCredentials(user.username, user.password);
@@ -32,6 +60,8 @@
 
                     if (user.role == "reader") {
                         $location.url("/reader/" + user._id + "/bookshelf");
+                    } else if (user.role == "writer") {
+                        $location.url("/writer/" + user._id + "/published");
                     } else if (user.role == "admin") {
                         $location.url("/admin");
                     }

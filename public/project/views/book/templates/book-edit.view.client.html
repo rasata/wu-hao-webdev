@@ -25,7 +25,7 @@
                 </a>
             </div>
             <div class="navbar-text pull-right">
-                <a ng-click="model.createBook(book)">
+                <a ng-click="model.updateBook(book)">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </div>
@@ -41,7 +41,7 @@
     <!-- left side -->
     <div class="col-sm-4 hidden-xs hw-sidebar">
         <ul class="list-group">
-            <li ng-repeat="book in model.published" class="list-group-item">
+            <li ng-repeat="book in model.bookshelf" class="list-group-item">
                 <div class="row">
                     <div class="col-xs-10">
                         {{book.title}}
@@ -77,6 +77,8 @@
                   id="description"
                   placeholder="Description">
         </textarea>
+
+        <a class="btn btn-danger btn-block" ng-click="model.deleteBook()">Delete Book</a>
     </div>
 </div>
 
