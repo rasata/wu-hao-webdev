@@ -103,9 +103,6 @@ module.exports = function (app, model) {
         var bookId = req.params.bookId;
         var newBook = req.body;
 
-        console.log("book id: " + bookId);
-        console.log(newBook);
-
         model.BookModel
             .updateBook(bookId, newBook)
             .then(

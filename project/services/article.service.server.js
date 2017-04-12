@@ -6,9 +6,9 @@
  */
 module.exports = function (app, model) {
     app.post("/aw/api/book/:bookId/article", createArticle);
+    app.get("/aw/api/article/:articleId", findArticleById);
     app.get("/aw/api/book/:bookId/article", findAllArticlesForBook);
     app.get("/aw/api/article/popular/:amount", findPopularArticles);
-    app.get("/aw/api/article/:articleId", findArticleById);
     app.put("/aw/api/article/:articleId", updateArticle);
     app.delete("/aw/api/article/:articleId", deleteArticle);
     app.get("/aw/api/article", findArticles);
@@ -85,7 +85,7 @@ module.exports = function (app, model) {
     }
 
     function findArticleById(req, res) {
-        var articleId = req.params.articleid;
+        var articleId = req.params.articleId;
 
         model.ArticleModel
             .findArticleById(articleId)
@@ -101,6 +101,9 @@ module.exports = function (app, model) {
     function updateArticle(req, res) {
         var articleId = req.params.articleId;
         var newArticle = req.body;
+
+        console.log("update article id: " + articleId);
+        console.log(newArticle);
 
         model.ArticleModel
             .updateArticle(articleId, newArticle)

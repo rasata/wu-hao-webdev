@@ -1,98 +1,44 @@
 <!DOCTYPE html>
 
-<nav class="navbar navbar-fixed-top">
-    <div class="row container-fluid">
-        <!--left side header -->
-        <div class="col-sm-4 hidden-xs">
-            <div class="navbar-text pull-left">
-                <a href="#/writer/{{model.userId}}/book/{{model.bookId}}">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </div>
-            <!--<div class="navbar-text pull-right">-->
-                <!--<a href="#/writer/{{model.userId}}/book/new">-->
-                    <!--<span class="glyphicon glyphicon-plus"></span>-->
-                <!--</a>-->
-            <!--</div>-->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/home">Autonomous Writers</a>
-            </div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-text pull-left">
+            <a href="#/writer/{{model.userId}}/book/{{model.bookId}}/articles">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
         </div>
-
-        <!--Right side header-->
-        <div class="col-sm-8">
-            <div class="navbar-text pull-left hidden-sm">
-                <a href="#/writer/{{model.userId}}/published">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </div>
-            <div class="navbar-text pull-right">
-                <a ng-click="model.createArticle(article)">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </a>
-            </div>
-            <div class="navbar-header">
-                <!--<a class="navbar-brand" href="#/user/{{model.userId}}/website/new">New Website</a>-->
-                <a class="navbar-brand" href="#/home">Autonomous Writers</a>
-            </div>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/writer/{{model.userId}}/published">My Books</a>
-            </div>
+        <div class="navbar-text pull-right">
+            <a ng-click="model.createArticle(article)">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#/user/{{model.userId}}/website/new">New Website</a>-->
+            <a class="navbar-brand" href="#/writer/{{model.userId}}/book/{{model.bookId}}/article/new">New Article</a>
         </div>
     </div>
 </nav>
 
-<div class="row container-fluid">
-    <!-- left side -->
-    <div class="col-sm-4 hidden-xs hw-sidebar">
-        <ul class="list-group">
-            <li ng-repeat="article in model.articles" class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-10">
-                        {{article.title}}
-                    </div>
-                    <div class="col-xs-2 pull-right">
-                        <a href="#/writer/{{model.userId}}/book/{{model.bookId}}/article/{{article._id}}">
-                            <!--<span class="glyphicon glyphicon-cog pull-right"></span>-->
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
+<div class="container">
+    <div ng-show="model.error" class="alert alert-danger" role="alert">
+        {{model.error}}
     </div>
 
-    <!-- right side -->
-    <div class="col-sm-8">
-        <div ng-show="model.error" class="alert alert-danger" role="alert">
-            {{model.error}}
-        </div>
+    <label for="name">Title</label>
+    <input ng-model="article.title" class="form-control" id="name">
 
-        <label for="name">Title</label>
-        <input ng-model="article.title" class="form-control" id="name" placeholder="Name">
+    <label for="chapterNum">Chapter Number</label>
+    <input ng-model="article.chapterNumber" type="number" class="form-control" id="chapterNum">
 
-        <label for="chapterNum">Chapter Number</label>
-        <input ng-model="article.chapterNumber" type="number" class="form-control" id="chapterNum">
+    <label for="chapterName">Chapter Name</label>
+    <input ng-model="article.chapterName" type="text" class="form-control" id="chapterName">
 
-        <label for="chapterName">Chapter Name</label>
-        <input ng-model="article.chapterName" type="text" class="form-control" id="chapterName">
-
-        <label for="content">Content</label>
-        <div ng-model="article.content"
-             id="content"
-             text-angular
-             ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
+    <label for="content">Content</label>
+    <div ng-model="article.content"
+         id="content"
+         text-angular
+         ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],
         ['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],
         ['indent','outdent'],['html']]">
-        </div>
     </div>
 </div>
-
-<nav class="navbar navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="row navbar-right navbar-text">
-            <div class="col-xs-12 text-right">
-                <a href="#/user/{{model.userId}}"><span class="glyphicon glyphicon-user"></span></a>
-            </div>
-        </div>
-    </div>
-</nav>

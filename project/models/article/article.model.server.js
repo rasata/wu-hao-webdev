@@ -32,7 +32,13 @@ module.exports = function () {
     }
 
     function updateArticle(articleId, article) {
-        return ArticleModel.update({_id: articleId}, {$set: article});
+        return ArticleModel.update({_id: articleId},
+            {
+                title: article.title,
+                chapterNumber: article.chapterNumber,
+                chapterName: article.chapterName,
+                content: article.content
+            });
     }
 
     function deleteArticle(articleId) {

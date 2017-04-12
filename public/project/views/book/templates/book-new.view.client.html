@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="row container-fluid">
+    <div class="container">
         <div class="navbar-text pull-left">
             <a href="#/writer/{{model.userId}}/published">
                 <span class="glyphicon glyphicon-chevron-left"></span>
@@ -20,7 +20,7 @@
     </div>
 </nav>
 
-<div class="row container-fluid">
+<div class="container">
     <div class="col-xs-12">
         <div ng-show="model.error" class="alert alert-danger" role="alert">
             {{model.error}}
@@ -45,13 +45,3 @@
         </textarea>
     </div>
 </div>
-
-<nav class="navbar navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="row navbar-right navbar-text">
-            <div class="col-xs-12 text-right">
-                <a href="#/user/{{model.userId}}"><span class="glyphicon glyphicon-user"></span></a>
-            </div>
-        </div>
-    </div>
-</nav>
