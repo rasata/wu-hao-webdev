@@ -6,9 +6,36 @@
         .module("AutonomousWriters")
         .controller("ArticleListController", ArticleListController)
         .controller("NewArticleController", NewArticleController)
-        .controller("EditArticleController", EditArticleController);
+        .controller("EditArticleController", EditArticleController)
+        .controller("ArticleViewController", ArticleViewController);
+    
+    function ArticleViewController($sce, $routeParams, $location, ArticleService) {
+        var vm = this;
 
-    function ArticleListController($routeParams, $location, ArticleService) {
+        vm.userId = $routeParams.uid;
+        vm.bookId = $routeParams.bid;
+        vm.articleId = $routeParams.aid;
+        vm.getTrustedHtml = getTrustedHtml;
+
+        function init() {
+            var promise = ArticleService.findArticleById(vm.articleId);
+            promise
+                .success(function (article) {
+                    vm.article = article;
+                })
+                .error(function (err, status) {
+                    vm.error = err;
+                });
+        }
+        init();
+
+        function getTrustedHtml(html) {
+            return $sce.trustAsHtml(html);
+        }
+    }
+    
+
+    function ArticleListController($sce, $routeParams, $location, ArticleService) {
         var vm = this;
 
         vm.userId = $routeParams.uid;
@@ -18,11 +45,7 @@
             var promise = ArticleService.findArticlesByBookId(vm.bookId);
             promise
                 .success(function (articles) {
-                    //     if (articles == null || articles.length == 0) {
-                    //         vm.error = "Could not find related articles.";
-                    //     } else {
                     vm.articles = articles;
-                    // }
                 })
                 .error(function (err, status) {
                     vm.error = err;
@@ -30,7 +53,6 @@
         }
 
         init();
-
     }
 
     function NewArticleController($routeParams, $location, ArticleService) {
@@ -80,8 +102,6 @@
             var promise = ArticleService.findArticleById(vm.articleId);
             promise.success(function (article) {
                 vm.article = article;
-                console.log("got article");
-                console.log(article);
             });
 
             promise.error(function (res, status) {

@@ -9,12 +9,13 @@
             </a>
         </div>
         <div class="navbar-text pull-right">
-            <a href="#/writer/{{model.userId}}/book/new">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
+            <!--TODO: like the article-->
+            <!--<a ng-click="model.likeTheArticle()">-->
+                <span class="glyphicon glyphicon-heart"></span>
+            <!--</a>-->
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#/writer/{{model.userId}}/published">Published Books</a>
+            <a class="navbar-brand" href="#/">{{model.article.title}}</a>
         </div>
     </div>
 </nav>
@@ -24,28 +25,5 @@
 </div>
 
 <div class="container-fluid">
-    <a class="btn btn-primary" href="#/writer/{{model.userId}}/book/new">Add New Book</a>
-
-    <ul class="list-group">
-        <li ng-repeat="article in model.articles" class="list-group-item">
-            <div class="row">
-                <div class="col-xs-11 col-sm-6">
-                    <a href="#/writer/{{model.userId}}/book/{{book._id}}/article">
-                        {{article.title}}
-                    </a>
-                </div>
-                <div class="col-sm-3 hidden-xs">
-                    {{article.authors}}
-                </div>
-                <div class="col-sm-2 hidden-xs">
-                    {{article.ISBN}}
-                </div>
-                <div class="col-xs-1">
-                    <a href="#/writer/{{model.userId}}/book/{{book._id}}">
-                        <span class="glyphicon glyphicon-cog pull-right"></span>
-                    </a>
-                </div>
-            </div>
-        </li>
-    </ul>
+    <div ng-bind-html="model.getTrustedHtml(model.article.content)"></div>
 </div>

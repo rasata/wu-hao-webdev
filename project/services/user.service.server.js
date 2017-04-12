@@ -43,11 +43,11 @@ module.exports = function (app, model) {
     // console.log("facebook config: \n");
     // console.log(facebookConfig);
 
-    console.log("google config: \n");
-    console.log(googleConfig);
-
-    console.log("google config: \n");
-    console.log(goodreadsConfig);
+    // console.log("google config: \n");
+    // console.log(googleConfig);
+    //
+    // console.log("goodreads config: \n");
+    // console.log(goodreadsConfig);
 
     var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
@@ -98,33 +98,34 @@ module.exports = function (app, model) {
     //     })(req, res, next);
     // });
 
-    app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}), function (req, res) {
-        if (req.user) {
-            res.send(req.user);
-        } else {
-            res.redirect("/project/index.html#/login");
-        }
-    });
-
-    app.get('/auth/goodreads/callback', function (req, res, next) {
-        passport.authenticate('goodreads', function (err, user, info) {
-            if (err) {
-                return next(err)
-            }
-            if (!user) {
-                return res.json({message: info.message})
-            }
-            res.json(user);
-        })(req, res, next);
-    });
+    app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}));
+    // app.get('/auth/goodreads/callback',
+    //     function (req, res, next) {
+    //         passport.authenticate('goodreads', function (err, user, info) {
+    //             if (err) {
+    //                 return next(err)
+    //             }
+    //             if (!user) {
+    //                 return res.json({message: info.message})
+    //             }
+    //             res.redirect("/project/#/user/" + user._id);
+    //         })(req, res, next);
+    //     });
+    app.get('/auth/goodreads/callback',
+        passport.authenticate('goodreads',
+            {
+                successRedirect: '/project/#/home',
+                failureRedirect: '/project/#/login'
+            }));
 
 
     app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
     app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {
-            successRedirect: '/home', // TODO: add user id to this?
-            failureRedirect: '/login'
-        }));
+        passport.authenticate('facebook',
+            {
+                successRedirect: '/home', // TODO: add user id to this?
+                failureRedirect: '/login'
+            }));
 
     app.post("/aw/api/user", createUser);
     // app.get("/aw/api/user?username=username", findUserByUsername);
@@ -132,8 +133,9 @@ module.exports = function (app, model) {
     app.get("/aw/api/user/:userId", findUserByUserId);
     app.put("/aw/api/user/:userId", updateUser);
     app.delete("/aw/api/user/:userId", deleteUser);
-    app.get("/aw/api/user", findUser);
     app.get("/aw/api/allusers", findAllUsers);
+    app.put("/aw/api/user/:userId/addToShelf/:bookId", addToBookshelf);
+    app.get("/aw/api/user", findUser);
 
     function googleStrategy(token, refreshToken, profile, done) {
         model.UserModel
@@ -173,7 +175,6 @@ module.exports = function (app, model) {
                 if (user) {
                     done(null, user);
                 } else {
-                    console.log(profile);
                     console.log(user);
                     var user = {
                         username: profile.displayName,
@@ -250,32 +251,8 @@ module.exports = function (app, model) {
     }
 
     function login(req, res) {
-        // model.UserModel.findUserByUsername(user.username)
-        //     .then(
-        //         function (responseUser) {
-        //             if(user && bcrypt.compareSync(responseUser.password, user.password)) {
-        //                 return done(null, user);
-        //             } else {
-        //                 return done(null, false);
-        //             }
-        //         }
-        //     );
-
-        // TODO: is this really checking the user from the database?
         var user = req.user;
         res.json(user);
-    }
-
-    function loginFacebook(req, res) {
-        console.log("service server, loginFacebook got called");
-        console.log(req);
-    }
-
-    function loginGoogle(req, res) {
-        console.log("service server, loginGoogle got called");
-        console.log(req.user);
-
-        res.send(req.user);
     }
 
     function isadmin(req, res) {
@@ -410,9 +387,25 @@ module.exports = function (app, model) {
             });
     }
 
+    function addToBookshelf(req, res) {
+        var userId = req.params.userId;
+        var bookId = req.params.bookId;
+
+        model.UserModel
+            .addToBookshelf(userId, bookId)
+            .then(
+                function (res) {
+                    res.send(200);
+                }
+            )
+            .catch(function (err) {
+                console.log(err);
+                res.status(500).send(err);
+            });
+    }
+
     function deleteUser(req, res) {
         var userId = req.params.userId;
-
         var userId = req.params.userId;
 
         model.UserModel

@@ -12,11 +12,13 @@
             $http.get('/aw/api/loggedin').success(function (user) {
                 $rootScope.errorMessage = null;
                 if (user !== '0') {
+                    console.log("I'm logged in MOFO!");
                     $rootScope.currentUser = user;
                     deferred.resolve();
                 } else {
+                    console.log("Can't touch this!");
                     deferred.reject();
-                    $location.url('/');
+                    $location.url('/login');
                 }
             });
             return deferred.promise;
@@ -107,9 +109,17 @@
                     loggedin: checkLoggedin
                 }
             })
-            .when("/reader/:uid/book/:bid", { // show all the visible chapters of this book for the reader
+            .when("/reader/:uid/book/:bid", {
                 templateUrl: "views/book/templates/book-list.view.client.html",
-                controller: "ViewBookController",
+                controller: "BookListController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin
+                }
+            })
+            .when("/reader/:uid/book/:bid/article/:aid", {
+                templateUrl: "views/article/templates/reader-article-list.view.client.html",
+                controller: "ArticleViewController",
                 controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin

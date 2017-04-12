@@ -19,9 +19,18 @@
             "register": register,
             "logout": logout,
             "checkLoggedIn": checkLoggedIn,
-            "findAllUsers": findAllUsers
+            "findAllUsers": findAllUsers,
+            "addToBookshelf": addToBookshelf
         };
         return api;
+
+        function addToBookshelf(bookId, userId) {
+            return $http.put("/aw/api/user/"+ userId +"/addToShelf/" + bookId);
+        }
+
+        function likeTheArticle(articleId, user) {
+
+        }
 
         function register(user) {
             return $http.post("/aw/api/register", user);
@@ -49,10 +58,10 @@
         }
 
         function checkLoggedIn() {
-            return $http.get('/aw/api/loggedin')
-                .then(function (response) {
-                    return response.data;
-                });
+            return $http.get('/aw/api/loggedin');
+                // .then(function (response) {
+                //     return response.data;
+                // });
         }
 
         function createUser(newUser) {

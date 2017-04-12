@@ -10,7 +10,8 @@ module.exports = function () {
         findAllUsers: findAllUsers,
         findUserByFacebookId: findUserByFacebookId,
         findUserByGoogleId: findUserByGoogleId,
-        findUserByGoodreadsId: findUserByGoodreadsId
+        findUserByGoodreadsId: findUserByGoodreadsId,
+        addToBookshelf: addToBookshelf
     };
 
     var mongoose = require('mongoose');
@@ -78,6 +79,17 @@ module.exports = function () {
             email: user.email,
             role: user.role
         });
+    }
+    
+    function addToBookshelf(userId, bookId) {
+        console.log("adding book to user shelf");
+        console.log(userId);
+        console.log(bookId);
+
+        return UserModel.update(
+            {_id: userId},
+            {$push: {bookshelf: bookId}}
+        );
     }
 
     // Removes user instance whose _id is equal to parameter userId

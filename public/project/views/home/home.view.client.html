@@ -35,7 +35,8 @@
     <div class="col-xs-4" ng-repeat="book in model.allBooks">
         <div class="row">
             <div class="col-xs-12 pull-right">
-                <a href="#/book/{{book._id}}">
+                <!--<a href="#/reader/{{model.userId}}/book/{{book._id}}">-->
+                <a ng-click="model.gotoBook(book)">
                     {{book.title}}
                 </a>
             </div>

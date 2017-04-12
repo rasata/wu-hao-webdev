@@ -8,16 +8,27 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($rootScope, $location, UserService, BookService) {
+    function LoginController($rootScope, $location, UserService, BookService, $http) {
         var vm = this;
 
         // event handlers
         vm.login = login;
-        vm.loginGoogle = loginGoogle;
         vm.logout = logout;
         // vm.gotoProfile = gotoProfile;
+        vm.gotoBook = gotoBook;
+        // vm.loginGoogle = loginGoogle;
+        // vm.loginGoodreads = loginGoodreads;
 
         function init() {
+            var loginPromise = UserService.checkLoggedIn();
+            loginPromise.success(function (user) {
+                if(user == 0) {
+                    $rootScope.currentUser = null;
+                } else {
+                    $rootScope.currentUser = user;
+                }
+            });
+
             var promise = BookService.findAllBooks();
             promise.success(
                 function (books) {
@@ -28,9 +39,13 @@
 
         init();
 
-        // function gotoProfile() {
-        //     $location.url("#/user/"+$rootScope.currentUser._id);
-        // }
+        function gotoBook(book) {
+            if ($rootScope.currentUser) {
+                $location.url("/reader/"+$rootScope.currentUser._id + "/book/" + book._id);
+            } else {
+                $location.url("/login/");
+            }
+        }
 
         function login(user) {
             // var promise = UserService.findUserByCredentials(user.username, user.password);
@@ -58,6 +73,17 @@
             });
         }
 
+        /*
+        function loginGoodreads() {
+            var promise = $http.get("/auth/goodreads");
+            promise.success(function (user) {
+                $rootScope.currentUser = user;
+            });
+            promise.error(function (err, status) {
+                vm.error = err;
+            });
+        }
+
         function loginGoogle() {
             var promise = UserService.loginGoogle();
             promise.success(function (user) {
@@ -77,6 +103,7 @@
                 }
             });
         }
+        */
 
         function logout(user) {
             var promise = UserService.logout(user);
@@ -104,8 +131,6 @@
                 // the two entered password are the same
 
                 // var createUserPromise = UserService.createUser(user);
-                console.log("wat");
-                console.log(user.username);
                 var findUsernamePromise = UserService.findUserByUsername(user.username);
 
                 findUsernamePromise.success(function (checkUserRes) {

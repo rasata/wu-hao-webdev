@@ -4,9 +4,38 @@
 (function () {
     angular
         .module("AutonomousWriters")
+        .controller("BookListController", BookListController)
         .controller("NewBookController", NewBookController)
         .controller("EditBookController", EditBookController);
-    
+
+    function BookListController($routeParams, $location, UserService, BookService, ArticleService) {
+        var vm = this;
+        vm.userId = $routeParams.uid;
+        vm.bookId = $routeParams.bid;
+
+        vm.addToBookshelf = addToBookshelf;
+
+        function init() {
+             var promise = ArticleService.findArticlesByBookId(vm.bookId);
+             promise.success(function (articles) {
+                 vm.articles = articles;
+             });
+        }
+        init();
+
+
+        function addToBookshelf() {
+            var promise = UserService.addToBookshelf(vm.bookId, vm.userId);
+            promise.success(function (res) {
+                vm.message = "Book added to your shelf";
+            });
+            promise.error(function (res, status) {
+                vm.error = "Book did not added to your shelf. " + res;
+            });
+        }
+    }
+
+
     function NewBookController($routeParams, $location, BookService) {
         var vm = this;
 
@@ -54,8 +83,6 @@
         function init() {
             var promise = BookService.findBookById(vm.bookId);
             promise.success(function (book) {
-                console.log("found book: " + vm.bookId);
-                console.log(JSON.stringify(book));
                 vm.book = book;
             });
 
