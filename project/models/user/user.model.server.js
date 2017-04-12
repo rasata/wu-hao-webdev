@@ -71,11 +71,12 @@ module.exports = function () {
         return UserModel.update({
             _id: userId
         }, {
-            // password: user.password,
             firstName: user.firstName,
             lastName: user.lastName,
+            username: user.username,
+            password: user.password,
             email: user.email,
-            phone: user.phone,
+            role: user.role
         });
     }
 

@@ -1,63 +1,27 @@
 <!DOCTYPE html>
 
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="row container-fluid">
-        <div class="col-sm-4 hidden-xs">
-            <div class="navbar-text pull-left">
-                <a href="#/writer/{{model.userId}}/published">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </div>
-            <div class="navbar-text pull-right">
-                <a href="#/writer/{{model.userId}}/book/new">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
-            </div>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/home">Autonomous Writers</a>
-            </div>
+        <div class="navbar-text pull-left">
+            <a href="#/writer/{{model.userId}}/published">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
         </div>
 
-        <div class="col-sm-8">
-            <div class="navbar-text pull-left hidden-sm">
-                <a href="#/writer/{{model.userId}}/published">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </div>
-            <div class="navbar-text pull-right">
-                <a ng-click="model.createBook(book)">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </a>
-            </div>
-            <div class="navbar-header">
-                <!--<a class="navbar-brand" href="#/user/{{model.userId}}/website/new">New Website</a>-->
-                <a class="navbar-brand" href="#/home">Autonomous Writers</a>
-            </div>
+        <div class="navbar-text pull-right">
+            <a ng-click="model.createBook(book)">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#/user/{{model.userId}}/website/new">New Website</a>-->
+            <a class="navbar-brand" href="#/writer/{{model.userId}}/book/new">New Book</a>
         </div>
     </div>
 </nav>
 
 <div class="row container-fluid">
-    <!-- left side -->
-    <div class="col-sm-4 hidden-xs hw-sidebar">
-        <ul class="list-group">
-            <li ng-repeat="book in model.published" class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-10">
-                        {{book.title}}
-                    </div>
-                    <div class="col-xs-2 pull-right">
-                        <a href="#/writer/{{model.userId}}/book/{{book._id}}">
-                            <span class="glyphicon glyphicon-cog pull-right"></span>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <!-- right side -->
-    <div class="col-sm-8">
+    <div class="col-xs-12">
         <div ng-show="model.error" class="alert alert-danger" role="alert">
             {{model.error}}
         </div>
@@ -66,9 +30,11 @@
         <input ng-model="book.title" class="form-control" id="name" placeholder="Name">
 
         <label for="isbn">ISBN</label>
-        <input ng-model="book.isbn" class="form-control" id="isbn">
+        <input ng-model="book.isbn" class="form-control" id="isbn" placeholder="ex, 978-0130460196">
 
-        <!--TODO: finish all the input in the schema-->
+        <!--TODO: genre should be checkbox?-->
+        <label>Genres (Seperate by comma, no space)</label>
+        <input ng-model="book.genres" class="form-control" id="genres" placeholder="ex: Drama, Romance, Travel, etc.">
 
         <label for="description">Description</label>
         <textarea ng-model="book.description"

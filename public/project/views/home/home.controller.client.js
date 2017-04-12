@@ -6,15 +6,19 @@
         .module("AutonomousWriters")
         .controller("HomeController", HomeController);
 
-    function HomeController($rootScope, $location, UserService) {
+    function HomeController($rootScope, $location, UserService, BookService) {
         var vm = this;
 
         vm.logout = logout;
         vm.gotoProfile = gotoProfile;
-
         // event handlers
         function init() {
-
+            var promise = BookService.findAllBooks();
+            promise.success(
+                function (books) {
+                    vm.allBooks = books;
+                }
+            );
         }
 
         init();

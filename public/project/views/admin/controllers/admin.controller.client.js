@@ -26,6 +26,11 @@
        init();
        
        function register(user) {
+           if (!user || !user.username || !user.password) {
+               vm.error = "missing required field";
+               return;
+           }
+
            var promise = UserService.register(user);
            promise.success(function (user) {
                init();
@@ -37,6 +42,11 @@
        }
 
        function updateUser(user) {
+           if (!user || !user.username || !user.password) {
+               vm.error = "missing required field";
+               return;
+           }
+
            var promise = UserService.updateUser(user._id, user);
            promise.success(function (user) {
                init();

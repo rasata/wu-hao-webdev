@@ -1,77 +1,57 @@
 <!DOCTYPE html>
 
-<nav class="navbar navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="row container-fluid">
-        <div class="col-sm-4 hidden-xs">
-            <div class="navbar-text pull-left">
-                <a href="#/writer/{{model.userId}}/published">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </div>
-            <div class="navbar-text pull-right">
-                <a href="#/writer/{{model.userId}}/book/new">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
-            </div>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#/home">Autonomous Writers</a>
-            </div>
+        <div class="navbar-text pull-left hidden-sm">
+            <a href="#/writer/{{model.userId}}/published">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
         </div>
-
-        <div class="col-sm-8">
-            <div class="navbar-text pull-left hidden-sm">
-                <a href="#/writer/{{model.userId}}/published">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                </a>
-            </div>
-            <div class="navbar-text pull-right">
-                <a ng-click="model.updateBook(book)">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </a>
-            </div>
-            <div class="navbar-header">
-                <!--<a class="navbar-brand" href="#/user/{{model.userId}}/website/new">New Website</a>-->
-                <a class="navbar-brand" href="#/home">Autonomous Writers</a>
-            </div>
+        <div class="navbar-text pull-right">
+            <a ng-click="model.updateBook()">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <!--<a class="navbar-brand" href="#/user/{{model.userId}}/website/new">New Website</a>-->
+            <a class="navbar-brand" href="#/home">Autonomous Writers</a>
         </div>
     </div>
 </nav>
 
 <div class="row container-fluid">
-    <!-- left side -->
-    <div class="col-sm-4 hidden-xs hw-sidebar">
-        <ul class="list-group">
-            <li ng-repeat="book in model.bookshelf" class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-10">
-                        {{book.title}}
-                    </div>
-                    <div class="col-xs-2 pull-right">
-                        <a href="#/writer/{{model.userId}}/book/{{book._id}}">
-                            <span class="glyphicon glyphicon-cog pull-right"></span>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
-
-    <!-- right side -->
     <div class="col-sm-8">
         <div ng-show="model.error" class="alert alert-danger" role="alert">
             {{model.error}}
         </div>
 
+        <div class="alert alert-success" ng-show="model.message">
+            {{model.message}}
+        </div>
+
         <label for="name">Title</label>
-        <input ng-model="book.title" class="form-control" id="name" placeholder="Name">
+        <input class="form-control" id="name" placeholder="Name" ng-model="model.book.title">
+
+        <!--<label for="authors">Authors</label>-->
+        <!--<input class="form-control" id="authors" ng-model="model.book.authors">-->
 
         <label for="isbn">ISBN</label>
-        <input ng-model="book.isbn" class="form-control" id="isbn">
+        <input class="form-control" id="isbn" ng-model="model.book.isbn">
 
-        <!--TODO: finish all the input in the schema-->
+        <!--<label for="articles">Articles</label>-->
+        <!--<input class="form-control" id="articles" ng-model="model.book.articles">-->
+
+        <!--<label for="subs">Subs</label>-->
+        <!--<input class="form-control" id="subs" ng-model="model.book.subscribers">-->
+
+        <label for="genres">Genres</label>
+        <input class="form-control" id="genres" ng-model="model.book.genres">
+
+        <!--<label for="liked">Liked</label>-->
+        <!--<input class="form-control" id="liked" type="number" ng-model="model.book.liked">-->
 
         <label for="description">Description</label>
-        <textarea ng-model="book.description"
+        <textarea ng-model="model.book.description"
                   class="form-control"
                   rows="4"
                   id="description"

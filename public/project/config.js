@@ -39,16 +39,26 @@
 
         var checkIsWriter = function ($q, $timeout, $http, $location, $rootScope) {
             var deferred = $q.defer();
-            $http.get('/aw/api/iswriter').success(function (user) {
+            $http.get('/aw/api/isadmin').success(function (user) {
                 $rootScope.errorMessage = null;
                 if (user !== '0') {
                     $rootScope.currentUser = user;
                     deferred.resolve();
                 } else {
-                    deferred.reject();
-                    $location.url('/');
+                    $http.get('/aw/api/iswriter').success(function (writerUser) {
+                        $rootScope.errorMessage = null;
+                        if (writerUser !== '0') {
+                            $rootScope.currentUser = writerUser;
+                            deferred.resolve();
+                        } else {
+                            deferred.reject();
+                            $location.url('/');
+                        }
+                    });
                 }
             });
+
+
             return deferred.promise;
         };
 
@@ -56,13 +66,11 @@
             .when("/", {
                 templateUrl: "views/home/home.view.client.html",
                 controller: "LoginController",
-                // controller: "HomeController",
                 controllerAs: "model"
             })
             .when("/home", {
                 templateUrl: "views/home/home.view.client.html",
                 controller: "LoginController",
-                // controller: "HomeController",
                 controllerAs: "model"
             })
             .when("/login", {
@@ -92,20 +100,11 @@
                 }
             })
             .when("/reader/:uid/bookshelf", { // show all books that is on user's shelf
-                templateUrl: "views/user/templates/reader/bookshelf.view.client.html",
+                templateUrl: "views/book/templates/bookshelf.view.client.html",
                 controller: "ReaderController",
                 controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin
-                }
-            })
-            .when("/writer/:uid/published", { // listing all the books having this user as an author
-                templateUrl: "views/user/templates/writer/published.view.client.html",
-                controller: "WriterController",
-                controllerAs: "model",
-                resolve: {
-                    loggedin: checkLoggedin,
-                    isWriter: checkIsWriter
                 }
             })
             .when("/reader/:uid/book/:bid", { // show all the visible chapters of this book for the reader
@@ -114,6 +113,15 @@
                 controllerAs: "model",
                 resolve: {
                     loggedin: checkLoggedin
+                }
+            })
+            .when("/writer/:uid/published", { // listing all the books having this user as an author
+                templateUrl: "views/book/templates/published.view.client.html",
+                controller: "WriterController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin,
+                    isWriter: checkIsWriter
                 }
             })
             .when("/writer/:uid/book/new", { // add new book with this user as the 1st author
@@ -134,7 +142,33 @@
                     isWriter: checkIsWriter
                 }
             })
-
+            .when("/writer/:uid/book/:bid/articles", {
+                templateUrl: "views/article/templates/writer-article-list.view.client.html",
+                controller: "ArticleListController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin,
+                    isWriter: checkIsWriter
+                }
+            })
+            .when("/writer/:uid/book/:bid/article/new", {
+                templateUrl: "views/article/templates/article-new.view.client.html",
+                controller: "NewArticleController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin,
+                    isWriter: checkIsWriter
+                }
+            })
+            .when("/writer/:uid/book/:bid/article/:aid", {
+                templateUrl: "views/article/templates/article-edit.view.client.html",
+                controller: "EditArticleController",
+                controllerAs: "model",
+                resolve: {
+                    loggedin: checkLoggedin,
+                    isWriter: checkIsWriter
+                }
+            })
             /*
              TODO: add article controllers/pages
              .when("/writer/:uid/book/:bid/page", {

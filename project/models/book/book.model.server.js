@@ -3,11 +3,12 @@
  */
 module.exports = function () {
     var api = {
-        createBook: createBook,
-        updateBook: updateBook,
+        createBook: createBookForAuthor,
         findBookById: findBookById,
-        deleteBook: deleteBook,
-        findBooksByAuthorId: findBooksByAuthorId
+        findAllBooksForAuthor: findAllBooksForAuthor,
+        findAllBooks: findAllBooks,
+        updateBook: updateBook,
+        deleteBook: deleteBook
     };
 
     var mongoose = require('mongoose');
@@ -18,8 +19,15 @@ module.exports = function () {
 
     return api;
 
-    function createBook(userId, newBook) {
-        console.log("adding book: ", JSON.stringify(newBook));
+    function findPopularBooks() {
+        // TODO:
+    }
+
+    function findAllBooks() {
+        return BookModel.find();
+    }
+
+    function createBookForAuthor(userId, newBook) {
         if (newBook.authors) {
             newBook.authors.push(userId);
         } else {
@@ -29,7 +37,20 @@ module.exports = function () {
     }
 
     function updateBook(bookId, newBook) {
-        return BookModel.update({_id: bookId, $set: newBook});
+        console.log(newBook);
+        console.log(JSON.stringify(newBook));
+        return BookModel.update({
+            _id: bookId
+        }, {
+            title: newBook.title,
+            authors: newBook.authors,
+            isbn: newBook.isbn,
+            articles: newBook.articles,
+            subscribers: newBook.subscribers,
+            genres: newBook.genres,
+            // liked: newBook.liked,
+            description: newBook.description
+        });
     }
 
     function findBookById(bookId) {
@@ -40,15 +61,9 @@ module.exports = function () {
         return BookModel.remove({_id: bookId});
     }
 
-    function findBooksByAuthorId(authorId) {
+    function findAllBooksForAuthor(authorId) {
         return BookModel.find({authors: authorId});
     }
 
     // TODO: add/remove article, etc.
 };
-
-/*
-1. CRUD for book
-2. add/remove article, etc.
-3.
- */

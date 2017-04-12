@@ -22,15 +22,23 @@
         init();
 
         function createBook(book) {
+            book.genres = parseGenres(book.genres);
+
             var promise = BookService.createBook(vm.userId, book);
             promise.success(
                 function (book) {
                     init();
+                    $location.url("/writer/" + vm.userId + "/published");
                 });
 
             promise.error(function (res, status) {
                 vm.error = res;
             });
+        }
+
+        function parseGenres(genresStr) {
+            var temp = genresStr.split(',');
+            return temp;
         }
     }
 
@@ -44,12 +52,11 @@
         vm.deleteBook = deleteBook;
 
         function init() {
-            console.log("Say you hate me");
             var promise = BookService.findBookById(vm.bookId);
             promise.success(function (book) {
-                vm.book = book;
-                console.log("this book");
+                console.log("found book: " + vm.bookId);
                 console.log(JSON.stringify(book));
+                vm.book = book;
             });
 
             promise.error(function (res, status) {
@@ -58,10 +65,11 @@
         }
         init();
 
-        function updateBook(book) {
-            var promise = BookService.updateBook(book);
+        function updateBook() {
+            var promise = BookService.updateBook(vm.bookId, vm.book);
             promise.success(function (book) {
                 init();
+                vm.message = "Update Success!";
             });
             promise.error(function (res, status) {
                 vm.error = res;
@@ -71,9 +79,8 @@
         function deleteBook() {
             var promise = BookService.deleteBook(vm.book._id);
             promise.success(function () {
-                $location.url("#/writer/" + vm.userId + "/published");
+                $location.url("/writer/" + vm.userId + "/published");
             })
         }
     }
-
 })();

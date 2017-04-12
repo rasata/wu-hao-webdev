@@ -8,6 +8,7 @@ module.exports = function (app) {
 
     var userModel = require("./user/user.model.server")();
     var bookModel = require("./book/book.model.server")();
+    var articleModel = require("./article/article.model.server")();
 
     var connectionString = 'mongodb://127.0.0.1:27017/project';
 
@@ -36,6 +37,7 @@ module.exports = function (app) {
         // widgetMode: require("./widget/widget.models.server")(applicationModel),
         UserModel: userModel,
         BookModel: bookModel,
+        ArticleModel: articleModel,
         mongojs: mongojs
     };
 

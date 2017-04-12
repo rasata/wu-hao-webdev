@@ -2,6 +2,10 @@
 
 <h2>Admin</h2>
 
+<div ng-show="model.error" class="alert alert-danger" role="alert">
+    {{model.error}}
+</div>
+
 <h3>User Management</h3>
 
 <table class="table table-stripped">
@@ -20,7 +24,7 @@
         <td><input ng-model="user.username" class="form-control" placeholder="Username"></td>
         <td><input ng-model="user.password" class="form-control" type="password" placeholder="Password"></td>
         <td><input ng-model="user.email" class="form-control" type="email" placeholder="abc@example.com"></td>
-        <td><input ng-model="user.role" class="form-control" placeholder="ex. Reader, Writer"></td>
+        <td><input ng-model="user.role" class="form-control" placeholder="ex. reader, writer"></td>
         <td>
             <button ng-click="model.register(user)" class="btn btn-primary">
                 <span class="glyphicon glyphicon-plus"></span>

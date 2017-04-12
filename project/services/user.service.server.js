@@ -263,8 +263,6 @@ module.exports = function (app, model) {
 
         // TODO: is this really checking the user from the database?
         var user = req.user;
-        console.log("service server login");
-        console.log(user);
         res.json(user);
     }
 

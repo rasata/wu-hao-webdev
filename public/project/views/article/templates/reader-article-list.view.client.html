@@ -27,18 +27,18 @@
     <a class="btn btn-primary" href="#/writer/{{model.userId}}/book/new">Add New Book</a>
 
     <ul class="list-group">
-        <li ng-repeat="book in model.bookshelf" class="list-group-item">
+        <li ng-repeat="article in model.articles" class="list-group-item">
             <div class="row">
                 <div class="col-xs-11 col-sm-6">
                     <a href="#/writer/{{model.userId}}/book/{{book._id}}/article">
-                        {{book.title}}
+                        {{article.title}}
                     </a>
                 </div>
                 <div class="col-sm-3 hidden-xs">
-                    {{book.authors}}
+                    {{article.authors}}
                 </div>
                 <div class="col-sm-2 hidden-xs">
-                    {{book.ISBN}}
+                    {{article.ISBN}}
                 </div>
                 <div class="col-xs-1">
                     <a href="#/writer/{{model.userId}}/book/{{book._id}}">

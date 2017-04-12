@@ -14,7 +14,8 @@
             "deleteBook": deleteBook,
             "findBookByTitle": findBookByTitle,
             "findBooksByAuthorId": findBooksByAuthorId,
-            "findBookByISBN": findBookByISBN
+            "findBookByISBN": findBookByISBN,
+            "findAllBooks": findAllBooks
         };
         return api;
 
@@ -26,12 +27,14 @@
             return $http.get("/aw/api/book/" + bookId);
         }
 
-        function updateBook(newBook) {
-            return $http.put("/aw/api/book", newBook);
+        function updateBook(bookId, newBook) {
+            console.log("update book in service client");
+            console.log(newBook);
+            return $http.put("/aw/api/book/" + bookId, newBook);
         }
 
         function deleteBook(bookId) {
-            return $http.delete("/aw/api/book", bookId);
+            return $http.delete("/aw/api/book/" + bookId);
         }
 
         function findBookByTitle(title) {
@@ -44,6 +47,14 @@
         
         function findBookByISBN(isbn) {
             return $http.get("/aw/api/book?ISBN=" + isbn);
+        }
+
+        function findAllBooks() {
+            return $http.get("/aw/api/book/all");
+        }
+
+        function findPopularBooks(amount) {
+            return $http.get("/aw/api/book/popular/"+amount);
         }
     }
 })();

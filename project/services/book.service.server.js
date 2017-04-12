@@ -3,10 +3,12 @@
  */
 module.exports = function (app, model) {
     app.post("/aw/api/writer/:userId/book", createBook);
+    app.get("/aw/api/book/popular/:amount", findPopularBooks);
+    app.get("/aw/api/book/all", findAllBooks);
+    app.get("/aw/api/book/:bookId", findBookByBookId);
     app.get("/aw/api/book", findBooks);
-    app.get("/aw/api/book/:bookid", findBookByBookId);
-    app.put("/aw/api/book", updateBook);
-    app.delete("/aw/api/book", deleteBook);
+    app.put("/aw/api/book/:bookId", updateBook);
+    app.delete("/aw/api/book/:bookId", deleteBook);
 
     function findBooks(req, res) {
         var authorId = req.query.authorId;
@@ -27,6 +29,19 @@ module.exports = function (app, model) {
         // TODO
     }
 
+    function findPopularBooks(req, res) {
+        var amount = req.params.amount;
+    }
+
+    function findAllBooks(req, res) {
+        model.BookModel.findAllBooks()
+            .then(
+                function (books) {
+                    res.json(books);
+                }
+            );
+    }
+
     function findBooksByAuthorName(req, res) {
         // TODO: implement this
     }
@@ -44,10 +59,9 @@ module.exports = function (app, model) {
 
     function findBooksByAuthorId(req, res) {
         var authorId = req.query.authorId;
-        console.log("find books by author ID");
 
         model.BookModel
-            .findBooksByAuthorId(authorId)
+            .findAllBooksForAuthor(authorId)
             .then(
                 function (response) {
                     res.send(response);
@@ -72,7 +86,7 @@ module.exports = function (app, model) {
     }
 
     function findBookByBookId(req, res) {
-        var bookId = req.params.bookid;
+        var bookId = req.params.bookId;
 
         model.BookModel
             .findBookById(bookId)
@@ -88,6 +102,9 @@ module.exports = function (app, model) {
     function updateBook(req, res) {
         var bookId = req.params.bookId;
         var newBook = req.body;
+
+        console.log("book id: " + bookId);
+        console.log(newBook);
 
         model.BookModel
             .updateBook(bookId, newBook)
