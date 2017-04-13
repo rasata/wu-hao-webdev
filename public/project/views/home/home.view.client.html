@@ -38,11 +38,11 @@
         <label for="grBookTitle">Search Book Title on Goodreads:</label>
         <div class="row">
             <div class="col-xs-8">
-                <input class="form-control" id="grBookTitle" ng-model="book.title"
-                       placeholder="ex, a tale of two cities">
+                <!--<input class="form-control" id="grBookTitle" ng-model="book.title" placeholder="ex, a tale of two cities">-->
+                <input class="form-control" id="grBookTitle" ng-model="model.book.title" placeholder="ex, a tale of two cities">
             </div>
             <div class="col-xs-4">
-                <a class="btn btn-primary btn-block" ng-click="model.searchGoodreadsTitle(book)">Search</a>
+                <a class="btn btn-primary btn-block" ng-click="model.searchGoodreadsTitle(model.book)">Search</a>
             </div>
         </div>
     </div>
@@ -60,11 +60,16 @@
         </div>
     </div>
 
-    <div class="container">
-        <h4>Hello!</h4>
+    <div ng-show="model.grRating" role="alert">
         <div class="row">
-           {{model.grBook.GoodreadsResponse.book.title}}
+            <div class="col-xs-4">
+                <img src="{{model.grImageUrl}}">
+            </div>
+            <div class="col-xs-4">
+                <p>Rating: {{model.grRating}} / 5</p>
+            </div>
         </div>
+        <div ng-bind-html="model.getTrustedHtml(model.gtReviews)"></div>
     </div>
 </div>
 

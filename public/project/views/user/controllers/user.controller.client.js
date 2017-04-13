@@ -8,7 +8,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($rootScope, $location, UserService, BookService, GoodreadsService, $route) {
+    function LoginController($sce, $rootScope, $location, UserService, BookService, GoodreadsService, $route) {
         var vm = this;
 
         // event handlers
@@ -17,11 +17,12 @@
         vm.gotoBook = gotoBook;
         vm.searchGoodreadsTitle = searchGoodreadsTitle;
         vm.searchGoodreadsISBN = searchGoodreadsISBN;
+        vm.getTrustedHtml = getTrustedHtml;
 
         function init() {
             var loginPromise = UserService.checkLoggedIn();
             loginPromise.success(function (user) {
-                if(user == 0) {
+                if (user == 0) {
                     $rootScope.currentUser = null;
                 } else {
                     $rootScope.currentUser = user;
@@ -40,6 +41,7 @@
 
             vm.book = new Object();
             vm.book.isbn = "0808519956";
+            vm.book.title = "a tale of two cities";
         }
 
         init();
@@ -47,18 +49,14 @@
         function searchGoodreadsTitle(book) {
             // var promise = BookService.
             if (book.title) {
+                var promise = GoodreadsService.getReviewsByTitle(book.title);
 
-            }
-        }
-
-        function searchGoodreadsISBN(book) {
-            if (book.isbn) {
-                var promise = GoodreadsService.getReviewsByISBN(book.isbn);
-                promise.success(function (grBook) {
-                    console.log("got book from goodreads");
-                    console.log(grBook["GoodreadsResponse"]);
-                    vm.grBook = grBook;
-                    $route.reload();
+                promise.success(function (grBooks) {
+                    vm.grBooks = grBooks;
+                    vm.grRating = grBooks["GoodreadsResponse"]["book"][0]["average_rating"][0];
+                    vm.grImageUrl = grBooks["GoodreadsResponse"]["book"][0]["image_url"][0];
+                    vm.gtReviews = grBooks["GoodreadsResponse"]["book"][0]["reviews_widget"][0];
+                    console.log(vm.gtReviews);
                 });
                 promise.error(function (error, status) {
                     console.log("no book from goodreads");
@@ -67,10 +65,30 @@
             }
         }
 
+        function searchGoodreadsISBN(book) {
+            if (book.isbn) {
+                var promise = GoodreadsService.getReviewsByISBN(book.isbn);
+                promise.success(function (grBooks) {
+                    vm.grBooks = grBooks;
+                    vm.grRating = grBooks["GoodreadsResponse"]["book"][0]["average_rating"][0];
+                    vm.grImageUrl = grBooks["GoodreadsResponse"]["book"][0]["image_url"][0];
+                    vm.gtReviews = grBooks["GoodreadsResponse"]["book"][0]["reviews_widget"][0];
+                    console.log(vm.gtReviews);
+                });
+                promise.error(function (error, status) {
+                    console.log("no book from goodreads");
+                    vm.error = error;
+                });
+            }
+        }
+
+        function getTrustedHtml(html) {
+            return $sce.trustAsHtml(html);
+        }
 
         function gotoBook(book) {
             if ($rootScope.currentUser) {
-                $location.url("/reader/"+$rootScope.currentUser._id + "/book/" + book._id);
+                $location.url("/reader/" + $rootScope.currentUser._id + "/book/" + book._id);
             } else {
                 $location.url("/login/");
             }

@@ -2,7 +2,8 @@
  * Created by wuhao on 2017-04-12.
  */
 module.exports = function (app, model) {
-    app.get("/aw/api/gr/:isbn/reviews", findReviewsByISBN);
+    app.get("/aw/api/gr/isbn/:isbn", findReviewsByISBN);
+    app.get("/aw/api/gr/title/:title", findBooksByTitle);
 
     var key = "ejIk3vTLwi3vJAPx0HHgjA";
 
@@ -11,20 +12,37 @@ module.exports = function (app, model) {
 
     function findReviewsByISBN(req, res) {
         var isbn = req.params.isbn;
-        console.log(isbn);
-        baseUrl = "https://www.goodreads.com/book/isbn/ISBN?format=xml&key=KEY";
-        url = baseUrl.replace("ISBN", isbn).replace("KEY", key);
-        console.log(url);
+        var baseUrl = "https://www.goodreads.com/book/isbn/ISBN?format=xml&key=KEY";
+        var url = baseUrl.replace("ISBN", isbn).replace("KEY", key);
 
         request(url, function(error, response, body) {
-            console.log('error:', error); // Print the error if one occurred
-            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            // console.log('body:', body); // Print the HTML for the Google homepage.
+            console.log('error:', error);
+            console.log('statusCode:', response && response.statusCode);
 
             parseString(body, function (err, result) {
-                console.log("error: " + err);
-                console.log("result: " + result);
                 res.json(result);
+            });
+        });
+    }
+
+    function findBooksByTitle(req, res) {
+        var title = req.params.title;
+        title = title.replace(' ', '+');
+        console.log(title);
+        var baseUrl = "https://www.goodreads.com/book/title.xml?title=TITLE&key=KEY";
+        var url = baseUrl.replace("TITLE", title).replace("KEY", key);
+
+        request(url, function(error, response, body) {
+            console.log('error:', error);
+            console.log('statusCode:', response && response.statusCode);
+            console.log('body:', body);
+
+            parseString(body, function (err, result) {
+                if(err) {
+                    res.send(500);
+                } else {
+                    res.json(result);
+                }
             });
         });
     }

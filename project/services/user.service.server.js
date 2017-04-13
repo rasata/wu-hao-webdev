@@ -1,18 +1,5 @@
 module.exports = function (app, model) {
     // passport
-    /*
-     var passport      = require('passport');
-
-     app.post  ('/api/login', passport.authenticate('local'), login);
-     app.post  ('/api/logout',         logout);
-     app.post  ('/api/register',       register);
-     app.post  ('/api/user',     auth, createUser);
-     app.get   ('/api/loggedin',       loggedin);
-     app.get   ('/api/user',     auth, findAllUsers);
-     app.put   ('/api/user/:id', auth, updateUser);
-     app.delete('/api/user/:id', auth, deleteUser);
-
-     */
     var auth = authorized;
     var adminAuth = adminAuthorized;
 
@@ -50,6 +37,8 @@ module.exports = function (app, model) {
         callbackURL: process.env.GOODREADS_CALLBACK_URL
     };
 
+    console.log(googleConfig);
+
     var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
@@ -81,10 +70,11 @@ module.exports = function (app, model) {
         passport.authenticate('google', {
             successRedirect: '/project/',
             failureRedirect: '/project/index.html#/login'
-        }), function (req, res) {
-            console.log(req.user);
-            res.send(req.user);
-        });
+        }));
+        // , function (req, res) {
+        //     console.log(req.user);
+        //     res.send(req.user);
+        // });
 
     app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}));
     app.get('/auth/goodreads/callback',
