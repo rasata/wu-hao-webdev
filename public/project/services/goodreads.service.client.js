@@ -33,8 +33,8 @@
         };
         return api;
         
-        function getReviewsByISBN(userId, isbn) {
-            return $http.get(url);
+        function getReviewsByISBN(isbn) {
+            return $http.get("/aw/api/gr/"+ isbn +"/reviews");
         }
     }
 })();

@@ -8,16 +8,15 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($rootScope, $location, UserService, BookService, $http) {
+    function LoginController($rootScope, $location, UserService, BookService, GoodreadsService, $route) {
         var vm = this;
 
         // event handlers
         vm.login = login;
         vm.logout = logout;
-        // vm.gotoProfile = gotoProfile;
         vm.gotoBook = gotoBook;
-        // vm.loginGoogle = loginGoogle;
-        // vm.loginGoodreads = loginGoodreads;
+        vm.searchGoodreadsTitle = searchGoodreadsTitle;
+        vm.searchGoodreadsISBN = searchGoodreadsISBN;
 
         function init() {
             var loginPromise = UserService.checkLoggedIn();
@@ -29,7 +28,7 @@
                 }
             });
             loginPromise.error(function (err, status) {
-                console.log("check login errer");
+                console.log("check login error");
             });
 
             var promise = BookService.findAllBooks();
@@ -38,9 +37,36 @@
                     vm.allBooks = books;
                 }
             );
+
+            vm.book = new Object();
+            vm.book.isbn = "0808519956";
         }
 
         init();
+
+        function searchGoodreadsTitle(book) {
+            // var promise = BookService.
+            if (book.title) {
+
+            }
+        }
+
+        function searchGoodreadsISBN(book) {
+            if (book.isbn) {
+                var promise = GoodreadsService.getReviewsByISBN(book.isbn);
+                promise.success(function (grBook) {
+                    console.log("got book from goodreads");
+                    console.log(grBook["GoodreadsResponse"]);
+                    vm.grBook = grBook;
+                    $route.reload();
+                });
+                promise.error(function (error, status) {
+                    console.log("no book from goodreads");
+                    vm.error = error;
+                });
+            }
+        }
+
 
         function gotoBook(book) {
             if ($rootScope.currentUser) {
@@ -75,38 +101,6 @@
                 vm.error = response;
             });
         }
-
-        /*
-        function loginGoodreads() {
-            var promise = $http.get("/auth/goodreads");
-            promise.success(function (user) {
-                $rootScope.currentUser = user;
-            });
-            promise.error(function (err, status) {
-                vm.error = err;
-            });
-        }
-
-        function loginGoogle() {
-            var promise = UserService.loginGoogle();
-            promise.success(function (user) {
-                if (user) {
-                    $rootScope.currentUser = user;
-
-                    if (user.role == "reader") {
-                        $location.url("/reader/" + user._id + "/bookshelf");
-                    } else if (user.role == "writer") {
-                        $location.url("/writer/" + user._id + "/published");
-                    } else if (user.role == "admin") {
-                        $location.url("/admin");
-                    }
-                } else {
-                    vm.error = "Login Failed!";
-                    $location.url("/login");
-                }
-            });
-        }
-        */
 
         function logout(user) {
             var promise = UserService.logout(user);

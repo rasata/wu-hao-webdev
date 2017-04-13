@@ -14,7 +14,6 @@
         vm.bookId = $routeParams.bid;
 
         vm.addToBookshelf = addToBookshelf;
-        vm.getGoodreadsReview = getGoodreadsReview;
 
         function init() {
             var bookPromise = BookService.findBookById(vm.bookId);
@@ -31,9 +30,6 @@
             userPromise.success(function (user) {
                 vm.user = user;
             });
-
-            // TODO: get book review, ratings
-            // var reviewPromise = GoodreadsService.getReviewsByISBN(userId, vm.bookId)
         }
 
         init();
