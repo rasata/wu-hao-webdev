@@ -8,21 +8,35 @@
         .controller("NewBookController", NewBookController)
         .controller("EditBookController", EditBookController);
 
-    function BookListController($routeParams, $location, UserService, BookService, ArticleService) {
+    function BookListController($routeParams, $location, UserService, BookService, ArticleService, GoodreadsService) {
         var vm = this;
         vm.userId = $routeParams.uid;
         vm.bookId = $routeParams.bid;
 
         vm.addToBookshelf = addToBookshelf;
+        vm.getGoodreadsReview = getGoodreadsReview;
 
         function init() {
-             var promise = ArticleService.findArticlesByBookId(vm.bookId);
-             promise.success(function (articles) {
-                 vm.articles = articles;
-             });
-        }
-        init();
+            var bookPromise = BookService.findBookById(vm.bookId);
+            bookPromise.success(function (book) {
+                vm.book = book;
+            });
 
+            var promise = ArticleService.findArticlesByBookId(vm.bookId);
+            promise.success(function (articles) {
+                vm.articles = articles;
+            });
+
+            var userPromise = UserService.findUserById(vm.userId);
+            userPromise.success(function (user) {
+                vm.user = user;
+            });
+
+            // TODO: get book review, ratings
+            // var reviewPromise = GoodreadsService.getReviewsByISBN(userId, vm.bookId)
+        }
+
+        init();
 
         function addToBookshelf() {
             var promise = UserService.addToBookshelf(vm.bookId, vm.userId);
@@ -48,6 +62,7 @@
                 vm.published = books;
             })
         }
+
         init();
 
         function createBook(book) {
@@ -90,6 +105,7 @@
                 vm.error = res;
             });
         }
+
         init();
 
         function updateBook() {

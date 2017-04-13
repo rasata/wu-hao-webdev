@@ -115,6 +115,7 @@
             var promise = ArticleService.updateArticle(vm.articleId, vm.article);
             promise.success(function (article) {
                 init();
+                $location.url("/writer/" + vm.userId + "/book/" + vm.bookId + "/articles");
             });
             promise.error(function (res, status) {
                 vm.error = res;

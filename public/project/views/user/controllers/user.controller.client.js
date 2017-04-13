@@ -28,6 +28,9 @@
                     $rootScope.currentUser = user;
                 }
             });
+            loginPromise.error(function (err, status) {
+                console.log("check login errer");
+            });
 
             var promise = BookService.findAllBooks();
             promise.success(

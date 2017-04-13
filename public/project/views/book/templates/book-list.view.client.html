@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#/home">Autonomous Writers</a>
+            <a class="navbar-brand" href="#/">Book: {{model.book.title}}</a>
         </div>
     </div>
 </nav>
@@ -29,6 +29,11 @@
 </div>
 
 <div class="container-fluid">
+    <div>
+        <h3>Goodreads Reviews</h3>
+        <a class="btn btn-primary" ng-click="model.getGoodreadsReview()">Test</a>
+    </div>
+
     <ul class="list-group">
         <li ng-repeat="article in model.articles" class="list-group-item">
             <div class="row">

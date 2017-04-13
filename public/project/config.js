@@ -12,11 +12,9 @@
             $http.get('/aw/api/loggedin').success(function (user) {
                 $rootScope.errorMessage = null;
                 if (user !== '0') {
-                    console.log("I'm logged in MOFO!");
                     $rootScope.currentUser = user;
                     deferred.resolve();
                 } else {
-                    console.log("Can't touch this!");
                     deferred.reject();
                     $location.url('/login');
                 }

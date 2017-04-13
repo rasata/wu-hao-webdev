@@ -2,7 +2,6 @@ module.exports = function (app, model) {
     // passport
     /*
      var passport      = require('passport');
-     var auth = authorized;
 
      app.post  ('/api/login', passport.authenticate('local'), login);
      app.post  ('/api/logout',         logout);
@@ -13,14 +12,25 @@ module.exports = function (app, model) {
      app.put   ('/api/user/:id', auth, updateUser);
      app.delete('/api/user/:id', auth, deleteUser);
 
-     function authorized (req, res, next) {
-     if (!req.isAuthenticated()) {
-     res.send(401);
-     } else {
-     next();
-     }
-     };
      */
+    var auth = authorized;
+    var adminAuth = adminAuthorized;
+
+    function authorized(req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
+
+    function adminAuthorized(req, res, next) {
+        if (!req.isAuthenticated() || req.user.role != "admin") {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
 
     var facebookConfig = {
         clientID: process.env.FACEBOOK_CLIENT_ID,
@@ -40,15 +50,6 @@ module.exports = function (app, model) {
         callbackURL: process.env.GOODREADS_CALLBACK_URL
     };
 
-    // console.log("facebook config: \n");
-    // console.log(facebookConfig);
-
-    // console.log("google config: \n");
-    // console.log(googleConfig);
-    //
-    // console.log("goodreads config: \n");
-    // console.log(goodreadsConfig);
-
     var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
@@ -64,7 +65,6 @@ module.exports = function (app, model) {
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
-    // old
     app.get('/aw/api/loggedin', loggedin);
     app.post('/aw/api/logout', logout);
     app.post("/aw/api/register", register);
@@ -86,31 +86,7 @@ module.exports = function (app, model) {
             res.send(req.user);
         });
 
-    // app.get('/google/oauth/callback', function (req, res, next) {
-    //     passport.authenticate('google', function (err, user, info) {
-    //         if (err) {
-    //             return next(err)
-    //         }
-    //         if (!user) {
-    //             return res.json({message: info.message})
-    //         }
-    //         res.json(user);
-    //     })(req, res, next);
-    // });
-
     app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}));
-    // app.get('/auth/goodreads/callback',
-    //     function (req, res, next) {
-    //         passport.authenticate('goodreads', function (err, user, info) {
-    //             if (err) {
-    //                 return next(err)
-    //             }
-    //             if (!user) {
-    //                 return res.json({message: info.message})
-    //             }
-    //             res.redirect("/project/#/user/" + user._id);
-    //         })(req, res, next);
-    //     });
     app.get('/auth/goodreads/callback',
         passport.authenticate('goodreads',
             {
@@ -123,7 +99,7 @@ module.exports = function (app, model) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook',
             {
-                successRedirect: '/home', // TODO: add user id to this?
+                successRedirect: '/home',
                 failureRedirect: '/login'
             }));
 
@@ -131,9 +107,9 @@ module.exports = function (app, model) {
     // app.get("/aw/api/user?username=username", findUserByUsername);
     app.get("/aw/api/user", findUser);
     app.get("/aw/api/user/:userId", findUserByUserId);
-    app.put("/aw/api/user/:userId", updateUser);
-    app.delete("/aw/api/user/:userId", deleteUser);
-    app.get("/aw/api/allusers", findAllUsers);
+    app.put("/aw/api/user/:userId", auth, updateUser);
+    app.delete("/aw/api/user/:userId", auth, deleteUser);
+    app.get("/aw/api/allusers", adminAuth, findAllUsers);
     app.put("/aw/api/user/:userId/addToShelf/:bookId", addToBookshelf);
     app.get("/aw/api/user", findUser);
 
@@ -169,6 +145,7 @@ module.exports = function (app, model) {
     }
 
     function goodreadsStrategy(token, tokenSecret, profile, done) {
+        console.log(JSON.stringify(profile));
         model.UserModel
             .findUserByGoodreadsId(profile.id)
             .then(function (user) {
@@ -178,6 +155,7 @@ module.exports = function (app, model) {
                     console.log(user);
                     var user = {
                         username: profile.displayName,
+                        role: "reader",
                         goodreads: {
                             id: profile.id
                         }
@@ -276,7 +254,6 @@ module.exports = function (app, model) {
     }
 
     function logout(req, res) {
-        console.log("server service logging out, " + req);
         req.logOut(); // nullify the cookie
         res.sendStatus(200);
     }
@@ -394,12 +371,11 @@ module.exports = function (app, model) {
         model.UserModel
             .addToBookshelf(userId, bookId)
             .then(
-                function (res) {
-                    res.send(200);
+                function (result) {
+                    res.sendStatus(200);
                 }
             )
             .catch(function (err) {
-                console.log(err);
                 res.status(500).send(err);
             });
     }

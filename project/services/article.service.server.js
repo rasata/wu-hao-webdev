@@ -102,9 +102,6 @@ module.exports = function (app, model) {
         var articleId = req.params.articleId;
         var newArticle = req.body;
 
-        console.log("update article id: " + articleId);
-        console.log(newArticle);
-
         model.ArticleModel
             .updateArticle(articleId, newArticle)
             .then(
