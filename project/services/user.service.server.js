@@ -99,7 +99,8 @@ module.exports = function (app, model) {
     app.get("/aw/api/user/:userId", findUserByUserId);
     app.put("/aw/api/user/:userId", auth, updateUser);
     app.delete("/aw/api/user/:userId", auth, deleteUser);
-    app.get("/aw/api/allusers", adminAuth, findAllUsers);
+    // app.get("/aw/api/allusers", adminAuth, findAllUsers);
+    app.get("/aw/api/allusers", findAllUsers);
     app.put("/aw/api/user/:userId/addToShelf/:bookId", addToBookshelf);
     app.get("/aw/api/user", findUser);
 

@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98c71958-b2b9-43ec-8128-80e04daa25ff" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/services/goodreads.service.server.js" afterPath="$PROJECT_DIR$/project/services/goodreads.service.server.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/services/user.service.server.js" afterPath="$PROJECT_DIR$/project/services/user.service.server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/project/services/goodreads.service.client.js" afterPath="$PROJECT_DIR$/public/project/services/goodreads.service.client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/project/views/home/home.view.client.html" afterPath="$PROJECT_DIR$/public/project/views/home/home.view.client.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/project/views/user/controllers/user.controller.client.js" afterPath="$PROJECT_DIR$/public/project/views/user/controllers/user.controller.client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/project/views/user/templates/login.view.client.html" afterPath="$PROJECT_DIR$/public/project/views/user/templates/login.view.client.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -51,8 +47,28 @@
       <file leaf-file-name="user.controller.client.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/project/views/user/controllers/user.controller.client.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-243">
+            <state relative-caret-position="135">
               <caret line="43" column="51" lean-forward="false" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/project/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-755">
+              <caret line="28" column="35" lean-forward="true" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user.service.server.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/project/services/user.service.server.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -68,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="goodreads.service.server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="goodreads.service.server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/services/goodreads.service.server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
+            <state relative-caret-position="-212">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
               </folding>
@@ -104,15 +120,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>model.</find>
-      <find>ng</find>
-      <find>ng-</find>
-      <find>ng-show-</find>
-      <find>ng-show=</find>
-      <find>$route</find>
-      <find>$route.re</find>
-      <find>g</find>
-      <find>got</find>
       <find>got book</find>
       <find>got book</find>
       <find>got book f</find>
@@ -132,8 +139,17 @@
       <find>getTrust</find>
       <find>getTrusted</find>
       <find>success</find>
-      <find>$route.reload();</find>
       <find>widget</find>
+      <find>$route.reload();</find>
+      <find>,</find>
+      <find>, au</find>
+      <find>, auth</find>
+      <find>/</find>
+      <find>/a</find>
+      <find>/al</find>
+      <find>/all</find>
+      <find>/allu</find>
+      <find>admin/</find>
     </findStrings>
     <replaceStrings>
       <replace>WidgetService</replace>
@@ -217,11 +233,11 @@
         <option value="$PROJECT_DIR$/public/project/views/book/controllers/book.controller.client.js" />
         <option value="$PROJECT_DIR$/project/services/package.json" />
         <option value="$PROJECT_DIR$/public/project/views/user/templates/login.view.client.html" />
-        <option value="$PROJECT_DIR$/project/services/user.service.server.js" />
         <option value="$PROJECT_DIR$/public/project/services/goodreads.service.client.js" />
         <option value="$PROJECT_DIR$/public/project/views/user/controllers/user.controller.client.js" />
         <option value="$PROJECT_DIR$/public/project/views/home/home.view.client.html" />
         <option value="$PROJECT_DIR$/project/services/goodreads.service.server.js" />
+        <option value="$PROJECT_DIR$/project/services/user.service.server.js" />
       </list>
     </option>
   </component>
@@ -778,12 +794,12 @@
       <workItem from="1491596453212" duration="36339000" />
       <workItem from="1491834306500" duration="32529000" />
       <workItem from="1491934902872" duration="29866000" />
-      <workItem from="1492000319151" duration="51684000" />
+      <workItem from="1492000319151" duration="53495000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="687851000" />
+    <option name="totallyTimeSpent" value="689662000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1111,14 +1127,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/project/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="110" column="38" lean-forward="true" selection-start-line="110" selection-start-column="38" selection-end-line="110" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project/services/book.service.server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
@@ -1199,14 +1207,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/services/user.service.server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="47">
-          <caret line="70" column="19" lean-forward="false" selection-start-line="70" selection-start-column="12" selection-end-line="70" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/assignment/views/widget/templates/list/widget-html.view.client.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1239,14 +1239,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/project/views/user/controllers/user.controller.client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-243">
-          <caret line="43" column="51" lean-forward="false" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/project/views/home/home.view.client.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1257,11 +1249,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/project/services/goodreads.service.server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
+        <state relative-caret-position="-212">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/project/views/user/controllers/user.controller.client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="43" column="51" lean-forward="false" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/project/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-755">
+          <caret line="28" column="35" lean-forward="true" selection-start-line="28" selection-start-column="35" selection-end-line="28" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/services/user.service.server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
