@@ -22,6 +22,7 @@
            promise.error(function (data, status) {
                vm.error = data;
            });
+           vm.newUser = new Object();
        }
        init();
        
@@ -34,6 +35,7 @@
            var promise = UserService.register(user);
            promise.success(function (user) {
                init();
+               vm.newUser = new Object();
            });
 
            promise.error(function (data, status) {
