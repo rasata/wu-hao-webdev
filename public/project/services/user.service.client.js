@@ -20,12 +20,17 @@
             "logout": logout,
             "checkLoggedIn": checkLoggedIn,
             "findAllUsers": findAllUsers,
-            "addToBookshelf": addToBookshelf
+            "addToBookshelf": addToBookshelf,
+            "removeFromBookshelf": removeFromBookshelf
         };
         return api;
 
+        function removeFromBookshelf(bookId, userId) {
+            return $http.put("/aw/api/user/" + userId + "/removeFromShelf/" + bookId);
+        }
+
         function addToBookshelf(bookId, userId) {
-            return $http.put("/aw/api/user/"+ userId +"/addToShelf/" + bookId);
+            return $http.put("/aw/api/user/" + userId + "/addToShelf/" + bookId);
         }
 
         function likeTheArticle(articleId, user) {
@@ -59,9 +64,6 @@
 
         function checkLoggedIn() {
             return $http.get('/aw/api/loggedin');
-                // .then(function (response) {
-                //     return response.data;
-                // });
         }
 
         function createUser(newUser) {
@@ -73,8 +75,6 @@
         }
 
         function findUserByCredentials(username, password) {
-            // assignment 4: moving to server side
-            // /aw/api/user?username=username&password=password
             return $http.get("/aw/api/user?username=" + username + "&password=" + password);
         }
 

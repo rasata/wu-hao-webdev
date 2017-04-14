@@ -11,7 +11,8 @@ module.exports = function () {
         findUserByFacebookId: findUserByFacebookId,
         findUserByGoogleId: findUserByGoogleId,
         findUserByGoodreadsId: findUserByGoodreadsId,
-        addToBookshelf: addToBookshelf
+        addToBookshelf: addToBookshelf,
+        removeBookFromShelf: removeBookFromShelf
     };
 
     var mongoose = require('mongoose');
@@ -82,13 +83,16 @@ module.exports = function () {
     }
     
     function addToBookshelf(userId, bookId) {
-        console.log("adding book to user shelf");
-        console.log(userId);
-        console.log(bookId);
-
         return UserModel.update(
             {_id: userId},
             {$push: {bookshelf: bookId}}
+        );
+    }
+
+    function removeBookFromShelf(userId, bookId) {
+        return UserModel.update(
+            {_id: userId},
+            {$pull: {"bookshelf": bookId}}
         );
     }
 

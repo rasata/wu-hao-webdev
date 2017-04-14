@@ -8,7 +8,7 @@
         .controller("NewBookController", NewBookController)
         .controller("EditBookController", EditBookController);
 
-    function BookListController($routeParams, $location, UserService, BookService, ArticleService, GoodreadsService) {
+    function BookListController($routeParams, $location, UserService, BookService, ArticleService) {
         var vm = this;
         vm.userId = $routeParams.uid;
         vm.bookId = $routeParams.bid;
@@ -37,7 +37,13 @@
         function addToBookshelf() {
             var promise = UserService.addToBookshelf(vm.bookId, vm.userId);
             promise.success(function (res) {
-                vm.message = "Book added to your shelf";
+                var bookPromise = BookService.addSubscriber(vm.bookId, vm.userId);
+                bookPromise.success(function (bookRes) {
+                    vm.message = "You are subscribed to the book " + vm.book.title;
+                });
+                bookPromise.error(function (error, status) {
+                    vm.error = error;
+                })
             });
             promise.error(function (res, status) {
                 vm.error = "Book did not added to your shelf. " + res;

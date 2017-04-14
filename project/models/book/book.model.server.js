@@ -8,7 +8,9 @@ module.exports = function () {
         findAllBooksForAuthor: findAllBooksForAuthor,
         findAllBooks: findAllBooks,
         updateBook: updateBook,
-        deleteBook: deleteBook
+        deleteBook: deleteBook,
+        addSubscriber: addSubscriber,
+        removeSubscriber: removeSubscriber
     };
 
     var mongoose = require('mongoose');
@@ -36,9 +38,19 @@ module.exports = function () {
         return BookModel.create(newBook);
     }
 
+    function addSubscriber(bookId, userId) {
+        return BookModel.update(
+            {_id: bookId},
+            {$push: {subscribers: userId}});
+    }
+
+    function removeSubscriber(bookId, userId) {
+        return BookModel.update(
+            {_id: bookId},
+            {$pull: {subscribers: userId}});
+    }
+    
     function updateBook(bookId, newBook) {
-        console.log(newBook);
-        console.log(JSON.stringify(newBook));
         return BookModel.update({
             _id: bookId
         }, {

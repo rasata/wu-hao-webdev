@@ -15,9 +15,19 @@
             "findBookByTitle": findBookByTitle,
             "findBooksByAuthorId": findBooksByAuthorId,
             "findBookByISBN": findBookByISBN,
-            "findAllBooks": findAllBooks
+            "findAllBooks": findAllBooks,
+            "addSubscriber": addSubscriber,
+            "removeSubscriber": removeSubscriber
         };
         return api;
+
+        function addSubscriber(bookId, userId) {
+            return $http.put("/aw/api/book/" + bookId + "/addSubscriber/" + userId);
+        }
+
+        function removeSubscriber(bookId, userId) {
+            return $http.put("/aw/api/book/" + bookId + "/removeSubscriber/" + userId);
+        }
 
         function createBook(userId, newBook) {
             return $http.post("/aw/api/writer/" + userId +"/book", newBook);

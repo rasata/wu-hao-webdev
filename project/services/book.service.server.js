@@ -8,7 +8,57 @@ module.exports = function (app, model) {
     app.get("/aw/api/book/:bookId", findBookByBookId);
     app.get("/aw/api/book", findBooks);
     app.put("/aw/api/book/:bookId", updateBook);
+    app.put("/aw/api/book/:bookId/addSubscriber/:userId", addSubscriber);
+    app.put("/aw/api/book/:bookId/removeSubscriber/:userId", removeSubscriber);
     app.delete("/aw/api/book/:bookId", deleteBook);
+
+    function addSubscriber(req, res) {
+        var bookId = req.params.bookId;
+        var userId = req.params.userId;
+
+        model.BookModel
+            .addSubscriber(bookId, userId)
+            .then(
+                function (dbRes) {
+                    res.sendStatus(200);
+                }
+            )
+            .catch(function (err) {
+                res.send(err);
+            });
+    }
+
+    function removeSubscriber(req, res) {
+        var bookId = req.params.bookId;
+        var userId = req.params.userId;
+
+        model.BookModel
+            .removeSubscriber(bookId, userId)
+            .then(
+                function (dbRes) {
+                    res.send(dbRes);
+                }
+            )
+            .catch(function (err) {
+                res.send(err);
+            });
+    }
+
+    function updateBook(req, res) {
+        var bookId = req.params.bookId;
+        var newBook = req.body;
+
+        model.BookModel
+            .updateBook(bookId, newBook)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                }
+            )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+    }
 
     function findBooks(req, res) {
         var authorId = req.query.authorId;
@@ -45,17 +95,6 @@ module.exports = function (app, model) {
     function findBooksByAuthorName(req, res) {
         // TODO: implement this
     }
-    /*
-    function findUser(req, res) {
-        var username = req.query['username'];
-        var password = req.query['password'];
-        if (username && password) {
-            findUserByCredentials(req, res);
-        } else if (username) {
-            findUserByUsername(req, res);
-        }
-    }
-    */
 
     function findBooksByAuthorId(req, res) {
         var authorId = req.query.authorId;
@@ -94,22 +133,6 @@ module.exports = function (app, model) {
                 function (response) {
                     res.send(response);
                 })
-            .catch(function (err) {
-                res.status(500).send(err);
-            });
-    }
-
-    function updateBook(req, res) {
-        var bookId = req.params.bookId;
-        var newBook = req.body;
-
-        model.BookModel
-            .updateBook(bookId, newBook)
-            .then(
-                function (status) {
-                    res.sendStatus(200);
-                }
-            )
             .catch(function (err) {
                 res.status(500).send(err);
             });

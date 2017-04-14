@@ -11,25 +11,45 @@
         vm.logout = logout;
 
         vm.userId = $routeParams.uid;
+        vm.removeBookFromShelf = removeBookFromShelf;
 
         function init() {
             var promise = UserService.findUserById(vm.userId);
             promise.success(function (user) {
                 vm.user = user;
                 vm.bookshelf = fillBookshelf(vm.user.bookshelf);
-                console.log("after filled!");
-                console.log(vm.bookshelf);
             });
             promise.error(function (res, status) {
                 vm.error = res;
             });
         }
+
         init();
+
+        function removeBookFromShelf(book) {
+            // UserService remove book
+            userPromise = UserService.removeFromBookshelf(book._id, vm.userId);
+            userPromise.success(function (newUser) {
+                // TODO: BookService remove user from subs
+                bookPromise = BookService.removeSubscriber(book._id, vm.userId);
+                bookPromise.success(function (bookRes) {
+                    vm.message = "You have unsubscribed the book." + bookRes;
+                });
+                bookPromise.error(function (errorMsg, status) {
+                    vm.error = errorMsg;
+                });
+
+                init();
+            });
+
+            userPromise.error(function (error, status) {
+                vm.error = error;
+            });
+        }
 
         function fillBookshelf(booklist) {
             ret = [];
-            console.log(JSON.stringify(booklist));
-            for (var i =  0; i < booklist.length; ++i) {
+            for (var i = 0; i < booklist.length; ++i) {
                 var bookPromise = BookService.findBookById(booklist[i]);
                 bookPromise.success(function (resBook) {
                     ret.push(resBook);

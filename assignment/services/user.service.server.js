@@ -26,7 +26,6 @@ module.exports = function (app, model) {
             .then(
                 function (response) {
                     res.send(response);
-                    console.log("response being sent: ", JSON.stringify(response));
                 }
             )
             .catch(

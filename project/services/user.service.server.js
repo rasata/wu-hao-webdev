@@ -37,8 +37,6 @@ module.exports = function (app, model) {
         callbackURL: process.env.GOODREADS_CALLBACK_URL
     };
 
-    console.log(googleConfig);
-
     var bcrypt = require("bcrypt-nodejs");
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
@@ -62,19 +60,13 @@ module.exports = function (app, model) {
 
     app.post('/aw/api/login', passport.authenticate('local'), login);
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}), function (req, res) {
-        console.log(req.user);
         res.send(req.user);
     });
-
     app.get('/google/oauth/callback',
         passport.authenticate('google', {
             successRedirect: '/project/',
             failureRedirect: '/project/index.html#/login'
         }));
-        // , function (req, res) {
-        //     console.log(req.user);
-        //     res.send(req.user);
-        // });
 
     app.get("/auth/goodreads", passport.authenticate("goodreads", {scope: ['profile', 'email']}));
     app.get('/auth/goodreads/callback',
@@ -83,7 +75,6 @@ module.exports = function (app, model) {
                 successRedirect: '/project/#/home',
                 failureRedirect: '/project/#/login'
             }));
-
 
     app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
     app.get('/auth/facebook/callback',
@@ -102,7 +93,40 @@ module.exports = function (app, model) {
     // app.get("/aw/api/allusers", adminAuth, findAllUsers);
     app.get("/aw/api/allusers", findAllUsers);
     app.put("/aw/api/user/:userId/addToShelf/:bookId", addToBookshelf);
+    app.put("/aw/api/user/:userId/removeFromShelf/:bookId", removeBookFromShelf);
     app.get("/aw/api/user", findUser);
+
+
+    function removeBookFromShelf(req, res) {
+        var userId = req.params.userId;
+        var bookId = req.params.bookId;
+
+        model.UserModel.removeBookFromShelf(userId, bookId)
+            .then(
+                function (dbRes) {
+                    res.status(200).send(dbRes);
+                }
+            )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+    }
+
+    function updateUser(req, res) {
+        var userId = req.params.userId;
+        var newUser = req.body;
+
+        model.UserModel
+            .updateUser(userId, newUser)
+            .then(
+                function (status) {
+                    res.sendStatus(200);
+                }
+            )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+    }
 
     function googleStrategy(token, refreshToken, profile, done) {
         model.UserModel
@@ -111,7 +135,6 @@ module.exports = function (app, model) {
                 if (user) {
                     done(null, user);
                 } else {
-                    console.log("creating a new user");
                     var user = {
                         username: profile.emails[0].value,
                         photo: profile.photos[0].value,
@@ -136,14 +159,12 @@ module.exports = function (app, model) {
     }
 
     function goodreadsStrategy(token, tokenSecret, profile, done) {
-        console.log(JSON.stringify(profile));
         model.UserModel
             .findUserByGoodreadsId(profile.id)
             .then(function (user) {
                 if (user) {
                     done(null, user);
                 } else {
-                    console.log(user);
                     var user = {
                         username: profile.displayName,
                         role: "reader",
@@ -200,7 +221,6 @@ module.exports = function (app, model) {
     function register(req, res) {
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
-        console.log("user: " + user.username + ", password hash: " + user.password);
 
         model.UserModel
             .createUser(user)
@@ -337,22 +357,6 @@ module.exports = function (app, model) {
                     res.send(users);
                 }
             );
-    }
-
-    function updateUser(req, res) {
-        var userId = req.params.userId;
-        var newUser = req.body;
-
-        model.UserModel
-            .updateUser(userId, newUser)
-            .then(
-                function (status) {
-                    res.sendStatus(200);
-                }
-            )
-            .catch(function (err) {
-                res.status(500).send(err);
-            });
     }
 
     function addToBookshelf(req, res) {
