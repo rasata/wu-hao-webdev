@@ -37,7 +37,9 @@
     <h3>Follow Books On Site</h3>
     <div class="col-xs-4" ng-repeat="book in model.allBooks">
         <div class="row">
-            <img src="{{book.imageUrl}}">
+            <a ng-click="model.gotoBook(book)">
+                <img src="{{book.imageUrl}}">
+            </a>
         </div>
         <div class="row">
             <div class="col-xs-12 pull-right">
