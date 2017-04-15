@@ -94,8 +94,23 @@ module.exports = function (app, model) {
     app.get("/aw/api/allusers", findAllUsers);
     app.put("/aw/api/user/:userId/addToShelf/:bookId", addToBookshelf);
     app.put("/aw/api/user/:userId/removeFromShelf/:bookId", removeBookFromShelf);
+    app.put("/aw/api/user/:userId/markBookRead/:bookId", markBookRead);
     app.get("/aw/api/user", findUser);
 
+    function markBookRead(req, res) {
+        var userId = req.params.userId;
+        var bookId = req.params.bookId;
+
+        model.UserModel.updateSubscription(userId, bookId, false)
+            .then(
+                function (dbRes) {
+                    res.status(200).send(dbRes);
+                }
+            )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+    }
 
     function removeBookFromShelf(req, res) {
         var userId = req.params.userId;

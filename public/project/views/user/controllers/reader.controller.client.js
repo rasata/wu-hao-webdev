@@ -30,7 +30,6 @@
             // UserService remove book
             userPromise = UserService.removeFromBookshelf(book._id, vm.userId);
             userPromise.success(function (newUser) {
-                // TODO: BookService remove user from subs
                 bookPromise = BookService.removeSubscriber(book._id, vm.userId);
                 bookPromise.success(function (bookRes) {
                     vm.message = "You have unsubscribed the book." + bookRes;
@@ -49,10 +48,16 @@
 
         function fillBookshelf(booklist) {
             ret = [];
+
             for (var i = 0; i < booklist.length; ++i) {
-                var bookPromise = BookService.findBookById(booklist[i]);
+                var resObj = new Object();
+                resObj.updated = booklist[i].updated;
+
+                var bookPromise = BookService.findBookById(booklist[i]._id);
                 bookPromise.success(function (resBook) {
-                    ret.push(resBook);
+                    resObj.book = resBook;
+                    console.log(resObj.updated);
+                    ret.push(resObj);
                 });
             }
             return ret;

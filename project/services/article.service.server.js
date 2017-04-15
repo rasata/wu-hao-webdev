@@ -27,7 +27,7 @@ module.exports = function (app, model) {
                 }
             )
     }
-    
+
     function findArticles(req, res) {
         var authorId = req.query.authorId;
 
@@ -39,17 +39,6 @@ module.exports = function (app, model) {
     function findPopularArticles(req, res) {
         var amount = req.params.amount;
     }
-
-    /*
-    function findAllArticles(req, res) {
-        model.ArticleModel.findAllArticles()
-            .then(
-                function (articles) {
-                    res.json(articles);
-                }
-            );
-    }
-    */
 
     function findArticlesByAuthorId(req, res) {
         var authorId = req.query.authorId;
@@ -72,29 +61,13 @@ module.exports = function (app, model) {
         var bookId = req.params.bookId;
         var newArticle = req.body;
 
-        console.log("creating article");
-        console.log(newArticle);
 
         model.ArticleModel
             .createArticle(bookId, newArticle)
             .then(function (article) {
                 res.send(article);
-            }, function (error) {
-                res.sendStatus(500).send(error);
-            });
-    }
 
-    function findArticleById(req, res) {
-        var articleId = req.params.articleId;
-
-        model.ArticleModel
-            .findArticleById(articleId)
-            .then(
-                function (response) {
-                    res.send(response);
-                })
-            .catch(function (err) {
-                res.status(500).send(err);
+                noticingSubscribers(bookId);
             });
     }
 
@@ -107,8 +80,50 @@ module.exports = function (app, model) {
             .then(
                 function (status) {
                     res.sendStatus(200);
+
+                    model.ArticleModel.findArticleById(articleId)
+                        .then(function (foundArticle) {
+                            var bookId = foundArticle._book;
+                            console.log("updating a new article, sending notice to all subscribers");
+                            noticingSubscribers(bookId);
+                        });
                 }
             )
+            .catch(function (err) {
+                res.status(500).send(err);
+            });
+    }
+
+    function noticingSubscribers(bookId) {
+        // sending notices to readers who follows the book that there's an update
+        model.BookModel.findBookById(bookId)
+            .then(function (foundBook) {
+                console.log("found book subs");
+                console.log(JSON.stringify(foundBook));
+                var subs = foundBook["subscribers"];
+
+                if (subs) {
+                    for (var count = 0; count < subs.length; count++) {
+                        //    TODO: update subscription
+                        console.log("noticing user: " + subs[count]);
+                        model.UserModel.updateSubscription(subs[count], bookId, true)
+                            .then(function (user) {
+                                console.log("updated user: " + JSON.stringify(user));
+                            });
+                    }
+                }
+            });
+    }
+
+    function findArticleById(req, res) {
+        var articleId = req.params.articleId;
+
+        model.ArticleModel
+            .findArticleById(articleId)
+            .then(
+                function (response) {
+                    res.send(response);
+                })
             .catch(function (err) {
                 res.status(500).send(err);
             });

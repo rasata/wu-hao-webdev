@@ -52,6 +52,11 @@ a:hover {
     text-decoration: none;
 }
 
+.hw-updated {
+    color: red;
+    font-style: italic;
+}
+
 .jga-toolbar {
     position: absolute;
     right: 15px;

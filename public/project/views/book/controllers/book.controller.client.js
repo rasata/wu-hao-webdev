@@ -29,6 +29,8 @@
             var userPromise = UserService.findUserById(vm.userId);
             userPromise.success(function (user) {
                 vm.user = user;
+
+                UserService.markBookRead(vm.bookId, vm.userId);
             });
         }
 

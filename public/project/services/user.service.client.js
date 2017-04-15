@@ -21,7 +21,8 @@
             "checkLoggedIn": checkLoggedIn,
             "findAllUsers": findAllUsers,
             "addToBookshelf": addToBookshelf,
-            "removeFromBookshelf": removeFromBookshelf
+            "removeFromBookshelf": removeFromBookshelf,
+            "markBookRead": markBookRead
         };
         return api;
 
@@ -31,6 +32,10 @@
 
         function addToBookshelf(bookId, userId) {
             return $http.put("/aw/api/user/" + userId + "/addToShelf/" + bookId);
+        }
+
+        function markBookRead(bookId, userId) {
+            return $http.put("/aw/api/user/" + userId + "/markBookRead/" + bookId);
         }
 
         function likeTheArticle(articleId, user) {

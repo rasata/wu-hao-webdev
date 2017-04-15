@@ -6,14 +6,14 @@
         <!--<a ng-climodelsodel.updmodelsodel.user)"><span class="glyphicon glyphicon-ok"></span></a>-->
         <!--</div>-->
         <div class="btn-group pull-right hw-button-group" role="group" aria-label="...">
+            <span ng-show="currentUser">
+                Welcome! <b>{{currentUser.username}}</b>, the {{currentUser.role}}
+            </span>
             <span ng-show="currentUser.role.indexOf('admin') > -1">
                 <a class="btn btn-danger" href="#/admin">Admin</a>
             </span>
             <span ng-show="currentUser.role.indexOf('writer') > -1">
                 <a class="btn btn-primary" href="#/writer/{{currentUser._id}}/published">My Publishes</a>
-            </span>
-            <span ng-show="currentUser.role.indexOf('reader') > -1">
-                <a class="btn btn-primary" href="#/reader/{{currentUser._id}}/bookshelf">My Bookshelf</a>
             </span>
             <span ng-hide="currentUser">
                 <a class="btn btn-default" href="#/login">Login</a>
@@ -21,6 +21,7 @@
             </span>
             <span ng-show="currentUser">
                 <!--<a class="btn btn-default" ng-click="model.gotoProfile()">Profile</a>-->
+                <a class="btn btn-primary" href="#/reader/{{currentUser._id}}/bookshelf">My Bookshelf</a>
                 <a class="btn btn-default" href="#/user/{{currentUser._id}}">Profile</a>
                 <a class="btn btn-default" ng-click="model.logout()">Logout</a>
             </span>
@@ -39,7 +40,8 @@
         <div class="row">
             <div class="col-xs-8">
                 <!--<input class="form-control" id="grBookTitle" ng-model="book.title" placeholder="ex, a tale of two cities">-->
-                <input class="form-control" id="grBookTitle" ng-model="model.book.title" placeholder="ex, a tale of two cities">
+                <input class="form-control" id="grBookTitle" ng-model="model.book.title"
+                       placeholder="ex, a tale of two cities">
             </div>
             <div class="col-xs-4">
                 <a class="btn btn-primary btn-block" ng-click="model.searchGoodreadsTitle(model.book)">Search</a>

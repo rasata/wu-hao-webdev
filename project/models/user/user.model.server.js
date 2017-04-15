@@ -12,7 +12,8 @@ module.exports = function () {
         findUserByGoogleId: findUserByGoogleId,
         findUserByGoodreadsId: findUserByGoodreadsId,
         addToBookshelf: addToBookshelf,
-        removeBookFromShelf: removeBookFromShelf
+        removeBookFromShelf: removeBookFromShelf,
+        updateSubscription: updateSubscription
     };
 
     var mongoose = require('mongoose');
@@ -22,6 +23,15 @@ module.exports = function () {
     var UserModel = mongoose.model('AWUserModel', UserSchema);
 
     return api;
+
+    function updateSubscription(userId, bookId, flag) {
+        console.log("updating the flag to" + flag);
+        // TODO: find user, find her book on the shelf, flip the flag
+        return UserModel.update(
+            {_id: userId},
+            {$set: {bookshelf: {_id: bookId, updated: flag}}}
+        );
+    }
 
     function findUserByGoodreadsId(goodreadsId) {
         return UserModel.findOne({
@@ -85,14 +95,14 @@ module.exports = function () {
     function addToBookshelf(userId, bookId) {
         return UserModel.update(
             {_id: userId},
-            {$push: {bookshelf: bookId}}
+            {$push: {bookshelf: {_id: bookId, updated: false}}}
         );
     }
 
     function removeBookFromShelf(userId, bookId) {
         return UserModel.update(
             {_id: userId},
-            {$pull: {"bookshelf": bookId}}
+            {$pull: {"bookshelf": {_id: bookId}}} // TODO: this is not right?
         );
     }
 

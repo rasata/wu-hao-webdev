@@ -11,6 +11,7 @@ module.exports = function () {
         deleteBook: deleteBook,
         addSubscriber: addSubscriber,
         removeSubscriber: removeSubscriber
+        // findSubscribers: findSubscribers
     };
 
     var mongoose = require('mongoose');
@@ -20,6 +21,18 @@ module.exports = function () {
     var BookModel = mongoose.model('AWBookModel', BookSchema);
 
     return api;
+
+    // function findSubscribers(bookId) {
+    //     // for each subscriber in this book's subs list, send user notice
+    //     BookModel.findById(bookId)
+    //         .then(function (foundBook) {
+    //             if (foundBook.subscribers) {
+    //                 return foundBook.subscribers;
+    //             } else {
+    //                 return null;
+    //             }
+    //         });
+    // }
 
     function findPopularBooks() {
         // TODO:

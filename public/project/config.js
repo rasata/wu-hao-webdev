@@ -177,49 +177,10 @@
                     isWriter: checkIsWriter
                 }
             })
-            /*
-             TODO: add article controllers/pages
-             .when("/writer/:uid/book/:bid/page", {
-             templateUrl: "views/page/templates/page-list.view.client.html",
-             controller: "PageListController",
-             controllerAs: "model"
-             })
-             .when("/user/:uid/website/:wid/page/new", {
-             templateUrl: "views/page/templates/page-new.view.client.html",
-             controller: "NewPageController",
-             controllerAs: "model"
-             })
-             .when("/user/:uid/website/:wid/page/:pid", {
-             templateUrl: "views/page/templates/page-edit.view.client.html",
-             controller: "EditPageController",
-             controllerAs: "model"
-             })
-             .when("/user/:uid/website/:wid/page/:pid/widget", {
-             templateUrl: "views/widget/templates/widget-list.view.client.html",
-             controller: "WidgetListController",
-             controllerAs: "model"
-             })
-             .when("/user/:uid/website/:wid/page/:pid/widget/new", {
-             templateUrl: "views/widget/templates/widget-chooser.view.client.html",
-             controller: "NewWidgetController",
-             controllerAs: "model"
-             })
-             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
-             templateUrl: "views/widget/templates/widget-edit.view.client.html",
-             controller: "EditWidgetController",
-             controllerAs: "model"
-             })
-             .when("/user/:uid/website/:wid/page/:pid/widget/:wgid/flickr", {
-             templateUrl: "views/widget/templates/widget-flickr-search.view.client.html",
-             controller: "FlickrImageSearchController",
-             controllerAs: "model"
-             })
-             */
             .otherwise({
                 templateUrl: "views/home/home.view.client.html",
                 controller: "LoginController",
                 controllerAs: "model"
             });
-        // $locationProvider.html5Mode(true);
     }
 })();
