@@ -64,7 +64,7 @@
             var promise = BookService.findBooksByAuthorId(vm.userId);
             promise.success(function (books) {
                 vm.published = books;
-            })
+            });
         }
 
         init();
@@ -85,8 +85,12 @@
         }
 
         function parseGenres(genresStr) {
-            var temp = genresStr.split(',');
-            return temp;
+            if (genresStr) {
+                var temp = genresStr.split(',');
+                return temp;
+            } else {
+                return '';
+            }
         }
     }
 

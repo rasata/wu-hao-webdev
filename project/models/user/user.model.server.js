@@ -25,8 +25,6 @@ module.exports = function () {
     return api;
 
     function updateSubscription(userId, bookId, flag) {
-        console.log("updating the flag to" + flag);
-        // TODO: find user, find her book on the shelf, flip the flag
         return UserModel.update(
             {_id: userId},
             {$set: {bookshelf: {_id: bookId, updated: flag}}}

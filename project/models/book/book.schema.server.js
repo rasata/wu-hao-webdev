@@ -19,6 +19,7 @@ module.exports = function (app) {
             //     "Autobiographies", "Fantasy"]
         },
         liked: Number,
+        imageUrl: String,
         description: String
     }, {collection: "book"});
 

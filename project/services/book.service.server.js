@@ -12,6 +12,10 @@ module.exports = function (app, model) {
     app.put("/aw/api/book/:bookId/removeSubscriber/:userId", removeSubscriber);
     app.delete("/aw/api/book/:bookId", deleteBook);
 
+    var key = "ejIk3vTLwi3vJAPx0HHgjA";
+    var request = require("request");
+    var parseString = require('xml2js').parseString;
+
     function addSubscriber(req, res) {
         var bookId = req.params.bookId;
         var userId = req.params.userId;
@@ -115,13 +119,45 @@ module.exports = function (app, model) {
         var userId = req.params.userId;
         var newBook = req.body;
 
-        model.BookModel
-            .createBook(userId, newBook)
-            .then(function (book) {
-                res.send(book);
-            }, function (error) {
-                res.sendStatus(500).send(error);
+        console.log("found book's isbn", newBook.isbn);
+        // TODO: try to fill the Goodreads image url
+
+        if (newBook.isbn) {
+            var baseUrl = "https://www.goodreads.com/book/isbn/ISBN?format=xml&key=KEY";
+            var url = baseUrl.replace("ISBN", newBook.isbn).replace("KEY", key);
+            console.log(url);
+
+            request(url, function(error, response, body) {
+                if (error) {
+                    console.log("1");
+                    console.log(error);
+
+                    model.BookModel
+                        .createBook(userId, newBook)
+                        .then(function (book) {
+                            res.send(book);
+                        }, function (error) {
+                            res.sendStatus(500).send(error);
+                        });
+                }
+
+                parseString(body, function (err, result) {
+                    var img_url = result["GoodreadsResponse"]["book"][0]["image_url"][0];
+
+                    if (img_url) {
+                        newBook.imageUrl = img_url;
+                    }
+
+                    model.BookModel
+                        .createBook(userId, newBook)
+                        .then(function (book) {
+                            res.send(book);
+                        }, function (error) {
+                            res.sendStatus(500).send(error);
+                        });
+                });
             });
+        }
     }
 
     function findBookByBookId(req, res) {
