@@ -91,9 +91,13 @@ module.exports = function () {
     }
     
     function addToBookshelf(userId, bookId) {
+        console.log("add book to shelf");
+        console.log("user: " + userId);
+        console.log("book: " + bookId);
+
         return UserModel.update(
             {_id: userId},
-            {$push: {bookshelf: {_id: bookId, updated: false}}}
+            {$push: {bookshelf: {_id: bookId}}}
         );
     }
 

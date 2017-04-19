@@ -1,2 +1,4 @@
 *.pem
 public/uploads/*
+
+.idea/workspace.xml

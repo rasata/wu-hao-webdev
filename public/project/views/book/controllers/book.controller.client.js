@@ -48,7 +48,9 @@
                 })
             });
             promise.error(function (res, status) {
-                vm.error = "Book did not added to your shelf. " + res;
+                // TODO: why is this error triggered?
+                // vm.error = "Book did not added to your shelf. " + res;
+                $location.url("/home");
             });
         }
     }
