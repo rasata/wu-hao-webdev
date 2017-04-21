@@ -56,7 +56,6 @@
                 var bookPromise = BookService.findBookById(booklist[i]._id);
                 bookPromise.success(function (resBook) {
                     resObj.book = resBook;
-                    console.log(resObj.updated);
                     ret.push(resObj);
                 });
             }

@@ -303,6 +303,9 @@ module.exports = function (app, model) {
 
     function createUser(req, res) {
         var newUser = req.body;
+        newUser.bookshelf = [];
+        newUser.publishedList = [];
+
         model.UserModel
             .createUser(newUser)
             .then(function (user) {
@@ -378,16 +381,32 @@ module.exports = function (app, model) {
         var userId = req.params.userId;
         var bookId = req.params.bookId;
 
-        model.UserModel
-            .addToBookshelf(userId, bookId)
-            .then(
-                function (result) {
-                    res.sendStatus(200);
-                }
-            )
-            .catch(function (err) {
-                res.status(500).send(err);
+        // var modelRes = model.UserModel.addToBookshelf(userId, bookId);
+        // if (modelRes == true) {
+        //     res.send(200);
+        // } else {
+        //     res.send(500);
+        // }
+        model.UserModel.addToBookshelf(userId, bookId)
+            .then(function(qweqwe) {
+                console.log(qweqwe);
+                res.send(200);
+            }, function (err) {
+                console.log(err);
+                res.send(500);
             });
+            // .then(
+            //     function (result) {
+            //         if (!result) {
+            //             res.send(500);
+            //         } else {
+            //             res.sendStatus(200);
+            //         }
+            //     }
+            // )
+            // .catch(function (err) {
+            //     res.status(500).send(err);
+            // });
     }
 
     function deleteUser(req, res) {

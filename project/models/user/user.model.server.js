@@ -72,7 +72,7 @@ module.exports = function () {
 
     function findAllUsers() {
         return UserModel.find({
-            role: { $in: ['reader', 'writer']}
+            role: {$in: ['reader', 'writer']}
         });
     }
 
@@ -89,22 +89,23 @@ module.exports = function () {
             role: user.role
         });
     }
-    
+
     function addToBookshelf(userId, bookId) {
         console.log("add book to shelf");
         console.log("user: " + userId);
         console.log("book: " + bookId);
+        console.log("hao");
 
-        return UserModel.update(
+        return UserModel.findOneAndUpdate(
             {_id: userId},
-            {$push: {bookshelf: {_id: bookId}}}
-        );
+            {$addToSet: {"bookshelf": bookId}}
+        )
     }
 
     function removeBookFromShelf(userId, bookId) {
         return UserModel.update(
             {_id: userId},
-            {$pull: {"bookshelf": {_id: bookId}}} // TODO: this is not right?
+            {$pull: {"bookshelf": {_id: bookId}}}
         );
     }
 

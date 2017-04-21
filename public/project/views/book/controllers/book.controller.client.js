@@ -39,18 +39,18 @@
         function addToBookshelf() {
             var promise = UserService.addToBookshelf(vm.bookId, vm.userId);
             promise.success(function (res) {
-                var bookPromise = BookService.addSubscriber(vm.bookId, vm.userId);
-                bookPromise.success(function (bookRes) {
-                    vm.message = "You are subscribed to the book " + vm.book.title;
-                });
-                bookPromise.error(function (error, status) {
-                    vm.error = error;
-                })
+                // var bookPromise = BookService.addSubscriber(vm.bookId, vm.userId);
+                // bookPromise.success(function (bookRes) {
+                //     vm.message = "You are subscribed to the book " + vm.book.title;
+                // });
+                // bookPromise.error(function (error, status) {
+                //     vm.error = error;
+                // })
             });
             promise.error(function (res, status) {
                 // TODO: why is this error triggered?
                 // vm.error = "Book did not added to your shelf. " + res;
-                $location.url("/home");
+                $location.url("/reader/" + vm.userId + "/bookshelf");
             });
         }
     }

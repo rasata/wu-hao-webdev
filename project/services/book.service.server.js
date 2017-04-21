@@ -119,17 +119,14 @@ module.exports = function (app, model) {
         var userId = req.params.userId;
         var newBook = req.body;
 
-        console.log("found book's isbn", newBook.isbn);
-        // TODO: try to fill the Goodreads image url
+        newBook.imageUrl = '';
 
         if (newBook.isbn) {
             var baseUrl = "https://www.goodreads.com/book/isbn/ISBN?format=xml&key=KEY";
             var url = baseUrl.replace("ISBN", newBook.isbn).replace("KEY", key);
-            console.log(url);
 
             request(url, function(error, response, body) {
                 if (error) {
-                    console.log("1");
                     console.log(error);
 
                     model.BookModel
@@ -142,22 +139,23 @@ module.exports = function (app, model) {
                 }
 
                 parseString(body, function (err, result) {
-                    var img_url = result["GoodreadsResponse"]["book"][0]["image_url"][0];
-
-                    if (img_url) {
+                    try {
+                        var img_url = result["GoodreadsResponse"]["book"][0]["image_url"][0];
                         newBook.imageUrl = img_url;
+                    } catch (err) {
+                        console.log("find book image failed: " + err);
                     }
-
-                    model.BookModel
-                        .createBook(userId, newBook)
-                        .then(function (book) {
-                            res.send(book);
-                        }, function (error) {
-                            res.sendStatus(500).send(error);
-                        });
                 });
             });
         }
+
+        model.BookModel
+            .createBook(userId, newBook)
+            .then(function (book) {
+                res.send(book);
+            }, function (error) {
+                res.sendStatus(500).send(error);
+            });
     }
 
     function findBookByBookId(req, res) {
