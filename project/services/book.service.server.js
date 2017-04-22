@@ -146,16 +146,26 @@ module.exports = function (app, model) {
                         console.log("find book image failed: " + err);
                     }
                 });
+
+                model.BookModel
+                    .createBook(userId, newBook)
+                    .then(function (book) {
+                        res.send(book);
+                    }, function (error) {
+                        res.sendStatus(500).send(error);
+                    });
+
             });
+        } else {
+            model.BookModel
+                .createBook(userId, newBook)
+                .then(function (book) {
+                    res.send(book);
+                }, function (error) {
+                    res.sendStatus(500).send(error);
+                });
         }
 
-        model.BookModel
-            .createBook(userId, newBook)
-            .then(function (book) {
-                res.send(book);
-            }, function (error) {
-                res.sendStatus(500).send(error);
-            });
     }
 
     function findBookByBookId(req, res) {

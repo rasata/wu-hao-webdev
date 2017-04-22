@@ -112,6 +112,29 @@ module.exports = function (app, model) {
             });
     }
 
+    function removeBookFromShelf(req, res) {
+        var userId = req.params.userId;
+        var bookId = req.params.bookId;
+
+        console.log("removing from shelf");
+        console.log(userId);
+        console.log(bookId);
+
+        model.UserModel.removeBookFromShelf(userId, bookId)
+            .then(
+                function (dbRes) {
+                    console.log("found the book in shelf");
+                    console.log(dbRes);
+                    res.status(200).send(dbRes);
+                }
+            )
+            .catch(function (err) {
+                console.log("remove the book from shelf");
+                console.log(dbRes);
+                res.status(500).send(err);
+            });
+    }
+
     function updateUser(req, res) {
         var userId = req.params.userId;
         var newUser = req.body;
@@ -362,7 +385,6 @@ module.exports = function (app, model) {
             );
     }
 
-    // TODO: doing
     function addToBookshelf(req, res) {
         var userId = req.params.userId;
         var bookId = req.params.bookId;
@@ -375,7 +397,6 @@ module.exports = function (app, model) {
         model.BookModel.findBookById(bookId)
             .then(function (daBook) {
                 console.log("found book before add to shelf: ");
-                console.log(daBook);
 
                 model.UserModel.addToBookshelf(userId, bookId, daBook)
                     .then(function(updatedUser) {
@@ -395,29 +416,6 @@ module.exports = function (app, model) {
                         console.log(err);
                         res.send(500);
                     });
-            });
-    }
-
-    function removeBookFromShelf(req, res) {
-        var userId = req.params.userId;
-        var bookId = req.params.bookId;
-
-        console.log("removing from shelf");
-        console.log(userId);
-        console.log(bookId);
-
-        model.UserModel.removeBookFromShelf(userId, bookId)
-            .then(
-                function (dbRes) {
-                    console.log("found the book in shelf");
-                    console.log(dbRes);
-                    res.status(200).send(dbRes);
-                }
-            )
-            .catch(function (err) {
-                console.log("remove the book from shelf failed");
-                console.log(dbRes);
-                res.status(500).send(err);
             });
     }
 

@@ -108,9 +108,9 @@ module.exports = function () {
             {_id: userId},
             {$addToSet: {"bookshelf":
                 {
-                    "bookId": bookId.toString(),
+                    "bookId": bookId,
                     "updated": false,
-                    "title": title
+                    "title": title.toString()
                 }
             }}
         )
