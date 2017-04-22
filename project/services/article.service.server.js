@@ -96,23 +96,23 @@ module.exports = function (app, model) {
 
     function noticingSubscribers(bookId) {
         // sending notices to readers who follows the book that there's an update
-        model.BookModel.findBookById(bookId)
-            .then(function (foundBook) {
-                console.log("found book subs");
-                console.log(JSON.stringify(foundBook));
-                var subs = foundBook["subscribers"];
-
-                if (subs) {
-                    for (var count = 0; count < subs.length; count++) {
-                        //    TODO: update subscription
-                        console.log("noticing user: " + subs[count]);
-                        model.UserModel.updateSubscription(subs[count], bookId, true)
-                            .then(function (user) {
-                                console.log("updated user: " + JSON.stringify(user));
-                            });
-                    }
-                }
-            });
+        // model.BookModel.findBookById(bookId)
+        //     .then(function (foundBook) {
+        //         console.log("found book subs");
+        //         console.log(JSON.stringify(foundBook));
+        //         var subs = foundBook["subscribers"];
+        //
+        //         if (subs) {
+        //             for (var count = 0; count < subs.length; count++) {
+        //                 //    TODO: update subscription
+        //                 console.log("noticing user: " + subs[count]);
+        //                 model.UserModel.updateSubscription(subs[count], bookId, true)
+        //                     .then(function (user) {
+        //                         console.log("updated user: " + JSON.stringify(user));
+        //                     });
+        //             }
+        //         }
+        //     });
     }
 
     function findArticleById(req, res) {

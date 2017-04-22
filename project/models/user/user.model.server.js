@@ -25,10 +25,10 @@ module.exports = function () {
     return api;
 
     function updateSubscription(userId, bookId, flag) {
-        return UserModel.update(
-            {_id: userId},
-            {$set: {bookshelf: {_id: bookId, updated: flag}}}
-        );
+        // return UserModel.update(
+        //     {_id: userId},
+        //     {$set: {bookshelf: {_id: bookId, updated: flag}}}
+        // );
     }
 
     function findUserByGoodreadsId(goodreadsId) {
