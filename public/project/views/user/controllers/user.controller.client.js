@@ -18,6 +18,7 @@
         vm.searchGoodreadsTitle = searchGoodreadsTitle;
         vm.searchGoodreadsISBN = searchGoodreadsISBN;
         vm.getTrustedHtml = getTrustedHtml;
+        vm.test = test;
 
         function init() {
             var loginPromise = UserService.checkLoggedIn();
@@ -42,9 +43,22 @@
             vm.book = new Object();
             vm.book.isbn = "0808519956";
             vm.book.title = "a tale of two cities";
+            vm.count = 0;
         }
 
         init();
+
+        function test() {
+            console.log(vm.allBooks[vm.count]._id);
+            var p = UserService.addToBookshelf(vm.allBooks[vm.count]._id, $rootScope.currentUser._id);
+            p.success(function (ret) {
+                vm.error = ret;
+                vm.count++;
+            });
+            p.error(function (err) {
+                vm.error = err;
+            });
+        }
 
         function searchGoodreadsTitle(book) {
             // var promise = BookService.

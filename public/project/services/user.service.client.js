@@ -31,6 +31,9 @@
         }
 
         function addToBookshelf(bookId, userId) {
+            console.log("service client");
+            console.log("user ID: " + userId);
+            console.log("book ID: " + bookId);
             return $http.put("/aw/api/user/" + userId + "/addToShelf/" + bookId);
         }
 

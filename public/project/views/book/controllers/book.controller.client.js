@@ -8,7 +8,7 @@
         .controller("NewBookController", NewBookController)
         .controller("EditBookController", EditBookController);
 
-    function BookListController($routeParams, $location, UserService, BookService, ArticleService) {
+    function BookListController($rootScope, $routeParams, $location, UserService, BookService, ArticleService) {
         var vm = this;
         vm.userId = $routeParams.uid;
         vm.bookId = $routeParams.bid;
@@ -26,26 +26,26 @@
                 vm.articles = articles;
             });
 
-            var userPromise = UserService.findUserById(vm.userId);
-            userPromise.success(function (user) {
-                vm.user = user;
-
-                UserService.markBookRead(vm.bookId, vm.userId);
-            });
+            // var userPromise = UserService.findUserById(vm.userId);
+            // userPromise.success(function (user) {
+            //     vm.user = user;
+            //
+            //     UserService.markBookRead(vm.bookId, vm.userId);
+            // });
         }
 
         init();
 
         function addToBookshelf() {
-            var promise = UserService.addToBookshelf(vm.bookId, vm.userId);
+            var promise = UserService.addToBookshelf(vm.bookId, $rootScope.currentUser._id);
             promise.success(function (res) {
-                // var bookPromise = BookService.addSubscriber(vm.bookId, vm.userId);
-                // bookPromise.success(function (bookRes) {
-                //     vm.message = "You are subscribed to the book " + vm.book.title;
-                // });
-                // bookPromise.error(function (error, status) {
-                //     vm.error = error;
-                // })
+                var bookPromise = BookService.addSubscriber(vm.bookId, vm.userId);
+                bookPromise.success(function (bookRes) {
+                    vm.message = "You are subscribed to the book " + vm.book.title;
+                });
+                bookPromise.error(function (error, status) {
+                    vm.error = error;
+                })
             });
             promise.error(function (res, status) {
                 // TODO: why is this error triggered?

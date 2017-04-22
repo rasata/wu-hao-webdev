@@ -90,22 +90,36 @@ module.exports = function () {
         });
     }
 
-    function addToBookshelf(userId, bookId) {
+    function addToBookshelf(userId, bookId, bookObj) {
         console.log("add book to shelf");
-        console.log("user: " + userId);
-        console.log("book: " + bookId);
-        console.log("hao");
+        console.log("user: " + userId.toString());
+        console.log("book: " + bookId.toString());
+
+        var title = '';
+        try {
+            title = bookObj.title;
+            console.log("title: " + bookObj.title);
+        } catch (err) {
+            console.log("Did not find the book!");
+            title = '';
+        }
 
         return UserModel.findOneAndUpdate(
             {_id: userId},
-            {$addToSet: {"bookshelf": bookId}}
+            {$addToSet: {"bookshelf":
+                {
+                    "bookId": bookId.toString(),
+                    "updated": false,
+                    "title": title
+                }
+            }}
         )
     }
 
     function removeBookFromShelf(userId, bookId) {
         return UserModel.update(
             {_id: userId},
-            {$pull: {"bookshelf": {_id: bookId}}}
+            {'$pull': {"bookshelf": {"bookId": bookId}}}
         );
     }
 

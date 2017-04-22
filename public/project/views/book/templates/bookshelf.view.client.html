@@ -43,22 +43,19 @@
 
 <div class="container-fluid">
     <ul class="list-group">
-        <li ng-repeat="obj in model.bookshelf" class="list-group-item">
+        <li ng-repeat="book in model.user.bookshelf" class="list-group-item">
             <div class="row">
-                <div class="col-xs-3">
-                    <a href="#/reader/{{model.userId}}/book/{{obj.book._id}}">
-                        {{obj.book.title}}
+                <div class="col-xs-4">
+                    <a href="#/reader/{{model.userId}}/book/{{book.bookId}}">
+                        {{book.title}}
                     </a>
                 </div>
-                <div class="col-xs-3">
-                    <span ng-show="{{obj.updated}}">
+                <div class="col-xs-4">
+                    <span ng-show="{{book.updated}}">
                         <span class="hw-updated">recently updated</span>
                     </span>
                 </div>
-                <div class="col-xs-3">
-                    {{obj.book.isbn}}
-                </div>
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                     <a ng-click="model.removeBookFromShelf(book)">
                         <span class="glyphicon glyphicon-remove pull-right"></span>
                     </a>

@@ -13,11 +13,12 @@ module.exports = function (app) {
         phone: String,
         email: String,
         address: String,
-        // bookshelf: [{
-        //     _book: {type: mongoose.Schema.Types.ObjectId, ref: 'book'},
-        //     updated: Boolean
-        // }]
-        bookshelf: [{type: mongoose.Schema.Types.ObjectId, ref: 'book'}]
+        bookshelf: [{
+            bookId: {type: mongoose.Schema.Types.ObjectId, ref: 'book'},
+            updated: Boolean,
+            title: String
+        }]
+        // bookshelf: [{type: mongoose.Schema.Types.ObjectId, ref: 'book'}]
         // bookshelf: { type : Array , "default" : [] }
         ,
         // writerInfo: {

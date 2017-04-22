@@ -112,21 +112,6 @@ module.exports = function (app, model) {
             });
     }
 
-    function removeBookFromShelf(req, res) {
-        var userId = req.params.userId;
-        var bookId = req.params.bookId;
-
-        model.UserModel.removeBookFromShelf(userId, bookId)
-            .then(
-                function (dbRes) {
-                    res.status(200).send(dbRes);
-                }
-            )
-            .catch(function (err) {
-                res.status(500).send(err);
-            });
-    }
-
     function updateUser(req, res) {
         var userId = req.params.userId;
         var newUser = req.body;
@@ -377,36 +362,63 @@ module.exports = function (app, model) {
             );
     }
 
+    // TODO: doing
     function addToBookshelf(req, res) {
         var userId = req.params.userId;
         var bookId = req.params.bookId;
 
-        // var modelRes = model.UserModel.addToBookshelf(userId, bookId);
-        // if (modelRes == true) {
-        //     res.send(200);
-        // } else {
-        //     res.send(500);
-        // }
-        model.UserModel.addToBookshelf(userId, bookId)
-            .then(function(qweqwe) {
-                console.log(qweqwe);
-                res.send(200);
-            }, function (err) {
-                console.log(err);
-                res.send(500);
+        console.log("service server: ");
+        console.log("user id: " + userId);
+        console.log("book id: " + bookId);
+
+        // 1st find the book, so that we can add title to user.bookshelf
+        model.BookModel.findBookById(bookId)
+            .then(function (daBook) {
+                console.log("found book before add to shelf: ");
+                console.log(daBook);
+
+                model.UserModel.addToBookshelf(userId, bookId, daBook)
+                    .then(function(updatedUser) {
+                        res.send(updatedUser);
+                    }, function (err) {
+                        console.log(err);
+                        res.send(500);
+                    });
+            }, function (error) {
+                console.log("didn't find book before add to shelf: ");
+                console.log(error);
+
+                model.UserModel.addToBookshelf(userId, bookId, null)
+                    .then(function(updatedUser) {
+                        res.send(updatedUser);
+                    }, function (err) {
+                        console.log(err);
+                        res.send(500);
+                    });
             });
-            // .then(
-            //     function (result) {
-            //         if (!result) {
-            //             res.send(500);
-            //         } else {
-            //             res.sendStatus(200);
-            //         }
-            //     }
-            // )
-            // .catch(function (err) {
-            //     res.status(500).send(err);
-            // });
+    }
+
+    function removeBookFromShelf(req, res) {
+        var userId = req.params.userId;
+        var bookId = req.params.bookId;
+
+        console.log("removing from shelf");
+        console.log(userId);
+        console.log(bookId);
+
+        model.UserModel.removeBookFromShelf(userId, bookId)
+            .then(
+                function (dbRes) {
+                    console.log("found the book in shelf");
+                    console.log(dbRes);
+                    res.status(200).send(dbRes);
+                }
+            )
+            .catch(function (err) {
+                console.log("remove the book from shelf failed");
+                console.log(dbRes);
+                res.status(500).send(err);
+            });
     }
 
     function deleteUser(req, res) {

@@ -61,7 +61,6 @@ module.exports = function () {
             articles: newBook.articles,
             subscribers: newBook.subscribers,
             genres: newBook.genres,
-            // liked: newBook.liked,
             description: newBook.description
         });
     }
